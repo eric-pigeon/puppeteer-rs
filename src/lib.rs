@@ -1,7 +1,5 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+mod browser;
+mod viewport;
+
+pub use browser::{Browser, BrowserContext, LaunchOptions};
+pub use viewport::Viewport;
