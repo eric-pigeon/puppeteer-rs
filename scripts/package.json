@@ -1,0 +1,16 @@
+{
+  "name": "generate-protocol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "devtools-protocol": "0.0.818844",
+    "handlebars": "^4"
+  },
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}

@@ -1,0 +1,21 @@
+{{#each domain.types}}
+{{#if (eq type "string")}}
+pub type {{id}} = String;
+{{/if}}
+{{#if (eq type "object")}}
+pub struct {{id}} {
+{{struct_keys id properties}}
+{{#each properties}}
+  pub {{struct_key ../id name}}: String,
+{{/each}}
+}
+{{/if}}
+{{/each}}
+
+{{#each domain.commands}}
+pub struct {{ufirst name}} {
+{{#if parameters }}
+{{/if}}
+}
+
+{{/each}}

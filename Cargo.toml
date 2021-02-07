@@ -12,6 +12,8 @@ tokio = { version = "*", features = ["macros"] }
 tokio-tungstenite = "*"
 futures-util = "*"
 regex = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 [dev-dependencies]
 tokio-test = "*"

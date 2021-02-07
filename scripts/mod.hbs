@@ -1,0 +1,11 @@
+use serde;
+
+{{#each domains}}
+pub mod {{underscore domain}};
+{{/each}}
+
+pub(crate) trait Method {
+    const NAME: &'static str;
+
+    type ReturnObject: serde::de::DeserializeOwned;
+}
