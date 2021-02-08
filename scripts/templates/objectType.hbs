@@ -1,0 +1,8 @@
+pub struct {{id}} {
+{{#each properties}}
+    {{#if description}}
+    // {{{comment description}}}
+    {{/if}}
+    {{> (propertyTypePartial this) objectId=../id}}
+{{/each}}
+}

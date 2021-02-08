@@ -1,0 +1,8 @@
+{{#switch id}}
+{{#case "Headers"}}
+pub type {{id}} = std::collections::HashMap<String, String>;
+{{/case}}
+{{#default}}
+pub type {{id}} = std::collections::HashMap<String, serde_json::Value>;
+{{/default}}
+{{/switch}}

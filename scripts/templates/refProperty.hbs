@@ -1,0 +1,5 @@
+{{#if optional }}
+pub {{struct_key name}}: Option<{{{ref $ref objectId}}}>,
+{{else}}
+pub {{struct_key name}}: {{{ref $ref objectId}}},
+{{/if}}

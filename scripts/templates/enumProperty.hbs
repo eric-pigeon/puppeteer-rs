@@ -1,0 +1,5 @@
+{{#if optional}}
+pub {{struct_key name}}: Option<{{camelize (concat objectId (ufirst name))}}>,
+{{else}}
+pub {{struct_key name}}: {{camelize (concat objectId (ufirst name))}},
+{{/if}}
