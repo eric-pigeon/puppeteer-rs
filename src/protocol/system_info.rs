@@ -1,6 +1,9 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 // Describes a single graphics processor (GPU).
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GPUDevice {
     // PCI ID of the GPU vendor, if available; 0 otherwise.
     pub vendor_id: f64,
@@ -20,6 +23,8 @@ pub struct GPUDevice {
     pub driver_version: String,
 }
 // Describes the width and height dimensions of an entity.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Size {
     // Width in pixels.
     pub width: i32,
@@ -28,6 +33,8 @@ pub struct Size {
 }
 // Describes a supported video decoding profile with its associated minimum and
 // maximum resolutions.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct VideoDecodeAcceleratorCapability {
     // Video codec profile that is supported, e.g. VP9 Profile 2.
     pub profile: String,
@@ -38,6 +45,8 @@ pub struct VideoDecodeAcceleratorCapability {
 }
 // Describes a supported video encoding profile with its associated maximum
 // resolution and maximum framerate.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct VideoEncodeAcceleratorCapability {
     // Video codec profile that is supported, e.g H264 Main.
     pub profile: String,
@@ -50,12 +59,16 @@ pub struct VideoEncodeAcceleratorCapability {
     pub max_framerate_denominator: i32,
 }
 // YUV subsampling type of the pixels of a given image.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum SubsamplingFormat {
     Yuv420,
     Yuv422,
     Yuv444,
 }
 // Image format of a given image.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ImageType {
     Jpeg,
     Webp,
@@ -63,6 +76,8 @@ pub enum ImageType {
 }
 // Describes a supported image decoding profile with its associated minimum and
 // maximum resolutions and subsampling.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ImageDecodeAcceleratorCapability {
     // Image coded, e.g. Jpeg.
     pub image_type: ImageType,
@@ -74,6 +89,8 @@ pub struct ImageDecodeAcceleratorCapability {
     pub subsamplings: Vec<SubsamplingFormat>,
 }
 // Provides information about the GPU(s) on the system.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GPUInfo {
     // The graphics devices on the system. Element 0 is the primary GPU.
     pub devices: Vec<GPUDevice>,
@@ -91,6 +108,8 @@ pub struct GPUInfo {
     pub image_decoding: Vec<ImageDecodeAcceleratorCapability>,
 }
 // Represents process info.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ProcessInfo {
     // Specifies process type.
     pub r#type: String,
@@ -102,7 +121,9 @@ pub struct ProcessInfo {
 }
 
 // Returns information about the system.
+#[derive(Serialize, Debug)]
 pub struct GetInfo {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetInfoReturnObject {
     // Information about the GPUs on the system.
     pub gpu: GPUInfo,
@@ -116,9 +137,21 @@ pub struct GetInfoReturnObject {
     // supported.
     pub command_line: String,
 }
+impl super::Command for GetInfo {
+    const NAME: &'static str = "SystemInfo.getInfo";
+
+    type ReturnObject = GetInfoReturnObject;
+}
 // Returns information about all running processes.
+#[derive(Serialize, Debug)]
 pub struct GetProcessInfo {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetProcessInfoReturnObject {
     // An array of process info blocks.
     pub process_info: Vec<ProcessInfo>,
+}
+impl super::Command for GetProcessInfo {
+    const NAME: &'static str = "SystemInfo.getProcessInfo";
+
+    type ReturnObject = GetProcessInfoReturnObject;
 }

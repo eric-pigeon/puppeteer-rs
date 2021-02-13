@@ -1,5 +1,6 @@
 // This file is auto-generated do not edit manually.
 use serde;
+use serde::{Deserialize, Serialize};
 
 pub mod accessibility;
 pub mod animation;
@@ -48,4 +49,22 @@ pub(crate) trait Command {
     const NAME: &'static str;
 
     type ReturnObject: serde::de::DeserializeOwned;
+
+    fn to_method_call(self, call_id: u32) -> CommandCall<Self>
+    where
+        Self: std::marker::Sized,
+    {
+        CommandCall {
+            id: call_id,
+            params: self,
+            method: Self::NAME,
+        }
+    }
+}
+
+#[derive(Serialize, Debug)]
+pub struct CommandCall<T> {
+    method: &'static str,
+    pub id: u32,
+    params: T,
 }

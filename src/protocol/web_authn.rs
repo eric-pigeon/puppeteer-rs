@@ -1,10 +1,15 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 pub type AuthenticatorId = String;
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum AuthenticatorProtocol {
     U2f,
     Ctap2,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum AuthenticatorTransport {
     Usb,
     Nfc,
@@ -12,6 +17,8 @@ pub enum AuthenticatorTransport {
     Cable,
     Internal,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct VirtualAuthenticatorOptions {
     pub protocol: AuthenticatorProtocol,
     pub transport: AuthenticatorTransport,
@@ -30,6 +37,8 @@ pub struct VirtualAuthenticatorOptions {
     // Defaults to false.
     pub is_user_verified: Option<bool>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Credential {
     pub credential_id: String,
     pub is_resident_credential: bool,
@@ -49,67 +58,144 @@ pub struct Credential {
 
 // Enable the WebAuthn domain and start intercepting credential storage and
 // retrieval with a virtual authenticator.
+#[derive(Serialize, Debug)]
 pub struct Enable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "WebAuthn.enable";
+
+    type ReturnObject = EnableReturnObject;
+}
 // Disable the WebAuthn domain.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "WebAuthn.disable";
+
+    type ReturnObject = DisableReturnObject;
+}
 // Creates and adds a virtual authenticator.
+#[derive(Serialize, Debug)]
 pub struct AddVirtualAuthenticator {
     pub options: VirtualAuthenticatorOptions,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct AddVirtualAuthenticatorReturnObject {
     pub authenticator_id: AuthenticatorId,
 }
+impl super::Command for AddVirtualAuthenticator {
+    const NAME: &'static str = "WebAuthn.addVirtualAuthenticator";
+
+    type ReturnObject = AddVirtualAuthenticatorReturnObject;
+}
 // Removes the given authenticator.
+#[derive(Serialize, Debug)]
 pub struct RemoveVirtualAuthenticator {
     pub authenticator_id: AuthenticatorId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveVirtualAuthenticatorReturnObject {}
+impl super::Command for RemoveVirtualAuthenticator {
+    const NAME: &'static str = "WebAuthn.removeVirtualAuthenticator";
+
+    type ReturnObject = RemoveVirtualAuthenticatorReturnObject;
+}
 // Adds the credential to the specified authenticator.
+#[derive(Serialize, Debug)]
 pub struct AddCredential {
     pub authenticator_id: AuthenticatorId,
     pub credential: Credential,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct AddCredentialReturnObject {}
+impl super::Command for AddCredential {
+    const NAME: &'static str = "WebAuthn.addCredential";
+
+    type ReturnObject = AddCredentialReturnObject;
+}
 // Returns a single credential stored in the given virtual authenticator that
 // matches the credential ID.
+#[derive(Serialize, Debug)]
 pub struct GetCredential {
     pub authenticator_id: AuthenticatorId,
     pub credential_id: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetCredentialReturnObject {
     pub credential: Credential,
 }
+impl super::Command for GetCredential {
+    const NAME: &'static str = "WebAuthn.getCredential";
+
+    type ReturnObject = GetCredentialReturnObject;
+}
 // Returns all the credentials stored in the given virtual authenticator.
+#[derive(Serialize, Debug)]
 pub struct GetCredentials {
     pub authenticator_id: AuthenticatorId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetCredentialsReturnObject {
     pub credentials: Vec<Credential>,
 }
+impl super::Command for GetCredentials {
+    const NAME: &'static str = "WebAuthn.getCredentials";
+
+    type ReturnObject = GetCredentialsReturnObject;
+}
 // Removes a credential from the authenticator.
+#[derive(Serialize, Debug)]
 pub struct RemoveCredential {
     pub authenticator_id: AuthenticatorId,
     pub credential_id: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveCredentialReturnObject {}
+impl super::Command for RemoveCredential {
+    const NAME: &'static str = "WebAuthn.removeCredential";
+
+    type ReturnObject = RemoveCredentialReturnObject;
+}
 // Clears all the credentials from the specified device.
+#[derive(Serialize, Debug)]
 pub struct ClearCredentials {
     pub authenticator_id: AuthenticatorId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearCredentialsReturnObject {}
+impl super::Command for ClearCredentials {
+    const NAME: &'static str = "WebAuthn.clearCredentials";
+
+    type ReturnObject = ClearCredentialsReturnObject;
+}
 // Sets whether User Verification succeeds or fails for an authenticator.
 // The default is true.
+#[derive(Serialize, Debug)]
 pub struct SetUserVerified {
     pub authenticator_id: AuthenticatorId,
     pub is_user_verified: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetUserVerifiedReturnObject {}
+impl super::Command for SetUserVerified {
+    const NAME: &'static str = "WebAuthn.setUserVerified";
+
+    type ReturnObject = SetUserVerifiedReturnObject;
+}
 // Sets whether tests of user presence will succeed immediately (if true) or fail to resolve (if false) for an authenticator.
 // The default is true.
+#[derive(Serialize, Debug)]
 pub struct SetAutomaticPresenceSimulation {
     pub authenticator_id: AuthenticatorId,
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetAutomaticPresenceSimulationReturnObject {}
+impl super::Command for SetAutomaticPresenceSimulation {
+    const NAME: &'static str = "WebAuthn.setAutomaticPresenceSimulation";
+
+    type ReturnObject = SetAutomaticPresenceSimulationReturnObject;
+}

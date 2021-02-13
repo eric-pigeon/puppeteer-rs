@@ -1,5 +1,8 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ScreenOrientationType {
     PortraitPrimary,
     PortraitSecondary,
@@ -7,16 +10,22 @@ pub enum ScreenOrientationType {
     LandscapeSecondary,
 }
 // Screen orientation.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ScreenOrientation {
     // Orientation type.
     pub r#type: ScreenOrientationType,
     // Orientation angle.
     pub angle: i32,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum DisplayFeatureOrientation {
     Vertical,
     Horizontal,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisplayFeature {
     // Orientation of a display feature in relation to screen
     pub orientation: DisplayFeatureOrientation,
@@ -28,6 +37,8 @@ pub struct DisplayFeature {
     // A display feature that only splits content will have a 0 mask_length.
     pub mask_length: i32,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MediaFeature {
     pub name: String,
     pub value: String,
@@ -36,17 +47,23 @@ pub struct MediaFeature {
 // allow the next delayed task (if any) to run; pause: The virtual time base may not advance;
 // pauseIfNetworkFetchesPending: The virtual time base may not advance if there are any pending
 // resource fetches.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum VirtualTimePolicy {
     Advance,
     Pause,
     PauseIfNetworkFetchesPending,
 }
 // Used to specify User Agent Cient Hints to emulate. See https://wicg.github.io/ua-client-hints
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UserAgentBrandVersion {
     pub brand: String,
     pub version: String,
 }
 // Used to specify User Agent Cient Hints to emulate. See https://wicg.github.io/ua-client-hints
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UserAgentMetadata {
     pub brands: Vec<UserAgentBrandVersion>,
     pub full_version: String,
@@ -58,43 +75,93 @@ pub struct UserAgentMetadata {
 }
 
 // Tells whether emulation is supported.
+#[derive(Serialize, Debug)]
 pub struct CanEmulate {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct CanEmulateReturnObject {
     // True if emulation is supported.
     pub result: bool,
 }
+impl super::Command for CanEmulate {
+    const NAME: &'static str = "Emulation.canEmulate";
+
+    type ReturnObject = CanEmulateReturnObject;
+}
 // Clears the overriden device metrics.
+#[derive(Serialize, Debug)]
 pub struct ClearDeviceMetricsOverride {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearDeviceMetricsOverrideReturnObject {}
+impl super::Command for ClearDeviceMetricsOverride {
+    const NAME: &'static str = "Emulation.clearDeviceMetricsOverride";
+
+    type ReturnObject = ClearDeviceMetricsOverrideReturnObject;
+}
 // Clears the overriden Geolocation Position and Error.
+#[derive(Serialize, Debug)]
 pub struct ClearGeolocationOverride {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearGeolocationOverrideReturnObject {}
+impl super::Command for ClearGeolocationOverride {
+    const NAME: &'static str = "Emulation.clearGeolocationOverride";
+
+    type ReturnObject = ClearGeolocationOverrideReturnObject;
+}
 // Requests that page scale factor is reset to initial values.
+#[derive(Serialize, Debug)]
 pub struct ResetPageScaleFactor {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ResetPageScaleFactorReturnObject {}
+impl super::Command for ResetPageScaleFactor {
+    const NAME: &'static str = "Emulation.resetPageScaleFactor";
+
+    type ReturnObject = ResetPageScaleFactorReturnObject;
+}
 // Enables or disables simulating a focused and active page.
+#[derive(Serialize, Debug)]
 pub struct SetFocusEmulationEnabled {
     // Whether to enable to disable focus emulation.
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetFocusEmulationEnabledReturnObject {}
+impl super::Command for SetFocusEmulationEnabled {
+    const NAME: &'static str = "Emulation.setFocusEmulationEnabled";
+
+    type ReturnObject = SetFocusEmulationEnabledReturnObject;
+}
 // Enables CPU throttling to emulate slow CPUs.
+#[derive(Serialize, Debug)]
 pub struct SetCPUThrottlingRate {
     // Throttling rate as a slowdown factor (1 is no throttle, 2 is 2x slowdown, etc).
     pub rate: f64,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetCPUThrottlingRateReturnObject {}
+impl super::Command for SetCPUThrottlingRate {
+    const NAME: &'static str = "Emulation.setCPUThrottlingRate";
+
+    type ReturnObject = SetCPUThrottlingRateReturnObject;
+}
 // Sets or clears an override of the default background color of the frame. This override is used
 // if the content does not specify one.
+#[derive(Serialize, Debug)]
 pub struct SetDefaultBackgroundColorOverride {
     // RGBA of the default background color. If not specified, any existing override will be
     // cleared.
     pub color: Option<super::dom::RGBA>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDefaultBackgroundColorOverrideReturnObject {}
+impl super::Command for SetDefaultBackgroundColorOverride {
+    const NAME: &'static str = "Emulation.setDefaultBackgroundColorOverride";
+
+    type ReturnObject = SetDefaultBackgroundColorOverrideReturnObject;
+}
 // Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
 // window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
 // query results).
+#[derive(Serialize, Debug)]
 pub struct SetDeviceMetricsOverride {
     // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
     pub width: i32,
@@ -126,36 +193,74 @@ pub struct SetDeviceMetricsOverride {
     // is turned-off.
     pub display_feature: Option<DisplayFeature>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDeviceMetricsOverrideReturnObject {}
+impl super::Command for SetDeviceMetricsOverride {
+    const NAME: &'static str = "Emulation.setDeviceMetricsOverride";
+
+    type ReturnObject = SetDeviceMetricsOverrideReturnObject;
+}
+#[derive(Serialize, Debug)]
 pub struct SetScrollbarsHidden {
     // Whether scrollbars should be always hidden.
     pub hidden: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetScrollbarsHiddenReturnObject {}
+impl super::Command for SetScrollbarsHidden {
+    const NAME: &'static str = "Emulation.setScrollbarsHidden";
+
+    type ReturnObject = SetScrollbarsHiddenReturnObject;
+}
+#[derive(Serialize, Debug)]
 pub struct SetDocumentCookieDisabled {
     // Whether document.coookie API should be disabled.
     pub disabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDocumentCookieDisabledReturnObject {}
+impl super::Command for SetDocumentCookieDisabled {
+    const NAME: &'static str = "Emulation.setDocumentCookieDisabled";
+
+    type ReturnObject = SetDocumentCookieDisabledReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum Configuration {
     Mobile,
     Desktop,
 }
+#[derive(Serialize, Debug)]
 pub struct SetEmitTouchEventsForMouse {
     // Whether touch emulation based on mouse input should be enabled.
     pub enabled: bool,
     // Touch/gesture events configuration. Default: current platform.
     pub configuration: Option<Configuration>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetEmitTouchEventsForMouseReturnObject {}
+impl super::Command for SetEmitTouchEventsForMouse {
+    const NAME: &'static str = "Emulation.setEmitTouchEventsForMouse";
+
+    type ReturnObject = SetEmitTouchEventsForMouseReturnObject;
+}
 // Emulates the given media type or media feature for CSS media queries.
+#[derive(Serialize, Debug)]
 pub struct SetEmulatedMedia {
     // Media type to emulate. Empty string disables the override.
     pub media: Option<String>,
     // Media features to emulate.
     pub features: Option<Vec<MediaFeature>>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetEmulatedMediaReturnObject {}
+impl super::Command for SetEmulatedMedia {
+    const NAME: &'static str = "Emulation.setEmulatedMedia";
+
+    type ReturnObject = SetEmulatedMediaReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum Type {
     None,
     Achromatopsia,
@@ -165,13 +270,21 @@ pub enum Type {
     Tritanopia,
 }
 // Emulates the given vision deficiency.
+#[derive(Serialize, Debug)]
 pub struct SetEmulatedVisionDeficiency {
     // Vision deficiency to emulate.
     pub r#type: Type,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetEmulatedVisionDeficiencyReturnObject {}
+impl super::Command for SetEmulatedVisionDeficiency {
+    const NAME: &'static str = "Emulation.setEmulatedVisionDeficiency";
+
+    type ReturnObject = SetEmulatedVisionDeficiencyReturnObject;
+}
 // Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
 // unavailable.
+#[derive(Serialize, Debug)]
 pub struct SetGeolocationOverride {
     // Mock latitude
     pub latitude: Option<f64>,
@@ -180,46 +293,95 @@ pub struct SetGeolocationOverride {
     // Mock accuracy
     pub accuracy: Option<f64>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetGeolocationOverrideReturnObject {}
+impl super::Command for SetGeolocationOverride {
+    const NAME: &'static str = "Emulation.setGeolocationOverride";
+
+    type ReturnObject = SetGeolocationOverrideReturnObject;
+}
 // Overrides the Idle state.
+#[derive(Serialize, Debug)]
 pub struct SetIdleOverride {
     // Mock isUserActive
     pub is_user_active: bool,
     // Mock isScreenUnlocked
     pub is_screen_unlocked: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetIdleOverrideReturnObject {}
+impl super::Command for SetIdleOverride {
+    const NAME: &'static str = "Emulation.setIdleOverride";
+
+    type ReturnObject = SetIdleOverrideReturnObject;
+}
 // Clears Idle state overrides.
+#[derive(Serialize, Debug)]
 pub struct ClearIdleOverride {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearIdleOverrideReturnObject {}
+impl super::Command for ClearIdleOverride {
+    const NAME: &'static str = "Emulation.clearIdleOverride";
+
+    type ReturnObject = ClearIdleOverrideReturnObject;
+}
 // Overrides value returned by the javascript navigator object.
+#[derive(Serialize, Debug)]
 pub struct SetNavigatorOverrides {
     // The platform navigator.platform should return.
     pub platform: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetNavigatorOverridesReturnObject {}
+impl super::Command for SetNavigatorOverrides {
+    const NAME: &'static str = "Emulation.setNavigatorOverrides";
+
+    type ReturnObject = SetNavigatorOverridesReturnObject;
+}
 // Sets a specified page scale factor.
+#[derive(Serialize, Debug)]
 pub struct SetPageScaleFactor {
     // Page scale factor.
     pub page_scale_factor: f64,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetPageScaleFactorReturnObject {}
+impl super::Command for SetPageScaleFactor {
+    const NAME: &'static str = "Emulation.setPageScaleFactor";
+
+    type ReturnObject = SetPageScaleFactorReturnObject;
+}
 // Switches script execution in the page.
+#[derive(Serialize, Debug)]
 pub struct SetScriptExecutionDisabled {
     // Whether script execution should be disabled in the page.
     pub value: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetScriptExecutionDisabledReturnObject {}
+impl super::Command for SetScriptExecutionDisabled {
+    const NAME: &'static str = "Emulation.setScriptExecutionDisabled";
+
+    type ReturnObject = SetScriptExecutionDisabledReturnObject;
+}
 // Enables touch on platforms which do not support them.
+#[derive(Serialize, Debug)]
 pub struct SetTouchEmulationEnabled {
     // Whether the touch event emulation should be enabled.
     pub enabled: bool,
     // Maximum touch points supported. Defaults to one.
     pub max_touch_points: Option<i32>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetTouchEmulationEnabledReturnObject {}
+impl super::Command for SetTouchEmulationEnabled {
+    const NAME: &'static str = "Emulation.setTouchEmulationEnabled";
+
+    type ReturnObject = SetTouchEmulationEnabledReturnObject;
+}
 // Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets
 // the current virtual time policy.  Note this supersedes any previous time budget.
+#[derive(Serialize, Debug)]
 pub struct SetVirtualTimePolicy {
     pub policy: VirtualTimePolicy,
     // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a
@@ -234,35 +396,63 @@ pub struct SetVirtualTimePolicy {
     // If set, base::Time::Now will be overriden to initially return this value.
     pub initial_virtual_time: Option<super::network::TimeSinceEpoch>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetVirtualTimePolicyReturnObject {
     // Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
     pub virtual_time_ticks_base: f64,
 }
+impl super::Command for SetVirtualTimePolicy {
+    const NAME: &'static str = "Emulation.setVirtualTimePolicy";
+
+    type ReturnObject = SetVirtualTimePolicyReturnObject;
+}
 // Overrides default host system locale with the specified one.
+#[derive(Serialize, Debug)]
 pub struct SetLocaleOverride {
     // ICU style C locale (e.g. "en_US"). If not specified or empty, disables the override and
     // restores default host system locale.
     pub locale: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetLocaleOverrideReturnObject {}
+impl super::Command for SetLocaleOverride {
+    const NAME: &'static str = "Emulation.setLocaleOverride";
+
+    type ReturnObject = SetLocaleOverrideReturnObject;
+}
 // Overrides default host system timezone with the specified one.
+#[derive(Serialize, Debug)]
 pub struct SetTimezoneOverride {
     // The timezone identifier. If empty, disables the override and
     // restores default host system timezone.
     pub timezone_id: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetTimezoneOverrideReturnObject {}
+impl super::Command for SetTimezoneOverride {
+    const NAME: &'static str = "Emulation.setTimezoneOverride";
+
+    type ReturnObject = SetTimezoneOverrideReturnObject;
+}
 // Resizes the frame/viewport of the page. Note that this does not affect the frame's container
 // (e.g. browser window). Can be used to produce screenshots of the specified size. Not supported
 // on Android.
+#[derive(Serialize, Debug)]
 pub struct SetVisibleSize {
     // Frame width (DIP).
     pub width: i32,
     // Frame height (DIP).
     pub height: i32,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetVisibleSizeReturnObject {}
+impl super::Command for SetVisibleSize {
+    const NAME: &'static str = "Emulation.setVisibleSize";
+
+    type ReturnObject = SetVisibleSizeReturnObject;
+}
 // Allows overriding user agent with the given string.
+#[derive(Serialize, Debug)]
 pub struct SetUserAgentOverride {
     // User agent to use.
     pub user_agent: String,
@@ -273,4 +463,10 @@ pub struct SetUserAgentOverride {
     // To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
     pub user_agent_metadata: Option<UserAgentMetadata>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetUserAgentOverrideReturnObject {}
+impl super::Command for SetUserAgentOverride {
+    const NAME: &'static str = "Emulation.setUserAgentOverride";
+
+    type ReturnObject = SetUserAgentOverrideReturnObject;
+}

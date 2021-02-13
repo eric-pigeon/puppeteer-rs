@@ -1,8 +1,11 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 // Players will get an ID that is unique within the agent context.
 pub type PlayerId = String;
 pub type Timestamp = f64;
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum PlayerMessageLevel {
     Error,
     Warning,
@@ -11,6 +14,8 @@ pub enum PlayerMessageLevel {
 }
 // Have one type per entry in MediaLogRecord::Type
 // Corresponds to kMessage
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PlayerMessage {
     // Keep in sync with MediaLogMessageLevel
     // We are currently keeping the message level 'error' separate from the
@@ -25,20 +30,28 @@ pub struct PlayerMessage {
     pub message: String,
 }
 // Corresponds to kMediaPropertyChange
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PlayerProperty {
     pub name: String,
     pub value: String,
 }
 // Corresponds to kMediaEventTriggered
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PlayerEvent {
     pub timestamp: Timestamp,
     pub value: String,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum PlayerErrorType {
     Pipelineerror,
     Mediaerror,
 }
 // Corresponds to kMediaError
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PlayerError {
     pub r#type: PlayerErrorType,
     // When this switches to using media::Status instead of PipelineStatus
@@ -50,8 +63,22 @@ pub struct PlayerError {
 }
 
 // Enables the Media domain
+#[derive(Serialize, Debug)]
 pub struct Enable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "Media.enable";
+
+    type ReturnObject = EnableReturnObject;
+}
 // Disables the Media domain.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "Media.disable";
+
+    type ReturnObject = DisableReturnObject;
+}

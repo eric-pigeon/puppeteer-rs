@@ -1,10 +1,15 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ScreenshotParamsFormat {
     Jpeg,
     Png,
 }
 // Encoding options for a screenshot.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ScreenshotParams {
     // Image compression format (defaults to png).
     pub format: Option<ScreenshotParamsFormat>,
@@ -16,6 +21,7 @@ pub struct ScreenshotParams {
 // screenshot from the resulting frame. Requires that the target was created with enabled
 // BeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also
 // https://goo.gl/3zHXhB for more background.
+#[derive(Serialize, Debug)]
 pub struct BeginFrame {
     // Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
     // the current time will be used.
@@ -32,6 +38,7 @@ pub struct BeginFrame {
     // during renderer initialization. In such a case, no screenshot data will be returned.
     pub screenshot: Option<ScreenshotParams>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct BeginFrameReturnObject {
     // Whether the BeginFrame resulted in damage and, thus, a new frame was committed to the
     // display. Reported for diagnostic uses, may be removed in the future.
@@ -39,9 +46,28 @@ pub struct BeginFrameReturnObject {
     // Base64-encoded image data of the screenshot, if one was requested and successfully taken.
     pub screenshot_data: Option<String>,
 }
+impl super::Command for BeginFrame {
+    const NAME: &'static str = "HeadlessExperimental.beginFrame";
+
+    type ReturnObject = BeginFrameReturnObject;
+}
 // Disables headless events for the target.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "HeadlessExperimental.disable";
+
+    type ReturnObject = DisableReturnObject;
+}
 // Enables headless events for the target.
+#[derive(Serialize, Debug)]
 pub struct Enable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "HeadlessExperimental.enable";
+
+    type ReturnObject = EnableReturnObject;
+}

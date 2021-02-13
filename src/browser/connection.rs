@@ -2,7 +2,10 @@
 use futures_util::StreamExt;
 //use tokio::io::{AsyncReadExt, AsyncWriteExt};
 //use tokio_tungstenite::{connect_async, tungstenite::protocol::Message};
+use std::sync::atomic::{AtomicU64, Ordering};
 use tokio_tungstenite::connect_async;
+
+use crate::protocol;
 
 pub struct ConnectionOptions {
     pub use_pipe: bool,
@@ -12,16 +15,24 @@ pub struct ConnectionOptions {
 
 pub struct Connection {
     _transport: Box<dyn ConnectionTransport>,
+    last_id: AtomicU64,
 }
 
 impl Connection {
     pub fn new(transport: Box<dyn ConnectionTransport>) -> Connection {
         Connection {
             _transport: transport,
+            last_id: AtomicU64::new(1),
         }
     }
 
-    // pub fn send() {}
+    pub fn send<C>(&self, command: C) -> C::ReturnObject
+    where
+        C: protocol::Command,
+    {
+    }
+
+    fn raw_send() {}
 }
 
 pub trait ConnectionTransport {

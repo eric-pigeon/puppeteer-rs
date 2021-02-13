@@ -7,6 +7,8 @@ use connection::{Connection, ConnectionOptions};
 pub use context::BrowserContext;
 pub use launch_options::{BrowserOptions, ChromeArgOptions, LaunchOptions};
 
+use crate::protocol::target;
+
 mod browser_fetcher;
 mod connection;
 mod context;
@@ -85,10 +87,14 @@ impl Browser {
             })
             .await;
 
-        Ok(Browser {
+        let browser = Browser {
             _child: child,
             _connection: connection,
-        })
+        };
+
+        connection.send(target::SetDiscoverTargets { discover: true });
+
+        Ok(browser)
     }
 }
 

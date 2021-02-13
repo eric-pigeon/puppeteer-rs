@@ -1,5 +1,8 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TouchPoint {
     // X coordinate of the event relative to the main frame's viewport in CSS pixels.
     pub x: f64,
@@ -17,11 +20,15 @@ pub struct TouchPoint {
     // Identifier used to track touch sources between events, must be unique within an event.
     pub id: Option<f64>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum GestureSourceType {
     Default,
     Touch,
     Mouse,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum MouseButton {
     None,
     Left,
@@ -33,6 +40,8 @@ pub enum MouseButton {
 // UTC time in seconds, counted from January 1, 1970.
 pub type TimeSinceEpoch = f64;
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum Type {
     KeyDown,
     KeyUp,
@@ -40,6 +49,7 @@ pub enum Type {
     Char,
 }
 // Dispatches a key event to the page.
+#[derive(Serialize, Debug)]
 pub struct DispatchKeyEvent {
     // Type of the key event.
     pub r#type: Type,
@@ -79,19 +89,35 @@ pub struct DispatchKeyEvent {
     // See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/editing/commands/editor_command_names.h for valid command names.
     pub commands: Option<Vec<String>>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct DispatchKeyEventReturnObject {}
+impl super::Command for DispatchKeyEvent {
+    const NAME: &'static str = "Input.dispatchKeyEvent";
+
+    type ReturnObject = DispatchKeyEventReturnObject;
+}
 // This method emulates inserting text that doesn't come from a key press,
 // for example an emoji keyboard or an IME.
+#[derive(Serialize, Debug)]
 pub struct InsertText {
     // The text to insert.
     pub text: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct InsertTextReturnObject {}
+impl super::Command for InsertText {
+    const NAME: &'static str = "Input.insertText";
+
+    type ReturnObject = InsertTextReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum PointerType {
     Mouse,
     Pen,
 }
 // Dispatches a mouse event to the page.
+#[derive(Serialize, Debug)]
 pub struct DispatchMouseEvent {
     // Type of the mouse event.
     pub r#type: Type,
@@ -119,8 +145,15 @@ pub struct DispatchMouseEvent {
     // Pointer type (default: "mouse").
     pub pointer_type: Option<PointerType>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct DispatchMouseEventReturnObject {}
+impl super::Command for DispatchMouseEvent {
+    const NAME: &'static str = "Input.dispatchMouseEvent";
+
+    type ReturnObject = DispatchMouseEventReturnObject;
+}
 // Dispatches a touch event to the page.
+#[derive(Serialize, Debug)]
 pub struct DispatchTouchEvent {
     // Type of the touch event. TouchEnd and TouchCancel must not contain any touch points, while
     // TouchStart and TouchMove must contains at least one.
@@ -135,8 +168,15 @@ pub struct DispatchTouchEvent {
     // Time at which the event occurred.
     pub timestamp: Option<TimeSinceEpoch>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct DispatchTouchEventReturnObject {}
+impl super::Command for DispatchTouchEvent {
+    const NAME: &'static str = "Input.dispatchTouchEvent";
+
+    type ReturnObject = DispatchTouchEventReturnObject;
+}
 // Emulates touch event from the mouse event parameters.
+#[derive(Serialize, Debug)]
 pub struct EmulateTouchFromMouseEvent {
     // Type of the mouse event.
     pub r#type: Type,
@@ -158,14 +198,28 @@ pub struct EmulateTouchFromMouseEvent {
     // Number of times the mouse button was clicked (default: 0).
     pub click_count: Option<i32>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct EmulateTouchFromMouseEventReturnObject {}
+impl super::Command for EmulateTouchFromMouseEvent {
+    const NAME: &'static str = "Input.emulateTouchFromMouseEvent";
+
+    type ReturnObject = EmulateTouchFromMouseEventReturnObject;
+}
 // Ignores input events (useful while auditing page).
+#[derive(Serialize, Debug)]
 pub struct SetIgnoreInputEvents {
     // Ignores input events processing when set to true.
     pub ignore: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetIgnoreInputEventsReturnObject {}
+impl super::Command for SetIgnoreInputEvents {
+    const NAME: &'static str = "Input.setIgnoreInputEvents";
+
+    type ReturnObject = SetIgnoreInputEventsReturnObject;
+}
 // Synthesizes a pinch gesture over a time period by issuing appropriate touch events.
+#[derive(Serialize, Debug)]
 pub struct SynthesizePinchGesture {
     // X coordinate of the start of the gesture in CSS pixels.
     pub x: f64,
@@ -179,8 +233,15 @@ pub struct SynthesizePinchGesture {
     // for the preferred input type).
     pub gesture_source_type: Option<GestureSourceType>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SynthesizePinchGestureReturnObject {}
+impl super::Command for SynthesizePinchGesture {
+    const NAME: &'static str = "Input.synthesizePinchGesture";
+
+    type ReturnObject = SynthesizePinchGestureReturnObject;
+}
 // Synthesizes a scroll gesture over a time period by issuing appropriate touch events.
+#[derive(Serialize, Debug)]
 pub struct SynthesizeScrollGesture {
     // X coordinate of the start of the gesture in CSS pixels.
     pub x: f64,
@@ -210,8 +271,15 @@ pub struct SynthesizeScrollGesture {
     // The name of the interaction markers to generate, if not empty (default: "").
     pub interaction_marker_name: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SynthesizeScrollGestureReturnObject {}
+impl super::Command for SynthesizeScrollGesture {
+    const NAME: &'static str = "Input.synthesizeScrollGesture";
+
+    type ReturnObject = SynthesizeScrollGestureReturnObject;
+}
 // Synthesizes a tap gesture over a time period by issuing appropriate touch events.
+#[derive(Serialize, Debug)]
 pub struct SynthesizeTapGesture {
     // X coordinate of the start of the gesture in CSS pixels.
     pub x: f64,
@@ -225,4 +293,10 @@ pub struct SynthesizeTapGesture {
     // for the preferred input type).
     pub gesture_source_type: Option<GestureSourceType>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SynthesizeTapGestureReturnObject {}
+impl super::Command for SynthesizeTapGesture {
+    const NAME: &'static str = "Input.synthesizeTapGesture";
+
+    type ReturnObject = SynthesizeTapGestureReturnObject;
+}

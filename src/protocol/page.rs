@@ -1,14 +1,19 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 // Unique frame identifier.
 pub type FrameId = String;
 // Indicates whether a frame has been identified as an ad.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum AdFrameType {
     None,
     Child,
     Root,
 }
 // Indicates whether the frame is a secure context and why it is the case.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum SecureContextType {
     Secure,
     SecureLocalhost,
@@ -16,12 +21,16 @@ pub enum SecureContextType {
     InsecureAncestor,
 }
 // Indicates whether the frame is cross-origin isolated and why it is the case.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CrossOriginIsolatedContextType {
     Isolated,
     NotIsolated,
     NotIsolatedFeatureDisabled,
 }
 // Information about the Frame on the page.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Frame {
     // Frame unique identifier.
     pub id: FrameId,
@@ -54,6 +63,8 @@ pub struct Frame {
     pub cross_origin_isolated_context_type: CrossOriginIsolatedContextType,
 }
 // Information about the Resource on the page.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FrameResource {
     // Resource URL.
     pub url: String,
@@ -71,6 +82,8 @@ pub struct FrameResource {
     pub canceled: Option<bool>,
 }
 // Information about the Frame hierarchy along with their cached resources.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FrameResourceTree {
     // Frame information for this tree item.
     pub frame: Frame,
@@ -80,6 +93,8 @@ pub struct FrameResourceTree {
     pub resources: Vec<FrameResource>,
 }
 // Information about the Frame hierarchy.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FrameTree {
     // Frame information for this tree item.
     pub frame: Frame,
@@ -89,6 +104,8 @@ pub struct FrameTree {
 // Unique script identifier.
 pub type ScriptIdentifier = String;
 // Transition type.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum TransitionType {
     Link,
     Typed,
@@ -105,6 +122,8 @@ pub enum TransitionType {
     Other,
 }
 // Navigation history entry.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct NavigationEntry {
     // Unique id of the navigation history entry.
     pub id: i32,
@@ -118,6 +137,8 @@ pub struct NavigationEntry {
     pub transition_type: TransitionType,
 }
 // Screencast frame metadata.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ScreencastFrameMetadata {
     // Top offset in DIP.
     pub offset_top: f64,
@@ -135,6 +156,8 @@ pub struct ScreencastFrameMetadata {
     pub timestamp: Option<super::network::TimeSinceEpoch>,
 }
 // Javascript dialog type.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum DialogType {
     Alert,
     Confirm,
@@ -142,6 +165,8 @@ pub enum DialogType {
     Beforeunload,
 }
 // Error while paring app manifest.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AppManifestError {
     // Error message.
     pub message: String,
@@ -153,11 +178,15 @@ pub struct AppManifestError {
     pub column: i32,
 }
 // Parsed app manifest properties.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AppManifestParsedProperties {
     // Computed scope value
     pub scope: String,
 }
 // Layout viewport position and dimensions.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct LayoutViewport {
     // Horizontal offset relative to the document (CSS pixels).
     pub page_x: i32,
@@ -169,6 +198,8 @@ pub struct LayoutViewport {
     pub client_height: i32,
 }
 // Visual viewport position, dimensions, and scale.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct VisualViewport {
     // Horizontal offset relative to the layout viewport (CSS pixels).
     pub offset_x: f64,
@@ -188,6 +219,8 @@ pub struct VisualViewport {
     pub zoom: Option<f64>,
 }
 // Viewport for capturing screenshot.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Viewport {
     // X offset in device independent pixels (dip).
     pub x: f64,
@@ -201,6 +234,8 @@ pub struct Viewport {
     pub scale: f64,
 }
 // Generic font families collection.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FontFamilies {
     // The standard font-family.
     pub standard: Option<String>,
@@ -218,12 +253,16 @@ pub struct FontFamilies {
     pub pictograph: Option<String>,
 }
 // Default font sizes.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FontSizes {
     // Default standard font size.
     pub standard: Option<i32>,
     // Default fixed font size.
     pub fixed: Option<i32>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ClientNavigationReason {
     FormSubmissionGet,
     FormSubmissionPost,
@@ -234,12 +273,16 @@ pub enum ClientNavigationReason {
     Reload,
     AnchorClick,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ClientNavigationDisposition {
     CurrentTab,
     NewTab,
     NewWindow,
     Download,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct InstallabilityErrorArgument {
     // Argument name (e.g. name:'minimum-icon-size-in-pixels').
     pub name: String,
@@ -247,6 +290,8 @@ pub struct InstallabilityErrorArgument {
     pub value: String,
 }
 // The installability error
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct InstallabilityError {
     // The error id (e.g. 'manifest-missing-suitable-icon').
     pub error_id: String,
@@ -254,6 +299,8 @@ pub struct InstallabilityError {
     pub error_arguments: Vec<InstallabilityErrorArgument>,
 }
 // The referring-policy used for the navigation.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ReferrerPolicy {
     NoReferrer,
     NoReferrerWhenDowngrade,
@@ -266,14 +313,22 @@ pub enum ReferrerPolicy {
 }
 
 // Deprecated, please use addScriptToEvaluateOnNewDocument instead.
+#[derive(Serialize, Debug)]
 pub struct AddScriptToEvaluateOnLoad {
     pub script_source: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct AddScriptToEvaluateOnLoadReturnObject {
     // Identifier of the added script.
     pub identifier: ScriptIdentifier,
 }
+impl super::Command for AddScriptToEvaluateOnLoad {
+    const NAME: &'static str = "Page.addScriptToEvaluateOnLoad";
+
+    type ReturnObject = AddScriptToEvaluateOnLoadReturnObject;
+}
 // Evaluates given script in every frame upon creation (before loading frame's scripts).
+#[derive(Serialize, Debug)]
 pub struct AddScriptToEvaluateOnNewDocument {
     pub source: String,
     // If specified, creates an isolated world with the given name and evaluates given script in it.
@@ -281,18 +336,34 @@ pub struct AddScriptToEvaluateOnNewDocument {
     // event is emitted.
     pub world_name: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct AddScriptToEvaluateOnNewDocumentReturnObject {
     // Identifier of the added script.
     pub identifier: ScriptIdentifier,
 }
+impl super::Command for AddScriptToEvaluateOnNewDocument {
+    const NAME: &'static str = "Page.addScriptToEvaluateOnNewDocument";
+
+    type ReturnObject = AddScriptToEvaluateOnNewDocumentReturnObject;
+}
 // Brings page to front (activates tab).
+#[derive(Serialize, Debug)]
 pub struct BringToFront {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct BringToFrontReturnObject {}
+impl super::Command for BringToFront {
+    const NAME: &'static str = "Page.bringToFront";
+
+    type ReturnObject = BringToFrontReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum Format {
     Jpeg,
     Png,
 }
 // Capture page screenshot.
+#[derive(Serialize, Debug)]
 pub struct CaptureScreenshot {
     // Image compression format (defaults to png).
     pub format: Option<Format>,
@@ -303,30 +374,65 @@ pub struct CaptureScreenshot {
     // Capture the screenshot from the surface, rather than the view. Defaults to true.
     pub from_surface: Option<bool>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct CaptureScreenshotReturnObject {
     // Base64-encoded image data.
     pub data: String,
 }
+impl super::Command for CaptureScreenshot {
+    const NAME: &'static str = "Page.captureScreenshot";
+
+    type ReturnObject = CaptureScreenshotReturnObject;
+}
 // Returns a snapshot of the page as a string. For MHTML format, the serialization includes
 // iframes, shadow DOM, external resources, and element-inline styles.
+#[derive(Serialize, Debug)]
 pub struct CaptureSnapshot {
     // Format (defaults to mhtml).
     pub format: Option<Format>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct CaptureSnapshotReturnObject {
     // Serialized page data.
     pub data: String,
 }
+impl super::Command for CaptureSnapshot {
+    const NAME: &'static str = "Page.captureSnapshot";
+
+    type ReturnObject = CaptureSnapshotReturnObject;
+}
 // Clears the overriden device metrics.
+#[derive(Serialize, Debug)]
 pub struct ClearDeviceMetricsOverride {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearDeviceMetricsOverrideReturnObject {}
+impl super::Command for ClearDeviceMetricsOverride {
+    const NAME: &'static str = "Page.clearDeviceMetricsOverride";
+
+    type ReturnObject = ClearDeviceMetricsOverrideReturnObject;
+}
 // Clears the overridden Device Orientation.
+#[derive(Serialize, Debug)]
 pub struct ClearDeviceOrientationOverride {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearDeviceOrientationOverrideReturnObject {}
+impl super::Command for ClearDeviceOrientationOverride {
+    const NAME: &'static str = "Page.clearDeviceOrientationOverride";
+
+    type ReturnObject = ClearDeviceOrientationOverrideReturnObject;
+}
 // Clears the overriden Geolocation Position and Error.
+#[derive(Serialize, Debug)]
 pub struct ClearGeolocationOverride {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearGeolocationOverrideReturnObject {}
+impl super::Command for ClearGeolocationOverride {
+    const NAME: &'static str = "Page.clearGeolocationOverride";
+
+    type ReturnObject = ClearGeolocationOverrideReturnObject;
+}
 // Creates an isolated world for the given frame.
+#[derive(Serialize, Debug)]
 pub struct CreateIsolatedWorld {
     // Id of the frame in which the isolated world should be created.
     pub frame_id: FrameId,
@@ -336,25 +442,54 @@ pub struct CreateIsolatedWorld {
     // option, use with caution.
     pub grant_univeral_access: Option<bool>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct CreateIsolatedWorldReturnObject {
     // Execution context of the isolated world.
     pub execution_context_id: super::runtime::ExecutionContextId,
 }
+impl super::Command for CreateIsolatedWorld {
+    const NAME: &'static str = "Page.createIsolatedWorld";
+
+    type ReturnObject = CreateIsolatedWorldReturnObject;
+}
 // Deletes browser cookie with given name, domain and path.
+#[derive(Serialize, Debug)]
 pub struct DeleteCookie {
     // Name of the cookie to remove.
     pub cookie_name: String,
     // URL to match cooke domain and path.
     pub url: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct DeleteCookieReturnObject {}
+impl super::Command for DeleteCookie {
+    const NAME: &'static str = "Page.deleteCookie";
+
+    type ReturnObject = DeleteCookieReturnObject;
+}
 // Disables page domain notifications.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "Page.disable";
+
+    type ReturnObject = DisableReturnObject;
+}
 // Enables page domain notifications.
+#[derive(Serialize, Debug)]
 pub struct Enable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "Page.enable";
+
+    type ReturnObject = EnableReturnObject;
+}
+#[derive(Serialize, Debug)]
 pub struct GetAppManifest {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetAppManifestReturnObject {
     // Manifest location.
     pub url: String,
@@ -364,29 +499,64 @@ pub struct GetAppManifestReturnObject {
     // Parsed manifest properties
     pub parsed: Option<AppManifestParsedProperties>,
 }
+impl super::Command for GetAppManifest {
+    const NAME: &'static str = "Page.getAppManifest";
+
+    type ReturnObject = GetAppManifestReturnObject;
+}
+#[derive(Serialize, Debug)]
 pub struct GetInstallabilityErrors {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetInstallabilityErrorsReturnObject {
     pub installability_errors: Vec<InstallabilityError>,
 }
+impl super::Command for GetInstallabilityErrors {
+    const NAME: &'static str = "Page.getInstallabilityErrors";
+
+    type ReturnObject = GetInstallabilityErrorsReturnObject;
+}
+#[derive(Serialize, Debug)]
 pub struct GetManifestIcons {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetManifestIconsReturnObject {
     pub primary_icon: Option<String>,
 }
+impl super::Command for GetManifestIcons {
+    const NAME: &'static str = "Page.getManifestIcons";
+
+    type ReturnObject = GetManifestIconsReturnObject;
+}
 // Returns all browser cookies. Depending on the backend support, will return detailed cookie
 // information in the `cookies` field.
+#[derive(Serialize, Debug)]
 pub struct GetCookies {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<super::network::Cookie>,
 }
+impl super::Command for GetCookies {
+    const NAME: &'static str = "Page.getCookies";
+
+    type ReturnObject = GetCookiesReturnObject;
+}
 // Returns present frame tree structure.
+#[derive(Serialize, Debug)]
 pub struct GetFrameTree {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetFrameTreeReturnObject {
     // Present frame tree structure.
     pub frame_tree: FrameTree,
 }
+impl super::Command for GetFrameTree {
+    const NAME: &'static str = "Page.getFrameTree";
+
+    type ReturnObject = GetFrameTreeReturnObject;
+}
 // Returns metrics relating to the layouting of the page, such as viewport bounds/scale.
+#[derive(Serialize, Debug)]
 pub struct GetLayoutMetrics {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetLayoutMetricsReturnObject {
     // Metrics relating to the layout viewport.
     pub layout_viewport: LayoutViewport,
@@ -395,37 +565,71 @@ pub struct GetLayoutMetricsReturnObject {
     // Size of scrollable area.
     pub content_size: super::dom::Rect,
 }
+impl super::Command for GetLayoutMetrics {
+    const NAME: &'static str = "Page.getLayoutMetrics";
+
+    type ReturnObject = GetLayoutMetricsReturnObject;
+}
 // Returns navigation history for the current page.
+#[derive(Serialize, Debug)]
 pub struct GetNavigationHistory {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetNavigationHistoryReturnObject {
     // Index of the current navigation history entry.
     pub current_index: i32,
     // Array of navigation history entries.
     pub entries: Vec<NavigationEntry>,
 }
+impl super::Command for GetNavigationHistory {
+    const NAME: &'static str = "Page.getNavigationHistory";
+
+    type ReturnObject = GetNavigationHistoryReturnObject;
+}
 // Resets navigation history for the current page.
+#[derive(Serialize, Debug)]
 pub struct ResetNavigationHistory {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ResetNavigationHistoryReturnObject {}
+impl super::Command for ResetNavigationHistory {
+    const NAME: &'static str = "Page.resetNavigationHistory";
+
+    type ReturnObject = ResetNavigationHistoryReturnObject;
+}
 // Returns content of the given resource.
+#[derive(Serialize, Debug)]
 pub struct GetResourceContent {
     // Frame id to get resource for.
     pub frame_id: FrameId,
     // URL of the resource to get content for.
     pub url: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetResourceContentReturnObject {
     // Resource content.
     pub content: String,
     // True, if content was served as base64.
     pub base64_encoded: bool,
 }
+impl super::Command for GetResourceContent {
+    const NAME: &'static str = "Page.getResourceContent";
+
+    type ReturnObject = GetResourceContentReturnObject;
+}
 // Returns present frame / resource tree structure.
+#[derive(Serialize, Debug)]
 pub struct GetResourceTree {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetResourceTreeReturnObject {
     // Present frame / resource tree structure.
     pub frame_tree: FrameResourceTree,
 }
+impl super::Command for GetResourceTree {
+    const NAME: &'static str = "Page.getResourceTree";
+
+    type ReturnObject = GetResourceTreeReturnObject;
+}
 // Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload).
+#[derive(Serialize, Debug)]
 pub struct HandleJavaScriptDialog {
     // Whether to accept or dismiss the dialog.
     pub accept: bool,
@@ -433,8 +637,15 @@ pub struct HandleJavaScriptDialog {
     // dialog.
     pub prompt_text: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct HandleJavaScriptDialogReturnObject {}
+impl super::Command for HandleJavaScriptDialog {
+    const NAME: &'static str = "Page.handleJavaScriptDialog";
+
+    type ReturnObject = HandleJavaScriptDialogReturnObject;
+}
 // Navigates current page to the given URL.
+#[derive(Serialize, Debug)]
 pub struct Navigate {
     // URL to navigate the page to.
     pub url: String,
@@ -447,6 +658,7 @@ pub struct Navigate {
     // Referrer-policy used for the navigation.
     pub referrer_policy: Option<ReferrerPolicy>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct NavigateReturnObject {
     // Frame id that has navigated (or failed to navigate)
     pub frame_id: FrameId,
@@ -455,17 +667,32 @@ pub struct NavigateReturnObject {
     // User friendly error message, present if and only if navigation has failed.
     pub error_text: Option<String>,
 }
+impl super::Command for Navigate {
+    const NAME: &'static str = "Page.navigate";
+
+    type ReturnObject = NavigateReturnObject;
+}
 // Navigates current page to the given history entry.
+#[derive(Serialize, Debug)]
 pub struct NavigateToHistoryEntry {
     // Unique id of the entry to navigate to.
     pub entry_id: i32,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct NavigateToHistoryEntryReturnObject {}
+impl super::Command for NavigateToHistoryEntry {
+    const NAME: &'static str = "Page.navigateToHistoryEntry";
+
+    type ReturnObject = NavigateToHistoryEntryReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum TransferMode {
     ReturnAsBase64,
     ReturnAsStream,
 }
 // Print page as PDF.
+#[derive(Serialize, Debug)]
 pub struct PrintToPDF {
     // Paper orientation. Defaults to false.
     pub landscape: Option<bool>,
@@ -511,13 +738,20 @@ pub struct PrintToPDF {
     // return as stream
     pub transfer_mode: Option<TransferMode>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct PrintToPDFReturnObject {
     // Base64-encoded pdf data. Empty if |returnAsStream| is specified.
     pub data: String,
     // A handle of the stream that holds resulting PDF data.
     pub stream: Option<super::io::StreamHandle>,
 }
+impl super::Command for PrintToPDF {
+    const NAME: &'static str = "Page.printToPDF";
+
+    type ReturnObject = PrintToPDFReturnObject;
+}
 // Reloads given page optionally ignoring the cache.
+#[derive(Serialize, Debug)]
 pub struct Reload {
     // If true, browser cache is ignored (as if the user pressed Shift+refresh).
     pub ignore_cache: Option<bool>,
@@ -525,24 +759,52 @@ pub struct Reload {
     // Argument will be ignored if reloading dataURL origin.
     pub script_to_evaluate_on_load: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct ReloadReturnObject {}
+impl super::Command for Reload {
+    const NAME: &'static str = "Page.reload";
+
+    type ReturnObject = ReloadReturnObject;
+}
 // Deprecated, please use removeScriptToEvaluateOnNewDocument instead.
+#[derive(Serialize, Debug)]
 pub struct RemoveScriptToEvaluateOnLoad {
     pub identifier: ScriptIdentifier,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveScriptToEvaluateOnLoadReturnObject {}
+impl super::Command for RemoveScriptToEvaluateOnLoad {
+    const NAME: &'static str = "Page.removeScriptToEvaluateOnLoad";
+
+    type ReturnObject = RemoveScriptToEvaluateOnLoadReturnObject;
+}
 // Removes given script from the list.
+#[derive(Serialize, Debug)]
 pub struct RemoveScriptToEvaluateOnNewDocument {
     pub identifier: ScriptIdentifier,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveScriptToEvaluateOnNewDocumentReturnObject {}
+impl super::Command for RemoveScriptToEvaluateOnNewDocument {
+    const NAME: &'static str = "Page.removeScriptToEvaluateOnNewDocument";
+
+    type ReturnObject = RemoveScriptToEvaluateOnNewDocumentReturnObject;
+}
 // Acknowledges that a screencast frame has been received by the frontend.
+#[derive(Serialize, Debug)]
 pub struct ScreencastFrameAck {
     // Frame number.
     pub session_id: i32,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct ScreencastFrameAckReturnObject {}
+impl super::Command for ScreencastFrameAck {
+    const NAME: &'static str = "Page.screencastFrameAck";
+
+    type ReturnObject = ScreencastFrameAckReturnObject;
+}
 // Searches for given string in resource content.
+#[derive(Serialize, Debug)]
 pub struct SearchInResource {
     // Frame id for resource to search in.
     pub frame_id: FrameId,
@@ -555,25 +817,46 @@ pub struct SearchInResource {
     // If true, treats string parameter as regex.
     pub is_regex: Option<bool>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SearchInResourceReturnObject {
     // List of search matches.
     pub result: Vec<super::debugger::SearchMatch>,
 }
+impl super::Command for SearchInResource {
+    const NAME: &'static str = "Page.searchInResource";
+
+    type ReturnObject = SearchInResourceReturnObject;
+}
 // Enable Chrome's experimental ad filter on all sites.
+#[derive(Serialize, Debug)]
 pub struct SetAdBlockingEnabled {
     // Whether to block ads.
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetAdBlockingEnabledReturnObject {}
+impl super::Command for SetAdBlockingEnabled {
+    const NAME: &'static str = "Page.setAdBlockingEnabled";
+
+    type ReturnObject = SetAdBlockingEnabledReturnObject;
+}
 // Enable page Content Security Policy by-passing.
+#[derive(Serialize, Debug)]
 pub struct SetBypassCSP {
     // Whether to bypass page CSP.
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetBypassCSPReturnObject {}
+impl super::Command for SetBypassCSP {
+    const NAME: &'static str = "Page.setBypassCSP";
+
+    type ReturnObject = SetBypassCSPReturnObject;
+}
 // Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
 // window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
 // query results).
+#[derive(Serialize, Debug)]
 pub struct SetDeviceMetricsOverride {
     // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
     pub width: i32,
@@ -601,8 +884,15 @@ pub struct SetDeviceMetricsOverride {
     // The viewport dimensions and scale. If not set, the override is cleared.
     pub viewport: Option<Viewport>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDeviceMetricsOverrideReturnObject {}
+impl super::Command for SetDeviceMetricsOverride {
+    const NAME: &'static str = "Page.setDeviceMetricsOverride";
+
+    type ReturnObject = SetDeviceMetricsOverrideReturnObject;
+}
 // Overrides the Device Orientation.
+#[derive(Serialize, Debug)]
 pub struct SetDeviceOrientationOverride {
     // Mock alpha
     pub alpha: f64,
@@ -611,33 +901,63 @@ pub struct SetDeviceOrientationOverride {
     // Mock gamma
     pub gamma: f64,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDeviceOrientationOverrideReturnObject {}
+impl super::Command for SetDeviceOrientationOverride {
+    const NAME: &'static str = "Page.setDeviceOrientationOverride";
+
+    type ReturnObject = SetDeviceOrientationOverrideReturnObject;
+}
 // Set generic font families.
+#[derive(Serialize, Debug)]
 pub struct SetFontFamilies {
     // Specifies font families to set. If a font family is not specified, it won't be changed.
     pub font_families: FontFamilies,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetFontFamiliesReturnObject {}
+impl super::Command for SetFontFamilies {
+    const NAME: &'static str = "Page.setFontFamilies";
+
+    type ReturnObject = SetFontFamiliesReturnObject;
+}
 // Set default font sizes.
+#[derive(Serialize, Debug)]
 pub struct SetFontSizes {
     // Specifies font sizes to set. If a font size is not specified, it won't be changed.
     pub font_sizes: FontSizes,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetFontSizesReturnObject {}
+impl super::Command for SetFontSizes {
+    const NAME: &'static str = "Page.setFontSizes";
+
+    type ReturnObject = SetFontSizesReturnObject;
+}
 // Sets given markup as the document's HTML.
+#[derive(Serialize, Debug)]
 pub struct SetDocumentContent {
     // Frame id to set HTML for.
     pub frame_id: FrameId,
     // HTML content to set.
     pub html: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDocumentContentReturnObject {}
+impl super::Command for SetDocumentContent {
+    const NAME: &'static str = "Page.setDocumentContent";
+
+    type ReturnObject = SetDocumentContentReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum Behavior {
     Deny,
     Allow,
     Default,
 }
 // Set the behavior when downloading a file.
+#[derive(Serialize, Debug)]
 pub struct SetDownloadBehavior {
     // Whether to allow all or deny all download requests, or use default Chrome behavior if
     // available (otherwise deny).
@@ -645,9 +965,16 @@ pub struct SetDownloadBehavior {
     // The default path to save downloaded files to. This is requred if behavior is set to 'allow'
     pub download_path: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDownloadBehaviorReturnObject {}
+impl super::Command for SetDownloadBehavior {
+    const NAME: &'static str = "Page.setDownloadBehavior";
+
+    type ReturnObject = SetDownloadBehaviorReturnObject;
+}
 // Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
 // unavailable.
+#[derive(Serialize, Debug)]
 pub struct SetGeolocationOverride {
     // Mock latitude
     pub latitude: Option<f64>,
@@ -656,26 +983,49 @@ pub struct SetGeolocationOverride {
     // Mock accuracy
     pub accuracy: Option<f64>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetGeolocationOverrideReturnObject {}
+impl super::Command for SetGeolocationOverride {
+    const NAME: &'static str = "Page.setGeolocationOverride";
+
+    type ReturnObject = SetGeolocationOverrideReturnObject;
+}
 // Controls whether page will emit lifecycle events.
+#[derive(Serialize, Debug)]
 pub struct SetLifecycleEventsEnabled {
     // If true, starts emitting lifecycle events.
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetLifecycleEventsEnabledReturnObject {}
+impl super::Command for SetLifecycleEventsEnabled {
+    const NAME: &'static str = "Page.setLifecycleEventsEnabled";
+
+    type ReturnObject = SetLifecycleEventsEnabledReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum Configuration {
     Mobile,
     Desktop,
 }
 // Toggles mouse event-based touch event emulation.
+#[derive(Serialize, Debug)]
 pub struct SetTouchEmulationEnabled {
     // Whether the touch event emulation should be enabled.
     pub enabled: bool,
     // Touch/gesture events configuration. Default: current platform.
     pub configuration: Option<Configuration>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetTouchEmulationEnabledReturnObject {}
+impl super::Command for SetTouchEmulationEnabled {
+    const NAME: &'static str = "Page.setTouchEmulationEnabled";
+
+    type ReturnObject = SetTouchEmulationEnabledReturnObject;
+}
 // Starts sending each frame using the `screencastFrame` event.
+#[derive(Serialize, Debug)]
 pub struct StartScreencast {
     // Image compression format.
     pub format: Option<Format>,
@@ -688,16 +1038,45 @@ pub struct StartScreencast {
     // Send every n-th frame.
     pub every_nth_frame: Option<i32>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct StartScreencastReturnObject {}
+impl super::Command for StartScreencast {
+    const NAME: &'static str = "Page.startScreencast";
+
+    type ReturnObject = StartScreencastReturnObject;
+}
 // Force the page stop all navigations and pending resource fetches.
+#[derive(Serialize, Debug)]
 pub struct StopLoading {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct StopLoadingReturnObject {}
+impl super::Command for StopLoading {
+    const NAME: &'static str = "Page.stopLoading";
+
+    type ReturnObject = StopLoadingReturnObject;
+}
 // Crashes renderer on the IO thread, generates minidumps.
+#[derive(Serialize, Debug)]
 pub struct Crash {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct CrashReturnObject {}
+impl super::Command for Crash {
+    const NAME: &'static str = "Page.crash";
+
+    type ReturnObject = CrashReturnObject;
+}
 // Tries to close page, running its beforeunload hooks, if any.
+#[derive(Serialize, Debug)]
 pub struct Close {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct CloseReturnObject {}
+impl super::Command for Close {
+    const NAME: &'static str = "Page.close";
+
+    type ReturnObject = CloseReturnObject;
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum State {
     Frozen,
     Active,
@@ -705,45 +1084,101 @@ pub enum State {
 // Tries to update the web lifecycle state of the page.
 // It will transition the page to the given state according to:
 // https://github.com/WICG/web-lifecycle/
+#[derive(Serialize, Debug)]
 pub struct SetWebLifecycleState {
     // Target lifecycle state
     pub state: State,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetWebLifecycleStateReturnObject {}
+impl super::Command for SetWebLifecycleState {
+    const NAME: &'static str = "Page.setWebLifecycleState";
+
+    type ReturnObject = SetWebLifecycleStateReturnObject;
+}
 // Stops sending each frame in the `screencastFrame`.
+#[derive(Serialize, Debug)]
 pub struct StopScreencast {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct StopScreencastReturnObject {}
+impl super::Command for StopScreencast {
+    const NAME: &'static str = "Page.stopScreencast";
+
+    type ReturnObject = StopScreencastReturnObject;
+}
 // Forces compilation cache to be generated for every subresource script.
+#[derive(Serialize, Debug)]
 pub struct SetProduceCompilationCache {
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetProduceCompilationCacheReturnObject {}
+impl super::Command for SetProduceCompilationCache {
+    const NAME: &'static str = "Page.setProduceCompilationCache";
+
+    type ReturnObject = SetProduceCompilationCacheReturnObject;
+}
 // Seeds compilation cache for given url. Compilation cache does not survive
 // cross-process navigation.
+#[derive(Serialize, Debug)]
 pub struct AddCompilationCache {
     pub url: String,
     // Base64-encoded data
     pub data: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct AddCompilationCacheReturnObject {}
+impl super::Command for AddCompilationCache {
+    const NAME: &'static str = "Page.addCompilationCache";
+
+    type ReturnObject = AddCompilationCacheReturnObject;
+}
 // Clears seeded compilation cache.
+#[derive(Serialize, Debug)]
 pub struct ClearCompilationCache {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearCompilationCacheReturnObject {}
+impl super::Command for ClearCompilationCache {
+    const NAME: &'static str = "Page.clearCompilationCache";
+
+    type ReturnObject = ClearCompilationCacheReturnObject;
+}
 // Generates a report for testing.
+#[derive(Serialize, Debug)]
 pub struct GenerateTestReport {
     // Message to be displayed in the report.
     pub message: String,
     // Specifies the endpoint group to deliver the report to.
     pub group: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GenerateTestReportReturnObject {}
+impl super::Command for GenerateTestReport {
+    const NAME: &'static str = "Page.generateTestReport";
+
+    type ReturnObject = GenerateTestReportReturnObject;
+}
 // Pauses page execution. Can be resumed using generic Runtime.runIfWaitingForDebugger.
+#[derive(Serialize, Debug)]
 pub struct WaitForDebugger {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct WaitForDebuggerReturnObject {}
+impl super::Command for WaitForDebugger {
+    const NAME: &'static str = "Page.waitForDebugger";
+
+    type ReturnObject = WaitForDebuggerReturnObject;
+}
 // Intercept file chooser requests and transfer control to protocol clients.
 // When file chooser interception is enabled, native file chooser dialog is not shown.
 // Instead, a protocol event `Page.fileChooserOpened` is emitted.
+#[derive(Serialize, Debug)]
 pub struct SetInterceptFileChooserDialog {
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetInterceptFileChooserDialogReturnObject {}
+impl super::Command for SetInterceptFileChooserDialog {
+    const NAME: &'static str = "Page.setInterceptFileChooserDialog";
+
+    type ReturnObject = SetInterceptFileChooserDialogReturnObject;
+}

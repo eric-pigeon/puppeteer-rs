@@ -1,15 +1,20 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 // An internal certificate ID value.
 pub type CertificateId = i32;
 // A description of mixed content (HTTP resources on HTTPS pages), as defined by
 // https://www.w3.org/TR/mixed-content/#categories
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum MixedContentType {
     Blockable,
     OptionallyBlockable,
     None,
 }
 // The security level of a page or resource.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum SecurityState {
     Unknown,
     Neutral,
@@ -19,6 +24,8 @@ pub enum SecurityState {
     InsecureBroken,
 }
 // Details about the security state of the page certificate.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CertificateSecurityState {
     // Protocol name (e.g. "TLS 1.2" or "QUIC").
     pub protocol: String,
@@ -57,10 +64,14 @@ pub struct CertificateSecurityState {
     // True if the connection is using an obsolete SSL signature.
     pub obsolete_ssl_signature: bool,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum SafetyTipStatus {
     BadReputation,
     Lookalike,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SafetyTipInfo {
     // Describes whether the page triggers any safety tips or reputation warnings. Default is unknown.
     pub safety_tip_status: SafetyTipStatus,
@@ -68,6 +79,8 @@ pub struct SafetyTipInfo {
     pub safe_url: Option<String>,
 }
 // Security state information about the page.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct VisibleSecurityState {
     // The security level of the page.
     pub security_state: SecurityState,
@@ -79,6 +92,8 @@ pub struct VisibleSecurityState {
     pub security_state_issue_ids: Vec<String>,
 }
 // An explanation of an factor contributing to the security state.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SecurityStateExplanation {
     // Security state representing the severity of the factor being explained.
     pub security_state: SecurityState,
@@ -96,6 +111,8 @@ pub struct SecurityStateExplanation {
     pub recommendations: Option<Vec<String>>,
 }
 // Information about insecure content on the page.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct InsecureContentStatus {
     // Always false.
     pub ran_mixed_content: bool,
@@ -114,35 +131,72 @@ pub struct InsecureContentStatus {
 }
 // The action to take when a certificate error occurs. continue will continue processing the
 // request and cancel will cancel the request.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CertificateErrorAction {
     Continue,
     Cancel,
 }
 
 // Disables tracking security state changes.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "Security.disable";
+
+    type ReturnObject = DisableReturnObject;
+}
 // Enables tracking security state changes.
+#[derive(Serialize, Debug)]
 pub struct Enable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "Security.enable";
+
+    type ReturnObject = EnableReturnObject;
+}
 // Enable/disable whether all certificate errors should be ignored.
+#[derive(Serialize, Debug)]
 pub struct SetIgnoreCertificateErrors {
     // If true, all certificate errors will be ignored.
     pub ignore: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetIgnoreCertificateErrorsReturnObject {}
+impl super::Command for SetIgnoreCertificateErrors {
+    const NAME: &'static str = "Security.setIgnoreCertificateErrors";
+
+    type ReturnObject = SetIgnoreCertificateErrorsReturnObject;
+}
 // Handles a certificate error that fired a certificateError event.
+#[derive(Serialize, Debug)]
 pub struct HandleCertificateError {
     // The ID of the event.
     pub event_id: i32,
     // The action to take on the certificate error.
     pub action: CertificateErrorAction,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct HandleCertificateErrorReturnObject {}
+impl super::Command for HandleCertificateError {
+    const NAME: &'static str = "Security.handleCertificateError";
+
+    type ReturnObject = HandleCertificateErrorReturnObject;
+}
 // Enable/disable overriding certificate errors. If enabled, all certificate error events need to
 // be handled by the DevTools client and should be answered with `handleCertificateError` commands.
+#[derive(Serialize, Debug)]
 pub struct SetOverrideCertificateErrors {
     // If true, certificate errors will be overridden.
     pub r#override: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetOverrideCertificateErrorsReturnObject {}
+impl super::Command for SetOverrideCertificateErrors {
+    const NAME: &'static str = "Security.setOverrideCertificateErrors";
+
+    type ReturnObject = SetOverrideCertificateErrorsReturnObject;
+}

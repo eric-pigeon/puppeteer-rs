@@ -1,6 +1,9 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 // Resource type as it was perceived by the rendering engine.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ResourceType {
     Document,
     Stylesheet,
@@ -26,6 +29,8 @@ pub type RequestId = String;
 // Unique intercepted request identifier.
 pub type InterceptionId = String;
 // Network level fetch failure reason.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ErrorReason {
     Failed,
     Aborted,
@@ -49,6 +54,8 @@ pub type MonotonicTime = f64;
 // Request / response headers as keys / values of JSON object.
 pub type Headers = std::collections::HashMap<String, String>;
 // The underlying connection technology that the browser is supposedly using.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ConnectionType {
     None,
     Cellular2g,
@@ -62,6 +69,8 @@ pub enum ConnectionType {
 }
 // Represents the cookie's 'SameSite' status:
 // https://tools.ietf.org/html/draft-west-first-party-cookies
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CookieSameSite {
     Strict,
     Lax,
@@ -69,12 +78,16 @@ pub enum CookieSameSite {
 }
 // Represents the cookie's 'Priority' status:
 // https://tools.ietf.org/html/draft-west-cookie-priority-00
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CookiePriority {
     Low,
     Medium,
     High,
 }
 // Timing information for the request.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResourceTiming {
     // Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
     // milliseconds relatively to this requestTime.
@@ -115,6 +128,8 @@ pub struct ResourceTiming {
     pub receive_headers_end: f64,
 }
 // Loading priority of a resource request.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ResourcePriority {
     VeryLow,
     Low,
@@ -123,9 +138,13 @@ pub enum ResourcePriority {
     VeryHigh,
 }
 // Post data entry for HTTP request
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PostDataEntry {
     pub bytes: Option<String>,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum RequestReferrerPolicy {
     UnsafeUrl,
     NoReferrerWhenDowngrade,
@@ -137,6 +156,8 @@ pub enum RequestReferrerPolicy {
     StrictOriginWhenCrossOrigin,
 }
 // HTTP request data.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Request {
     // Request URL (without fragment).
     pub url: String,
@@ -165,6 +186,8 @@ pub struct Request {
     pub trust_token_params: Option<TrustTokenParams>,
 }
 // Details of a signed certificate timestamp (SCT).
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SignedCertificateTimestamp {
     // Validation status.
     pub status: String,
@@ -184,6 +207,8 @@ pub struct SignedCertificateTimestamp {
     pub signature_data: String,
 }
 // Security details about a request.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SecurityDetails {
     // Protocol name (e.g. "TLS 1.2" or "QUIC").
     pub protocol: String,
@@ -213,12 +238,16 @@ pub struct SecurityDetails {
     pub certificate_transparency_compliance: CertificateTransparencyCompliance,
 }
 // Whether the request complied with Certificate Transparency policy.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CertificateTransparencyCompliance {
     Unknown,
     NotCompliant,
     Compliant,
 }
 // The reason why request was blocked.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum BlockedReason {
     Other,
     Csp,
@@ -235,18 +264,24 @@ pub enum BlockedReason {
     CorpNotSameSite,
 }
 // Source of serviceworker response.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ServiceWorkerResponseSource {
     CacheStorage,
     HttpCache,
     FallbackCode,
     Network,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum TrustTokenParamsRefreshPolicy {
     UseCached,
     Refresh,
 }
 // Determines what type of Trust Token operation is executed and
 // depending on the type, some additional parameters.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TrustTokenParams {
     pub r#type: TrustTokenOperationType,
     // Only set for "srr-token-redemption" type and determine whether
@@ -256,12 +291,16 @@ pub struct TrustTokenParams {
     // records.
     pub issuers: Option<Vec<String>>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum TrustTokenOperationType {
     Issuance,
     Redemption,
     Signing,
 }
 // HTTP response data.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Response {
     // Response URL. This URL can be different from CachedResource.url in case of redirect.
     pub url: String,
@@ -311,11 +350,15 @@ pub struct Response {
     pub security_details: Option<SecurityDetails>,
 }
 // WebSocket request data.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct WebSocketRequest {
     // HTTP request headers.
     pub headers: Headers,
 }
 // WebSocket response data.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct WebSocketResponse {
     // HTTP response status code.
     pub status: i32,
@@ -331,6 +374,8 @@ pub struct WebSocketResponse {
     pub request_headers_text: Option<String>,
 }
 // WebSocket message data. This represents an entire WebSocket message, not just a fragmented frame as the name suggests.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct WebSocketFrame {
     // WebSocket message opcode.
     pub opcode: f64,
@@ -342,6 +387,8 @@ pub struct WebSocketFrame {
     pub payload_data: String,
 }
 // Information about the cached resource.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CachedResource {
     // Resource URL. This is the url of the original network request.
     pub url: String,
@@ -352,6 +399,8 @@ pub struct CachedResource {
     // Cached response body size.
     pub body_size: f64,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum InitiatorType {
     Parser,
     Script,
@@ -360,6 +409,8 @@ pub enum InitiatorType {
     Other,
 }
 // Information about the request initiator.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Initiator {
     // Type of this initiator.
     pub r#type: InitiatorType,
@@ -375,6 +426,8 @@ pub struct Initiator {
     pub column_number: Option<f64>,
 }
 // Cookie object
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Cookie {
     // Cookie name.
     pub name: String,
@@ -400,6 +453,8 @@ pub struct Cookie {
     pub priority: CookiePriority,
 }
 // Types of reasons why a cookie may not be stored from a response.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum SetCookieBlockedReason {
     SecureOnly,
     SameSiteStrict,
@@ -418,6 +473,8 @@ pub enum SetCookieBlockedReason {
     SchemefulSameSiteUnspecifiedTreatedAsLax,
 }
 // Types of reasons why a cookie may not be sent with a request.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CookieBlockedReason {
     SecureOnly,
     NotOnPath,
@@ -433,6 +490,8 @@ pub enum CookieBlockedReason {
     SchemefulSameSiteUnspecifiedTreatedAsLax,
 }
 // A cookie which was not stored from a response with the corresponding reason.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct BlockedSetCookieWithReason {
     // The reason(s) this cookie was blocked.
     pub blocked_reasons: Vec<SetCookieBlockedReason>,
@@ -445,6 +504,8 @@ pub struct BlockedSetCookieWithReason {
     pub cookie: Option<Cookie>,
 }
 // A cookie with was not sent with a request with the corresponding reason.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct BlockedCookieWithReason {
     // The reason(s) the cookie was blocked.
     pub blocked_reasons: Vec<CookieBlockedReason>,
@@ -452,6 +513,8 @@ pub struct BlockedCookieWithReason {
     pub cookie: Cookie,
 }
 // Cookie parameter object
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CookieParam {
     // Cookie name.
     pub name: String,
@@ -475,11 +538,15 @@ pub struct CookieParam {
     // Cookie Priority.
     pub priority: Option<CookiePriority>,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum AuthChallengeSource {
     Server,
     Proxy,
 }
 // Authorization challenge for HTTP status code 401 or 407.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AuthChallenge {
     // Source of the authentication challenge.
     pub source: Option<AuthChallengeSource>,
@@ -490,12 +557,16 @@ pub struct AuthChallenge {
     // The realm of the challenge. May be empty.
     pub realm: String,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum AuthChallengeResponseResponse {
     Default,
     CancelAuth,
     ProvideCredentials,
 }
 // Response to an AuthChallenge.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AuthChallengeResponse {
     // The decision on what to do in response to the authorization challenge.  Default means
     // deferring to the default behavior of the net stack, which will likely either the Cancel
@@ -510,11 +581,15 @@ pub struct AuthChallengeResponse {
 }
 // Stages of the interception to begin intercepting. Request will intercept before the request is
 // sent. Response will intercept after the response is received.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum InterceptionStage {
     Request,
     HeadersReceived,
 }
 // Request pattern for interception.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestPattern {
     // Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is
     // backslash. Omitting is equivalent to "*".
@@ -526,6 +601,8 @@ pub struct RequestPattern {
 }
 // Information about a signed exchange signature.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SignedExchangeSignature {
     // Signed exchange signature label.
     pub label: String,
@@ -548,6 +625,8 @@ pub struct SignedExchangeSignature {
 }
 // Information about a signed exchange header.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#cbor-representation
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SignedExchangeHeader {
     // Signed exchange request URL.
     pub request_url: String,
@@ -561,6 +640,8 @@ pub struct SignedExchangeHeader {
     pub header_integrity: String,
 }
 // Field type for a signed exchange related error.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum SignedExchangeErrorField {
     SignatureSig,
     SignatureIntegrity,
@@ -570,6 +651,8 @@ pub enum SignedExchangeErrorField {
     SignatureTimestamps,
 }
 // Information about a signed exchange response.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SignedExchangeError {
     // Error message.
     pub message: String,
@@ -579,6 +662,8 @@ pub struct SignedExchangeError {
     pub error_field: Option<SignedExchangeErrorField>,
 }
 // Information about a signed exchange response.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SignedExchangeInfo {
     // The outer response of signed HTTP exchange which was received from network.
     pub outer_response: Response,
@@ -589,33 +674,45 @@ pub struct SignedExchangeInfo {
     // Errors occurred while handling the signed exchagne.
     pub errors: Option<Vec<SignedExchangeError>>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CrossOriginOpenerPolicyValue {
     SameOrigin,
     SameOriginAllowPopups,
     UnsafeNone,
     SameOriginPlusCoep,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CrossOriginOpenerPolicyStatus {
     pub value: CrossOriginOpenerPolicyValue,
     pub report_only_value: CrossOriginOpenerPolicyValue,
     pub reporting_endpoint: Option<String>,
     pub report_only_reporting_endpoint: Option<String>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum CrossOriginEmbedderPolicyValue {
     None,
     RequireCorp,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CrossOriginEmbedderPolicyStatus {
     pub value: CrossOriginEmbedderPolicyValue,
     pub report_only_value: CrossOriginEmbedderPolicyValue,
     pub reporting_endpoint: Option<String>,
     pub report_only_reporting_endpoint: Option<String>,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SecurityIsolationStatus {
     pub coop: CrossOriginOpenerPolicyStatus,
     pub coep: CrossOriginEmbedderPolicyStatus,
 }
 // An object providing the result of a network resource load.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct LoadNetworkResourcePageResult {
     pub success: bool,
     // Optional values used for error reporting.
@@ -629,40 +726,78 @@ pub struct LoadNetworkResourcePageResult {
 }
 // An options object that may be extended later to better support CORS,
 // CORB and streaming.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct LoadNetworkResourceOptions {
     pub disable_cache: bool,
     pub include_credentials: bool,
 }
 
 // Tells whether clearing browser cache is supported.
+#[derive(Serialize, Debug)]
 pub struct CanClearBrowserCache {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct CanClearBrowserCacheReturnObject {
     // True if browser cache can be cleared.
     pub result: bool,
 }
+impl super::Command for CanClearBrowserCache {
+    const NAME: &'static str = "Network.canClearBrowserCache";
+
+    type ReturnObject = CanClearBrowserCacheReturnObject;
+}
 // Tells whether clearing browser cookies is supported.
+#[derive(Serialize, Debug)]
 pub struct CanClearBrowserCookies {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct CanClearBrowserCookiesReturnObject {
     // True if browser cookies can be cleared.
     pub result: bool,
 }
+impl super::Command for CanClearBrowserCookies {
+    const NAME: &'static str = "Network.canClearBrowserCookies";
+
+    type ReturnObject = CanClearBrowserCookiesReturnObject;
+}
 // Tells whether emulation of network conditions is supported.
+#[derive(Serialize, Debug)]
 pub struct CanEmulateNetworkConditions {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct CanEmulateNetworkConditionsReturnObject {
     // True if emulation of network conditions is supported.
     pub result: bool,
 }
+impl super::Command for CanEmulateNetworkConditions {
+    const NAME: &'static str = "Network.canEmulateNetworkConditions";
+
+    type ReturnObject = CanEmulateNetworkConditionsReturnObject;
+}
 // Clears browser cache.
+#[derive(Serialize, Debug)]
 pub struct ClearBrowserCache {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearBrowserCacheReturnObject {}
+impl super::Command for ClearBrowserCache {
+    const NAME: &'static str = "Network.clearBrowserCache";
+
+    type ReturnObject = ClearBrowserCacheReturnObject;
+}
 // Clears browser cookies.
+#[derive(Serialize, Debug)]
 pub struct ClearBrowserCookies {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearBrowserCookiesReturnObject {}
+impl super::Command for ClearBrowserCookies {
+    const NAME: &'static str = "Network.clearBrowserCookies";
+
+    type ReturnObject = ClearBrowserCookiesReturnObject;
+}
 // Response to Network.requestIntercepted which either modifies the request to continue with any
 // modifications, or blocks it, or completes it with the provided response bytes. If a network
 // fetch occurs as a result which encounters a redirect an additional Network.requestIntercepted
 // event will be sent with the same InterceptionId.
 // Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead.
+#[derive(Serialize, Debug)]
 pub struct ContinueInterceptedRequest {
     pub interception_id: InterceptionId,
     // If set this causes the request to fail with the given reason. Passing `Aborted` for requests
@@ -686,8 +821,15 @@ pub struct ContinueInterceptedRequest {
     // Response to a requestIntercepted with an authChallenge. Must not be set otherwise.
     pub auth_challenge_response: Option<AuthChallengeResponse>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct ContinueInterceptedRequestReturnObject {}
+impl super::Command for ContinueInterceptedRequest {
+    const NAME: &'static str = "Network.continueInterceptedRequest";
+
+    type ReturnObject = ContinueInterceptedRequestReturnObject;
+}
 // Deletes browser cookies with matching name and url or domain/path pair.
+#[derive(Serialize, Debug)]
 pub struct DeleteCookies {
     // Name of the cookies to remove.
     pub name: String,
@@ -699,11 +841,25 @@ pub struct DeleteCookies {
     // If specified, deletes only cookies with the exact path.
     pub path: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct DeleteCookiesReturnObject {}
+impl super::Command for DeleteCookies {
+    const NAME: &'static str = "Network.deleteCookies";
+
+    type ReturnObject = DeleteCookiesReturnObject;
+}
 // Disables network tracking, prevents network events from being sent to the client.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "Network.disable";
+
+    type ReturnObject = DisableReturnObject;
+}
 // Activates emulation of network conditions.
+#[derive(Serialize, Debug)]
 pub struct EmulateNetworkConditions {
     // True to emulate internet disconnection.
     pub offline: bool,
@@ -716,8 +872,15 @@ pub struct EmulateNetworkConditions {
     // Connection type if known.
     pub connection_type: Option<ConnectionType>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct EmulateNetworkConditionsReturnObject {}
+impl super::Command for EmulateNetworkConditions {
+    const NAME: &'static str = "Network.emulateNetworkConditions";
+
+    type ReturnObject = EmulateNetworkConditionsReturnObject;
+}
 // Enables network tracking, network events will now be delivered to the client.
+#[derive(Serialize, Debug)]
 pub struct Enable {
     // Buffer size in bytes to use when preserving network payloads (XHRs, etc).
     pub max_total_buffer_size: Option<i32>,
@@ -726,84 +889,147 @@ pub struct Enable {
     // Longest post body size (in bytes) that would be included in requestWillBeSent notification
     pub max_post_data_size: Option<i32>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "Network.enable";
+
+    type ReturnObject = EnableReturnObject;
+}
 // Returns all browser cookies. Depending on the backend support, will return detailed cookie
 // information in the `cookies` field.
+#[derive(Serialize, Debug)]
 pub struct GetAllCookies {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetAllCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<Cookie>,
 }
+impl super::Command for GetAllCookies {
+    const NAME: &'static str = "Network.getAllCookies";
+
+    type ReturnObject = GetAllCookiesReturnObject;
+}
 // Returns the DER-encoded certificate.
+#[derive(Serialize, Debug)]
 pub struct GetCertificate {
     // Origin to get certificate for.
     pub origin: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetCertificateReturnObject {
     pub table_names: Vec<String>,
 }
+impl super::Command for GetCertificate {
+    const NAME: &'static str = "Network.getCertificate";
+
+    type ReturnObject = GetCertificateReturnObject;
+}
 // Returns all browser cookies for the current URL. Depending on the backend support, will return
 // detailed cookie information in the `cookies` field.
+#[derive(Serialize, Debug)]
 pub struct GetCookies {
     // The list of URLs for which applicable cookies will be fetched.
     // If not specified, it's assumed to be set to the list containing
     // the URLs of the page and all of its subframes.
     pub urls: Option<Vec<String>>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<Cookie>,
 }
+impl super::Command for GetCookies {
+    const NAME: &'static str = "Network.getCookies";
+
+    type ReturnObject = GetCookiesReturnObject;
+}
 // Returns content served for the given request.
+#[derive(Serialize, Debug)]
 pub struct GetResponseBody {
     // Identifier of the network request to get content for.
     pub request_id: RequestId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetResponseBodyReturnObject {
     // Response body.
     pub body: String,
     // True, if content was sent as base64.
     pub base64_encoded: bool,
 }
+impl super::Command for GetResponseBody {
+    const NAME: &'static str = "Network.getResponseBody";
+
+    type ReturnObject = GetResponseBodyReturnObject;
+}
 // Returns post data sent with the request. Returns an error when no data was sent with the request.
+#[derive(Serialize, Debug)]
 pub struct GetRequestPostData {
     // Identifier of the network request to get content for.
     pub request_id: RequestId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetRequestPostDataReturnObject {
     // Request body string, omitting files from multipart requests
     pub post_data: String,
 }
+impl super::Command for GetRequestPostData {
+    const NAME: &'static str = "Network.getRequestPostData";
+
+    type ReturnObject = GetRequestPostDataReturnObject;
+}
 // Returns content served for the given currently intercepted request.
+#[derive(Serialize, Debug)]
 pub struct GetResponseBodyForInterception {
     // Identifier for the intercepted request to get body for.
     pub interception_id: InterceptionId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetResponseBodyForInterceptionReturnObject {
     // Response body.
     pub body: String,
     // True, if content was sent as base64.
     pub base64_encoded: bool,
 }
+impl super::Command for GetResponseBodyForInterception {
+    const NAME: &'static str = "Network.getResponseBodyForInterception";
+
+    type ReturnObject = GetResponseBodyForInterceptionReturnObject;
+}
 // Returns a handle to the stream representing the response body. Note that after this command,
 // the intercepted request can't be continued as is -- you either need to cancel it or to provide
 // the response body. The stream only supports sequential read, IO.read will fail if the position
 // is specified.
+#[derive(Serialize, Debug)]
 pub struct TakeResponseBodyForInterceptionAsStream {
     pub interception_id: InterceptionId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct TakeResponseBodyForInterceptionAsStreamReturnObject {
     pub stream: super::io::StreamHandle,
+}
+impl super::Command for TakeResponseBodyForInterceptionAsStream {
+    const NAME: &'static str = "Network.takeResponseBodyForInterceptionAsStream";
+
+    type ReturnObject = TakeResponseBodyForInterceptionAsStreamReturnObject;
 }
 // This method sends a new XMLHttpRequest which is identical to the original one. The following
 // parameters should be identical: method, url, async, request body, extra headers, withCredentials
 // attribute, user, password.
+#[derive(Serialize, Debug)]
 pub struct ReplayXHR {
     // Identifier of XHR to replay.
     pub request_id: RequestId,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct ReplayXHRReturnObject {}
+impl super::Command for ReplayXHR {
+    const NAME: &'static str = "Network.replayXHR";
+
+    type ReturnObject = ReplayXHRReturnObject;
+}
 // Searches for given string in response content.
+#[derive(Serialize, Debug)]
 pub struct SearchInResponseBody {
     // Identifier of the network response to search.
     pub request_id: RequestId,
@@ -814,29 +1040,57 @@ pub struct SearchInResponseBody {
     // If true, treats string parameter as regex.
     pub is_regex: Option<bool>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SearchInResponseBodyReturnObject {
     // List of search matches.
     pub result: Vec<super::debugger::SearchMatch>,
 }
+impl super::Command for SearchInResponseBody {
+    const NAME: &'static str = "Network.searchInResponseBody";
+
+    type ReturnObject = SearchInResponseBodyReturnObject;
+}
 // Blocks URLs from loading.
+#[derive(Serialize, Debug)]
 pub struct SetBlockedURLs {
     // URL patterns to block. Wildcards ('*') are allowed.
     pub urls: Vec<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetBlockedURLsReturnObject {}
+impl super::Command for SetBlockedURLs {
+    const NAME: &'static str = "Network.setBlockedURLs";
+
+    type ReturnObject = SetBlockedURLsReturnObject;
+}
 // Toggles ignoring of service worker for each request.
+#[derive(Serialize, Debug)]
 pub struct SetBypassServiceWorker {
     // Bypass service worker and load from network.
     pub bypass: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetBypassServiceWorkerReturnObject {}
+impl super::Command for SetBypassServiceWorker {
+    const NAME: &'static str = "Network.setBypassServiceWorker";
+
+    type ReturnObject = SetBypassServiceWorkerReturnObject;
+}
 // Toggles ignoring cache for each request. If `true`, cache will not be used.
+#[derive(Serialize, Debug)]
 pub struct SetCacheDisabled {
     // Cache disabled state.
     pub cache_disabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetCacheDisabledReturnObject {}
+impl super::Command for SetCacheDisabled {
+    const NAME: &'static str = "Network.setCacheDisabled";
+
+    type ReturnObject = SetCacheDisabledReturnObject;
+}
 // Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
+#[derive(Serialize, Debug)]
 pub struct SetCookie {
     // Cookie name.
     pub name: String,
@@ -860,45 +1114,87 @@ pub struct SetCookie {
     // Cookie Priority type.
     pub priority: Option<CookiePriority>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetCookieReturnObject {
     // Always set to true. If an error occurs, the response indicates protocol error.
     pub success: bool,
 }
+impl super::Command for SetCookie {
+    const NAME: &'static str = "Network.setCookie";
+
+    type ReturnObject = SetCookieReturnObject;
+}
 // Sets given cookies.
+#[derive(Serialize, Debug)]
 pub struct SetCookies {
     // Cookies to be set.
     pub cookies: Vec<CookieParam>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetCookiesReturnObject {}
+impl super::Command for SetCookies {
+    const NAME: &'static str = "Network.setCookies";
+
+    type ReturnObject = SetCookiesReturnObject;
+}
 // For testing.
+#[derive(Serialize, Debug)]
 pub struct SetDataSizeLimitsForTest {
     // Maximum total buffer size.
     pub max_total_size: i32,
     // Maximum per-resource size.
     pub max_resource_size: i32,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDataSizeLimitsForTestReturnObject {}
+impl super::Command for SetDataSizeLimitsForTest {
+    const NAME: &'static str = "Network.setDataSizeLimitsForTest";
+
+    type ReturnObject = SetDataSizeLimitsForTestReturnObject;
+}
 // Specifies whether to always send extra HTTP headers with the requests from this page.
+#[derive(Serialize, Debug)]
 pub struct SetExtraHTTPHeaders {
     // Map with extra HTTP headers.
     pub headers: Headers,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetExtraHTTPHeadersReturnObject {}
+impl super::Command for SetExtraHTTPHeaders {
+    const NAME: &'static str = "Network.setExtraHTTPHeaders";
+
+    type ReturnObject = SetExtraHTTPHeadersReturnObject;
+}
 // Specifies whether to sned a debug header to all outgoing requests.
+#[derive(Serialize, Debug)]
 pub struct SetAttachDebugHeader {
     // Whether to send a debug header.
     pub enabled: bool,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetAttachDebugHeaderReturnObject {}
+impl super::Command for SetAttachDebugHeader {
+    const NAME: &'static str = "Network.setAttachDebugHeader";
+
+    type ReturnObject = SetAttachDebugHeaderReturnObject;
+}
 // Sets the requests to intercept that match the provided patterns and optionally resource types.
 // Deprecated, please use Fetch.enable instead.
+#[derive(Serialize, Debug)]
 pub struct SetRequestInterception {
     // Requests matching any of these patterns will be forwarded and wait for the corresponding
     // continueInterceptedRequest call.
     pub patterns: Vec<RequestPattern>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetRequestInterceptionReturnObject {}
+impl super::Command for SetRequestInterception {
+    const NAME: &'static str = "Network.setRequestInterception";
+
+    type ReturnObject = SetRequestInterceptionReturnObject;
+}
 // Allows overriding user agent with the given string.
+#[derive(Serialize, Debug)]
 pub struct SetUserAgentOverride {
     // User agent to use.
     pub user_agent: String,
@@ -909,16 +1205,30 @@ pub struct SetUserAgentOverride {
     // To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
     pub user_agent_metadata: Option<super::emulation::UserAgentMetadata>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetUserAgentOverrideReturnObject {}
+impl super::Command for SetUserAgentOverride {
+    const NAME: &'static str = "Network.setUserAgentOverride";
+
+    type ReturnObject = SetUserAgentOverrideReturnObject;
+}
 // Returns information about the COEP/COOP isolation status.
+#[derive(Serialize, Debug)]
 pub struct GetSecurityIsolationStatus {
     // If no frameId is provided, the status of the target is provided.
     pub frame_id: Option<super::page::FrameId>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetSecurityIsolationStatusReturnObject {
     pub status: SecurityIsolationStatus,
 }
+impl super::Command for GetSecurityIsolationStatus {
+    const NAME: &'static str = "Network.getSecurityIsolationStatus";
+
+    type ReturnObject = GetSecurityIsolationStatusReturnObject;
+}
 // Fetches the resource and returns the content.
+#[derive(Serialize, Debug)]
 pub struct LoadNetworkResource {
     // Frame id to get the resource for.
     pub frame_id: super::page::FrameId,
@@ -927,6 +1237,12 @@ pub struct LoadNetworkResource {
     // Options for the request.
     pub options: LoadNetworkResourceOptions,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct LoadNetworkResourceReturnObject {
     pub resource: LoadNetworkResourcePageResult,
+}
+impl super::Command for LoadNetworkResource {
+    const NAME: &'static str = "Network.loadNetworkResource";
+
+    type ReturnObject = LoadNetworkResourceReturnObject;
 }

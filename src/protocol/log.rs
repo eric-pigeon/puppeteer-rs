@@ -1,5 +1,8 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum LogEntrySource {
     Xml,
     Javascript,
@@ -15,6 +18,8 @@ pub enum LogEntrySource {
     Recommendation,
     Other,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum LogEntryLevel {
     Verbose,
     Info,
@@ -22,6 +27,8 @@ pub enum LogEntryLevel {
     Error,
 }
 // Log entry.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct LogEntry {
     // Log entry source.
     pub source: LogEntrySource,
@@ -44,6 +51,8 @@ pub struct LogEntry {
     // Call arguments.
     pub args: Option<Vec<super::runtime::RemoteObject>>,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ViolationSettingName {
     LongTask,
     LongLayout,
@@ -54,6 +63,8 @@ pub enum ViolationSettingName {
     RecurringHandler,
 }
 // Violation configuration setting.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ViolationSetting {
     // Violation type.
     pub name: ViolationSettingName,
@@ -62,21 +73,56 @@ pub struct ViolationSetting {
 }
 
 // Clears the log.
+#[derive(Serialize, Debug)]
 pub struct Clear {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct ClearReturnObject {}
+impl super::Command for Clear {
+    const NAME: &'static str = "Log.clear";
+
+    type ReturnObject = ClearReturnObject;
+}
 // Disables log domain, prevents further log entries from being reported to the client.
+#[derive(Serialize, Debug)]
 pub struct Disable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct DisableReturnObject {}
+impl super::Command for Disable {
+    const NAME: &'static str = "Log.disable";
+
+    type ReturnObject = DisableReturnObject;
+}
 // Enables log domain, sends the entries collected so far to the client by means of the
 // `entryAdded` notification.
+#[derive(Serialize, Debug)]
 pub struct Enable {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
+impl super::Command for Enable {
+    const NAME: &'static str = "Log.enable";
+
+    type ReturnObject = EnableReturnObject;
+}
 // start violation reporting.
+#[derive(Serialize, Debug)]
 pub struct StartViolationsReport {
     // Configuration for violations.
     pub config: Vec<ViolationSetting>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct StartViolationsReportReturnObject {}
+impl super::Command for StartViolationsReport {
+    const NAME: &'static str = "Log.startViolationsReport";
+
+    type ReturnObject = StartViolationsReportReturnObject;
+}
 // Stop violation reporting.
+#[derive(Serialize, Debug)]
 pub struct StopViolationsReport {}
+#[derive(Deserialize, Debug, Clone)]
 pub struct StopViolationsReportReturnObject {}
+impl super::Command for StopViolationsReport {
+    const NAME: &'static str = "Log.stopViolationsReport";
+
+    type ReturnObject = StopViolationsReportReturnObject;
+}

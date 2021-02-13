@@ -1,12 +1,17 @@
 // This file is auto-generated do not edit manually.
+use serde::{Deserialize, Serialize};
 
 // DOM breakpoint type.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum DOMBreakpointType {
     SubtreeModified,
     AttributeModified,
     NodeRemoved,
 }
 // Object event listener.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EventListener {
     // `EventListener`'s type.
     pub r#type: String,
@@ -31,6 +36,7 @@ pub struct EventListener {
 }
 
 // Returns event listeners of the given object.
+#[derive(Serialize, Debug)]
 pub struct GetEventListeners {
     // Identifier of the object to return listeners for.
     pub object_id: super::runtime::RemoteObjectId,
@@ -41,47 +47,89 @@ pub struct GetEventListeners {
     // (default is false). Reports listeners for all contexts if pierce is enabled.
     pub pierce: Option<bool>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct GetEventListenersReturnObject {
     // Array of relevant listeners.
     pub listeners: Vec<EventListener>,
 }
+impl super::Command for GetEventListeners {
+    const NAME: &'static str = "DOMDebugger.getEventListeners";
+
+    type ReturnObject = GetEventListenersReturnObject;
+}
 // Removes DOM breakpoint that was set using `setDOMBreakpoint`.
+#[derive(Serialize, Debug)]
 pub struct RemoveDOMBreakpoint {
     // Identifier of the node to remove breakpoint from.
     pub node_id: super::dom::NodeId,
     // Type of the breakpoint to remove.
     pub r#type: DOMBreakpointType,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveDOMBreakpointReturnObject {}
+impl super::Command for RemoveDOMBreakpoint {
+    const NAME: &'static str = "DOMDebugger.removeDOMBreakpoint";
+
+    type ReturnObject = RemoveDOMBreakpointReturnObject;
+}
 // Removes breakpoint on particular DOM event.
+#[derive(Serialize, Debug)]
 pub struct RemoveEventListenerBreakpoint {
     // Event name.
     pub event_name: String,
     // EventTarget interface name.
     pub target_name: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveEventListenerBreakpointReturnObject {}
+impl super::Command for RemoveEventListenerBreakpoint {
+    const NAME: &'static str = "DOMDebugger.removeEventListenerBreakpoint";
+
+    type ReturnObject = RemoveEventListenerBreakpointReturnObject;
+}
 // Removes breakpoint on particular native event.
+#[derive(Serialize, Debug)]
 pub struct RemoveInstrumentationBreakpoint {
     // Instrumentation name to stop on.
     pub event_name: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveInstrumentationBreakpointReturnObject {}
+impl super::Command for RemoveInstrumentationBreakpoint {
+    const NAME: &'static str = "DOMDebugger.removeInstrumentationBreakpoint";
+
+    type ReturnObject = RemoveInstrumentationBreakpointReturnObject;
+}
 // Removes breakpoint from XMLHttpRequest.
+#[derive(Serialize, Debug)]
 pub struct RemoveXHRBreakpoint {
     // Resource URL substring.
     pub url: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct RemoveXHRBreakpointReturnObject {}
+impl super::Command for RemoveXHRBreakpoint {
+    const NAME: &'static str = "DOMDebugger.removeXHRBreakpoint";
+
+    type ReturnObject = RemoveXHRBreakpointReturnObject;
+}
 // Sets breakpoint on particular operation with DOM.
+#[derive(Serialize, Debug)]
 pub struct SetDOMBreakpoint {
     // Identifier of the node to set breakpoint on.
     pub node_id: super::dom::NodeId,
     // Type of the operation to stop upon.
     pub r#type: DOMBreakpointType,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetDOMBreakpointReturnObject {}
+impl super::Command for SetDOMBreakpoint {
+    const NAME: &'static str = "DOMDebugger.setDOMBreakpoint";
+
+    type ReturnObject = SetDOMBreakpointReturnObject;
+}
 // Sets breakpoint on particular DOM event.
+#[derive(Serialize, Debug)]
 pub struct SetEventListenerBreakpoint {
     // DOM Event name to stop on (any DOM event will do).
     pub event_name: String,
@@ -89,16 +137,36 @@ pub struct SetEventListenerBreakpoint {
     // EventTarget.
     pub target_name: Option<String>,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetEventListenerBreakpointReturnObject {}
+impl super::Command for SetEventListenerBreakpoint {
+    const NAME: &'static str = "DOMDebugger.setEventListenerBreakpoint";
+
+    type ReturnObject = SetEventListenerBreakpointReturnObject;
+}
 // Sets breakpoint on particular native event.
+#[derive(Serialize, Debug)]
 pub struct SetInstrumentationBreakpoint {
     // Instrumentation name to stop on.
     pub event_name: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetInstrumentationBreakpointReturnObject {}
+impl super::Command for SetInstrumentationBreakpoint {
+    const NAME: &'static str = "DOMDebugger.setInstrumentationBreakpoint";
+
+    type ReturnObject = SetInstrumentationBreakpointReturnObject;
+}
 // Sets breakpoint on XMLHttpRequest.
+#[derive(Serialize, Debug)]
 pub struct SetXHRBreakpoint {
     // Resource URL substring. All XHRs having this substring in the URL will get stopped upon.
     pub url: String,
 }
+#[derive(Deserialize, Debug, Clone)]
 pub struct SetXHRBreakpointReturnObject {}
+impl super::Command for SetXHRBreakpoint {
+    const NAME: &'static str = "DOMDebugger.setXHRBreakpoint";
+
+    type ReturnObject = SetXHRBreakpointReturnObject;
+}
