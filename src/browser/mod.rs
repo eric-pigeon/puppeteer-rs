@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use tempfile::tempdir;
 
 use browser_fetcher::BrowserFetcher;
-use connection::{Connection, ConnectionOptions};
+use connection::{Connection, ConnectionOptions, ConnectionTransport};
 pub use context::BrowserContext;
 pub use launch_options::{BrowserOptions, ChromeArgOptions, LaunchOptions};
 
@@ -46,7 +46,7 @@ const DEFAULT_ARGS: &'static [&'static str] = &[
 
 pub struct Browser {
     _child: Child,
-    _connection: Connection,
+    connection: Connection,
 }
 
 impl Browser {
@@ -89,10 +89,12 @@ impl Browser {
 
         let browser = Browser {
             _child: child,
-            _connection: connection,
+            connection: connection,
         };
 
-        connection.send(target::SetDiscoverTargets { discover: true });
+        browser
+            .connection
+            .send(target::SetDiscoverTargets { discover: true });
 
         Ok(browser)
     }

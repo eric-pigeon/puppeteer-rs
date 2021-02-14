@@ -50,7 +50,7 @@ pub(crate) trait Command {
 
     type ReturnObject: serde::de::DeserializeOwned;
 
-    fn to_method_call(self, call_id: u32) -> CommandCall<Self>
+    fn to_command_call(self, call_id: u64) -> CommandCall<Self>
     where
         Self: std::marker::Sized,
     {
@@ -65,6 +65,6 @@ pub(crate) trait Command {
 #[derive(Serialize, Debug)]
 pub struct CommandCall<T> {
     method: &'static str,
-    pub id: u32,
+    pub id: u64,
     params: T,
 }
