@@ -1,11 +1,11 @@
+use chashmap::CHashMap;
 use futures::future::Future;
 use futures_util::{stream::SplitSink, SinkExt, StreamExt};
-use tokio::sync::oneshot;
-//use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use serde;
+use std::cell::RefCell;
 use std::sync::atomic::{AtomicU64, Ordering};
+use tokio::sync::oneshot;
 use tokio_tungstenite::{connect_async, tungstenite::protocol::Message, WebSocketStream};
-//use tungstenite::Message;
 
 use crate::protocol;
 
@@ -18,7 +18,7 @@ pub struct ConnectionOptions {
 pub struct Connection {
     transport: Box<dyn ConnectionTransport>,
     last_id: AtomicU64,
-    // _callbacks: CHashMap<u64,
+    callbacks: CHashMap<u64, oneshot::Sender<Message>>,
 }
 
 impl Connection {
@@ -26,14 +26,16 @@ impl Connection {
         Connection {
             transport: transport,
             last_id: AtomicU64::new(1),
+            callbacks: CHashMap::new(),
         }
     }
 
     // TODO change error type
-    pub fn send<C>(
+    pub(crate) fn send<C>(
         &self,
         command: C,
-    ) -> impl Future<Output = Result<C::ReturnObject, oneshot::error::RecvError>>
+        //) -> impl Future<Output = Result<C::ReturnObject, oneshot::error::RecvError>>
+    ) -> impl Future<Output = Result<(), &'static str>>
     where
         C: protocol::Command + serde::Serialize,
     {
@@ -44,11 +46,21 @@ impl Connection {
 
         // TODO
         // let (_sender, receiver) = oneshot::channel::<Result<C::ReturnObject, &'static str>>();
-        let (_sender, receiver) = oneshot::channel::<C::ReturnObject>();
-        receiver
+        //let (sender, receiver) = oneshot::channel::<C::ReturnObject>();
+        //self.callbacks.insert(call_id, sender);
+        //receiver
+        let (sender, receiver) = oneshot::channel::<Message>();
+        self.callbacks.insert(call_id, sender);
+
+        async move {
+            let _message = receiver.await;
+            // TODO
+            Ok(())
+        }
     }
 
-    fn raw_send() {}
+    // TODO
+    // fn raw_send() {}
 }
 
 pub trait ConnectionTransport {
@@ -59,7 +71,8 @@ pub trait ConnectionTransport {
 }
 
 pub struct WebSocketTransport {
-    write_stream: SplitSink<WebSocketStream<tokio::net::TcpStream>, Message>,
+    write_stream: RefCell<SplitSink<WebSocketStream<tokio::net::TcpStream>, Message>>,
+    on_message: fn(Message),
 }
 
 impl WebSocketTransport {
@@ -67,7 +80,6 @@ impl WebSocketTransport {
         let (ws_stream, _) = connect_async(url).await.expect("Failed to connect");
         let (write, mut read) = ws_stream.split();
 
-        // println!("starting read task");
         tokio::spawn(async move {
             println!("starting read task");
             while let Some(msg) = read.next().await {
@@ -80,7 +92,8 @@ impl WebSocketTransport {
         });
 
         WebSocketTransport {
-            write_stream: write,
+            write_stream: RefCell::new(write),
+            on_message: |_message: Message| {},
         }
     }
 }
@@ -88,7 +101,9 @@ impl WebSocketTransport {
 impl ConnectionTransport for WebSocketTransport {
     fn send(&self, message: &str) {
         let message = Message::text(message);
-        self.write_stream.send(message);
+        println!("{}", message);
+        futures::executor::block_on(self.write_stream.borrow_mut().send(message))
+            .expect("failed to send message on websocket");
     }
 
     fn close(&self) {

@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use tempfile::tempdir;
 
 use browser_fetcher::BrowserFetcher;
-use connection::{Connection, ConnectionOptions, ConnectionTransport};
+use connection::{Connection, ConnectionOptions};
 pub use context::BrowserContext;
 pub use launch_options::{BrowserOptions, ChromeArgOptions, LaunchOptions};
 
@@ -94,7 +94,9 @@ impl Browser {
 
         browser
             .connection
-            .send(target::SetDiscoverTargets { discover: true });
+            .send(target::SetDiscoverTargets { discover: true })
+            .await
+            .expect("failed to set discover targes");
 
         Ok(browser)
     }
@@ -102,7 +104,7 @@ impl Browser {
 
 impl Drop for Browser {
     fn drop(&mut self) {
-        println!("Dropping browser");
+        // println!("Dropping browser");
         //     let _ = self.loop_shutdown_tx.send(());
         //     self.transport.shutdown();
     }

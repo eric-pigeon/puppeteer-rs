@@ -10,6 +10,7 @@ edition = "2018"
 tempfile = "3"
 tokio = { version = "*", features = ["macros"] }
 tokio-tungstenite = "*"
+chashmap = "2"
 futures-util = "*"
 futures = "0.3.0"
 regex = "1"
