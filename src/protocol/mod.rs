@@ -1,6 +1,6 @@
 // This file is auto-generated do not edit manually.
 use serde;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 pub mod accessibility;
 pub mod animation;
@@ -67,4 +67,30 @@ pub struct CommandCall<T> {
     method: &'static str,
     pub id: u64,
     params: T,
+}
+
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(tag = "method")]
+pub enum Event {}
+
+#[derive(Deserialize, Debug, PartialEq, Clone)]
+pub struct RemoteError {
+    pub code: u64,
+    pub message: String,
+}
+
+#[derive(Deserialize, Debug, PartialEq, Clone)]
+pub struct Response {
+    #[serde(rename(deserialize = "id"))]
+    pub call_id: u64,
+    pub result: Option<serde_json::Value>,
+    pub error: Option<RemoteError>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+#[serde(untagged)]
+pub enum Message {
+    Event(Event),
+    Response(Response),
+    ConnectionShutdown,
 }

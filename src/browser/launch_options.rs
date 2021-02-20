@@ -31,6 +31,7 @@ pub struct BrowserOptions {
 impl Default for ChromeArgOptions {
     fn default() -> ChromeArgOptions {
         ChromeArgOptions {
+            // headless: false,
             headless: true,
             args: vec![],
             user_data_dir: None,

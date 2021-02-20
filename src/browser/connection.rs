@@ -1,11 +1,14 @@
 use chashmap::CHashMap;
 use futures::future::Future;
-use futures_util::{stream::SplitSink, SinkExt, StreamExt};
+use futures_util::{
+    stream::{Map, SplitSink, SplitStream},
+    SinkExt, StreamExt,
+};
 use serde;
 use std::cell::RefCell;
 use std::sync::atomic::{AtomicU64, Ordering};
-use tokio::sync::oneshot;
-use tokio_tungstenite::{connect_async, tungstenite::protocol::Message, WebSocketStream};
+use tokio::{net, sync::oneshot};
+use tokio_tungstenite::{connect_async, tungstenite, WebSocketStream};
 
 use crate::protocol;
 
@@ -18,24 +21,52 @@ pub struct ConnectionOptions {
 pub struct Connection {
     transport: Box<dyn ConnectionTransport>,
     last_id: AtomicU64,
-    callbacks: CHashMap<u64, oneshot::Sender<Message>>,
+    callbacks: CHashMap<u64, oneshot::Sender<protocol::Response>>,
+    _transport_handle: tokio::task::JoinHandle<()>,
 }
 
 impl Connection {
     pub fn new(transport: Box<dyn ConnectionTransport>) -> Connection {
-        Connection {
+        let _join_handle = tokio::spawn(async {
+            //while let Some(message) = transport.as_mut().message_stream().next().await {
+            //    println!("{:?}", message)
+            //}
+        });
+
+        let connection = Connection {
             transport: transport,
             last_id: AtomicU64::new(1),
             callbacks: CHashMap::new(),
-        }
+            _transport_handle: _join_handle,
+        };
+        // tokio::spawn(async {
+        //     while let Some(msg) = read.next().await {
+        //         let msg = msg.expect("Failed to read websocket message");
+        //         let msg = msg.to_text().expect("failed to get websocket text");
+
+        //         match serde_json::from_str::<protocol::Message>(msg) {
+        //             Ok(message) => {
+        //                 (transport.on_message)(message);
+        //                 // self.on_message(message);
+        //                 // println!("{:?}", message);
+        //             }
+        //             Err(err) => {
+        //                 println!("{}", err);
+        //                 println!("{}", msg);
+        //             }
+        //         }
+        //     }
+        // });
+
+        connection
     }
 
     // TODO change error type
+    //) -> impl Future<Output = Result<C::ReturnObject, oneshot::error::RecvError>>
     pub(crate) fn send<C>(
         &self,
         command: C,
-        //) -> impl Future<Output = Result<C::ReturnObject, oneshot::error::RecvError>>
-    ) -> impl Future<Output = Result<(), &'static str>>
+    ) -> impl Future<Output = Result<C::ReturnObject, &'static str>>
     where
         C: protocol::Command + serde::Serialize,
     {
@@ -49,64 +80,127 @@ impl Connection {
         //let (sender, receiver) = oneshot::channel::<C::ReturnObject>();
         //self.callbacks.insert(call_id, sender);
         //receiver
-        let (sender, receiver) = oneshot::channel::<Message>();
+        let (sender, receiver) = oneshot::channel::<protocol::Response>();
         self.callbacks.insert(call_id, sender);
 
         async move {
-            let _message = receiver.await;
+            let response = receiver.await;
             // TODO
-            Ok(())
+            let tmp = response.unwrap().result.unwrap();
+            let result: C::ReturnObject = serde_json::from_value(tmp).unwrap();
+            Ok(result)
         }
     }
-
-    // TODO
-    // fn raw_send() {}
 }
+
+type ReadStream = dyn futures::Stream<Item = Result<protocol::Message, TodoError>> + Unpin + Send;
 
 pub trait ConnectionTransport {
     fn send(&self, message: &str);
+    fn message_stream(&self) -> Box<ReadStream>;
     fn close(&self);
-    // onmessage?: (message: string) => void;
-    // onclose?: () => void;
 }
 
+type WebSocketMapper = dyn FnMut(
+    Result<tungstenite::protocol::Message, tokio_tungstenite::tungstenite::Error>,
+) -> Result<protocol::Message, TodoError>;
+
 pub struct WebSocketTransport {
-    write_stream: RefCell<SplitSink<WebSocketStream<tokio::net::TcpStream>, Message>>,
-    on_message: fn(Message),
+    write_stream:
+        RefCell<SplitSink<WebSocketStream<net::TcpStream>, tungstenite::protocol::Message>>,
+    read_stream: Box<Map<SplitStream<WebSocketStream<net::TcpStream>>, Box<WebSocketMapper>>>,
 }
 
 impl WebSocketTransport {
     pub async fn new(url: String) -> WebSocketTransport {
         let (ws_stream, _) = connect_async(url).await.expect("Failed to connect");
-        let (write, mut read) = ws_stream.split();
+        let (write, read) = ws_stream.split();
 
-        tokio::spawn(async move {
-            println!("starting read task");
-            while let Some(msg) = read.next().await {
-                println!("{:?}", msg)
-                //        // let msg = msg?;
-                //        // if msg.is_text() || msg.is_binary() {
-                //        //     ws_stream.send(msg).await?;
-                //        // }
-            }
+        // TODO
+        let tmp: Box<WebSocketMapper> = Box::new(|_result| {
+            // TODO
+            Ok(protocol::Message::ConnectionShutdown)
         });
+        let read = Box::new(read.map(tmp));
 
-        WebSocketTransport {
+        let transport = WebSocketTransport {
             write_stream: RefCell::new(write),
-            on_message: |_message: Message| {},
-        }
+            read_stream: read,
+        };
+
+        // tokio::spawn(async {
+        //     while let Some(msg) = read.next().await {
+        //         let msg = msg.expect("Failed to read websocket message");
+        //         let msg = msg.to_text().expect("failed to get websocket text");
+
+        //         match serde_json::from_str::<protocol::Message>(msg) {
+        //             Ok(message) => {
+        //                 (transport.on_message)(message);
+        //                 // self.on_message(message);
+        //                 // println!("{:?}", message);
+        //             }
+        //             Err(err) => {
+        //                 println!("{}", err);
+        //                 println!("{}", msg);
+        //             }
+        //         }
+        //     }
+        // });
+
+        transport
     }
 }
 
 impl ConnectionTransport for WebSocketTransport {
     fn send(&self, message: &str) {
-        let message = Message::text(message);
+        let message = tungstenite::protocol::Message::text(message);
         println!("{}", message);
         futures::executor::block_on(self.write_stream.borrow_mut().send(message))
             .expect("failed to send message on websocket");
     }
 
+    fn message_stream(&self) -> Box<ReadStream> {
+        self.read_stream
+        //     Box::new(self.read_stream.borrow().map(|result| {
+        //         let _message = result?;
+        //         // let message = message.to_text()?;
+
+        //         // serde_json::from_str::<protocol::Message>(message)
+        //         // TODO
+        //         Ok(protocol::Message::ConnectionShutdown)
+        //     }))
+        //     //RefCell::new(self.read_stream.take().unwrap().map(|result| {
+        //     //    let _message = result?;
+        //     //    // let message = message.to_text()?;
+
+        //     //    // serde_json::from_str::<protocol::Message>(message)
+        //     //    // TODO
+        //     //    Ok(protocol::Message::ConnectionShutdown)
+        //     //}))
+    }
+
     fn close(&self) {
         // TODO
+    }
+}
+
+// TODO name this
+#[derive(Debug)]
+pub enum TodoError {
+    TungsteniteError(tokio_tungstenite::tungstenite::Error),
+    JsonError(serde_json::Error),
+    // TOOD
+    // ProtcolError(String),
+}
+
+impl From<serde_json::Error> for TodoError {
+    fn from(error: serde_json::Error) -> Self {
+        TodoError::JsonError(error)
+    }
+}
+
+impl From<tokio_tungstenite::tungstenite::Error> for TodoError {
+    fn from(error: tokio_tungstenite::tungstenite::Error) -> Self {
+        TodoError::TungsteniteError(error)
     }
 }
