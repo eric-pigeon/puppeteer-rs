@@ -6,13 +6,8 @@ pub type RequestId = String;
 // Stages of the request to handle. Request will intercept before the request is
 // sent. Response will intercept after the response is received (but before response
 // body is received.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum RequestStage {
-    Request,
-    Response,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type RequestStage = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RequestPattern {
     // Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is
@@ -24,20 +19,20 @@ pub struct RequestPattern {
     pub request_stage: Option<RequestStage>,
 }
 // Response HTTP header entry
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct HeaderEntry {
     pub name: String,
     pub value: String,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum AuthChallengeSource {
     Server,
     Proxy,
 }
 // Authorization challenge for HTTP status code 401 or 407.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AuthChallenge {
     // Source of the authentication challenge.
@@ -49,7 +44,7 @@ pub struct AuthChallenge {
     // The realm of the challenge. May be empty.
     pub realm: String,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum AuthChallengeResponseResponse {
     Default,
@@ -57,7 +52,7 @@ pub enum AuthChallengeResponseResponse {
     ProvideCredentials,
 }
 // Response to an AuthChallenge.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AuthChallengeResponse {
     // The decision on what to do in response to the authorization challenge.  Default means
@@ -232,8 +227,13 @@ impl super::Command for TakeResponseBodyAsStream {
 // The stage of the request can be determined by presence of responseErrorReason
 // and responseStatusCode -- the request is at the response stage if either
 // of these fields is present and in the request stage otherwise.
-#[derive(Deserialize, Debug, Clone)]
-pub struct RequestPaused {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct RequestPausedEvent {
+    pub params: RequestPausedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct RequestPausedParams {
     // Each request the page makes will have a unique id.
     pub request_id: RequestId,
     // The details of the request.
@@ -254,8 +254,13 @@ pub struct RequestPaused {
 }
 // Issued when the domain is enabled with handleAuthRequests set to true.
 // The request is paused until client responds with continueWithAuth.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AuthRequired {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AuthRequiredEvent {
+    pub params: AuthRequiredParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AuthRequiredParams {
     // Each request the page makes will have a unique id.
     pub request_id: RequestId,
     // The details of the request.

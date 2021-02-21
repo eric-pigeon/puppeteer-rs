@@ -29,8 +29,13 @@ impl super::Command for Unbind {
 }
 
 // Informs that port was successfully bound and got a specified connection id.
-#[derive(Deserialize, Debug, Clone)]
-pub struct Accepted {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AcceptedEvent {
+    pub params: AcceptedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AcceptedParams {
     // Port number that was successfully bound.
     pub port: i32,
     // Connection id to be used.

@@ -8,7 +8,7 @@ pub type RemoteObjectId = String;
 // Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
 // `-Infinity`, and bigint literals.
 pub type UnserializableValue = String;
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum RemoteObjectType {
     Object,
@@ -21,7 +21,7 @@ pub enum RemoteObjectType {
     Bigint,
     Wasm,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum RemoteObjectSubtype {
     Array,
@@ -49,7 +49,7 @@ pub enum RemoteObjectSubtype {
     Externref,
 }
 // Mirror object referencing original JavaScript object.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RemoteObject {
     // Object type.
@@ -71,7 +71,7 @@ pub struct RemoteObject {
     pub preview: Option<ObjectPreview>,
     pub custom_preview: Option<CustomPreview>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomPreview {
     // The JSON-stringified result of formatter.header(object, config) call.
@@ -82,7 +82,7 @@ pub struct CustomPreview {
     // The result value is json ML array.
     pub body_getter_id: Option<RemoteObjectId>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ObjectPreviewType {
     Object,
@@ -94,7 +94,7 @@ pub enum ObjectPreviewType {
     Symbol,
     Bigint,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ObjectPreviewSubtype {
     Array,
@@ -111,7 +111,7 @@ pub enum ObjectPreviewSubtype {
     Error,
 }
 // Object containing abbreviated remote object value.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectPreview {
     // Object type.
@@ -127,7 +127,7 @@ pub struct ObjectPreview {
     // List of the entries. Specified for `map` and `set` subtype values only.
     pub entries: Option<Vec<EntryPreview>>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum PropertyPreviewType {
     Object,
@@ -140,7 +140,7 @@ pub enum PropertyPreviewType {
     Accessor,
     Bigint,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum PropertyPreviewSubtype {
     Array,
@@ -156,7 +156,7 @@ pub enum PropertyPreviewSubtype {
     Generator,
     Error,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PropertyPreview {
     // Property name.
@@ -170,7 +170,7 @@ pub struct PropertyPreview {
     // Object subtype hint. Specified for `object` type values only.
     pub subtype: Option<String>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct EntryPreview {
     // Preview of the key. Specified for map-like collection entries.
@@ -179,7 +179,7 @@ pub struct EntryPreview {
     pub value: ObjectPreview,
 }
 // Object property descriptor.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PropertyDescriptor {
     // Property name or symbol description.
@@ -208,7 +208,7 @@ pub struct PropertyDescriptor {
     pub symbol: Option<RemoteObject>,
 }
 // Object internal property descriptor. This property isn't normally visible in JavaScript code.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InternalPropertyDescriptor {
     // Conventional property name.
@@ -217,7 +217,7 @@ pub struct InternalPropertyDescriptor {
     pub value: Option<RemoteObject>,
 }
 // Object private field descriptor.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PrivatePropertyDescriptor {
     // Private property name.
@@ -233,7 +233,7 @@ pub struct PrivatePropertyDescriptor {
 }
 // Represents function call argument. Either remote object id `objectId`, primitive `value`,
 // unserializable primitive value or neither of (for undefined) them should be specified.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CallArgument {
     // Primitive value or serializable javascript object.
@@ -246,7 +246,7 @@ pub struct CallArgument {
 // Id of an execution context.
 pub type ExecutionContextId = i32;
 // Description of an isolated world.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ExecutionContextDescription {
     // Unique id of the execution context. It can be used to specify in which execution context
@@ -261,7 +261,7 @@ pub struct ExecutionContextDescription {
 }
 // Detailed information about exception (or error) that was thrown during script compilation or
 // execution.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ExceptionDetails {
     // Exception id.
@@ -288,7 +288,7 @@ pub type Timestamp = f64;
 // Number of milliseconds.
 pub type TimeDelta = f64;
 // Stack entry for runtime errors and assertions.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CallFrame {
     // JavaScript function name.
@@ -303,7 +303,7 @@ pub struct CallFrame {
     pub column_number: i32,
 }
 // Call frames for assertions or error messages.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct StackTrace {
     // String label of this stack trace. For async traces this may be a name of the function that
@@ -320,7 +320,7 @@ pub struct StackTrace {
 pub type UniqueDebuggerId = String;
 // If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
 // allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct StackTraceId {
     pub id: String,
@@ -747,16 +747,26 @@ impl super::Command for RemoveBinding {
 }
 
 // Notification is issued every time when binding is called.
-#[derive(Deserialize, Debug, Clone)]
-pub struct BindingCalled {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct BindingCalledEvent {
+    pub params: BindingCalledParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct BindingCalledParams {
     pub name: String,
     pub payload: String,
     // Identifier of the context where the call was made.
     pub execution_context_id: ExecutionContextId,
 }
 // Issued when console API was called.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ConsoleAPICalled {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ConsoleAPICalledEvent {
+    pub params: ConsoleAPICalledParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ConsoleAPICalledParams {
     // Type of the call.
     pub r#type: String,
     // Call arguments.
@@ -775,39 +785,69 @@ pub struct ConsoleAPICalled {
     pub context: Option<String>,
 }
 // Issued when unhandled exception was revoked.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ExceptionRevoked {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ExceptionRevokedEvent {
+    pub params: ExceptionRevokedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ExceptionRevokedParams {
     // Reason describing why exception was revoked.
     pub reason: String,
     // The id of revoked exception, as reported in `exceptionThrown`.
     pub exception_id: i32,
 }
 // Issued when exception was thrown and unhandled.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ExceptionThrown {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ExceptionThrownEvent {
+    pub params: ExceptionThrownParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ExceptionThrownParams {
     // Timestamp of the exception.
     pub timestamp: Timestamp,
     pub exception_details: ExceptionDetails,
 }
 // Issued when new execution context is created.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ExecutionContextCreated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ExecutionContextCreatedEvent {
+    pub params: ExecutionContextCreatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ExecutionContextCreatedParams {
     // A newly created execution context.
     pub context: ExecutionContextDescription,
 }
 // Issued when execution context is destroyed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ExecutionContextDestroyed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ExecutionContextDestroyedEvent {
+    pub params: ExecutionContextDestroyedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ExecutionContextDestroyedParams {
     // Id of the destroyed context
     pub execution_context_id: ExecutionContextId,
 }
 // Issued when all executionContexts were cleared in browser
-#[derive(Deserialize, Debug, Clone)]
-pub struct ExecutionContextsCleared {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ExecutionContextsClearedEvent {
+    pub params: ExecutionContextsClearedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ExecutionContextsClearedParams {}
 // Issued when object should be inspected (for example, as a result of inspect() command line API
 // call).
-#[derive(Deserialize, Debug, Clone)]
-pub struct InspectRequested {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct InspectRequestedEvent {
+    pub params: InspectRequestedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct InspectRequestedParams {
     pub object: RemoteObject,
     // TODO objectProperty
 }

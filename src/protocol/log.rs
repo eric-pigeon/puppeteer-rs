@@ -1,7 +1,7 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum LogEntrySource {
     Xml,
@@ -18,7 +18,7 @@ pub enum LogEntrySource {
     Recommendation,
     Other,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum LogEntryLevel {
     Verbose,
@@ -27,7 +27,7 @@ pub enum LogEntryLevel {
     Error,
 }
 // Log entry.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct LogEntry {
     // Log entry source.
@@ -51,7 +51,7 @@ pub struct LogEntry {
     // Call arguments.
     pub args: Option<Vec<super::runtime::RemoteObject>>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ViolationSettingName {
     LongTask,
@@ -63,7 +63,7 @@ pub enum ViolationSettingName {
     RecurringHandler,
 }
 // Violation configuration setting.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ViolationSetting {
     // Violation type.
@@ -128,8 +128,13 @@ impl super::Command for StopViolationsReport {
 }
 
 // Issued when new message was logged.
-#[derive(Deserialize, Debug, Clone)]
-pub struct EntryAdded {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct EntryAddedEvent {
+    pub params: EntryAddedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct EntryAddedParams {
     // The entry.
     pub entry: LogEntry,
 }

@@ -2,23 +2,9 @@
 use serde::{Deserialize, Serialize};
 
 // Enum of possible storage types.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum StorageType {
-    Appcache,
-    Cookies,
-    Filesystems,
-    Indexeddb,
-    Localstorage,
-    Shadercache,
-    Websql,
-    Serviceworkers,
-    Cachestorage,
-    All,
-    Other,
-}
+pub type StorageType = String;
 // Usage for a storage type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UsageForType {
     // Name of storage type.
@@ -183,22 +169,37 @@ impl super::Command for UntrackIndexedDBForOrigin {
 }
 
 // A cache's contents have been modified.
-#[derive(Deserialize, Debug, Clone)]
-pub struct CacheStorageContentUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct CacheStorageContentUpdatedEvent {
+    pub params: CacheStorageContentUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct CacheStorageContentUpdatedParams {
     // Origin to update.
     pub origin: String,
     // Name of cache in origin.
     pub cache_name: String,
 }
 // A cache has been added/deleted.
-#[derive(Deserialize, Debug, Clone)]
-pub struct CacheStorageListUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct CacheStorageListUpdatedEvent {
+    pub params: CacheStorageListUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct CacheStorageListUpdatedParams {
     // Origin to update.
     pub origin: String,
 }
 // The origin's IndexedDB object store has been modified.
-#[derive(Deserialize, Debug, Clone)]
-pub struct IndexedDBContentUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct IndexedDBContentUpdatedEvent {
+    pub params: IndexedDBContentUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct IndexedDBContentUpdatedParams {
     // Origin to update.
     pub origin: String,
     // Database to update.
@@ -207,8 +208,13 @@ pub struct IndexedDBContentUpdated {
     pub object_store_name: String,
 }
 // The origin's IndexedDB database list has been modified.
-#[derive(Deserialize, Debug, Clone)]
-pub struct IndexedDBListUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct IndexedDBListUpdatedEvent {
+    pub params: IndexedDBListUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct IndexedDBListUpdatedParams {
     // Origin to update.
     pub origin: String,
 }

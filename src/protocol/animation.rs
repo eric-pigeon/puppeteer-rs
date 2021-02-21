@@ -1,7 +1,7 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum AnimationType {
     CSSTransition,
@@ -9,7 +9,7 @@ pub enum AnimationType {
     WebAnimation,
 }
 // Animation instance.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Animation {
     // `Animation`'s id.
@@ -35,7 +35,7 @@ pub struct Animation {
     pub css_id: Option<String>,
 }
 // AnimationEffect instance
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AnimationEffect {
     // `AnimationEffect`'s delay.
@@ -60,7 +60,7 @@ pub struct AnimationEffect {
     pub easing: String,
 }
 // Keyframes Rule
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct KeyframesRule {
     // CSS keyframed animation's name.
@@ -69,7 +69,7 @@ pub struct KeyframesRule {
     pub keyframes: Vec<KeyframeStyle>,
 }
 // Keyframe Style
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct KeyframeStyle {
     // Keyframe's time offset.
@@ -218,20 +218,35 @@ impl super::Command for SetTiming {
 }
 
 // Event for when an animation has been cancelled.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AnimationCanceled {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AnimationCanceledEvent {
+    pub params: AnimationCanceledParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimationCanceledParams {
     // Id of the animation that was cancelled.
     pub id: String,
 }
 // Event for each animation that has been created.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AnimationCreated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AnimationCreatedEvent {
+    pub params: AnimationCreatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimationCreatedParams {
     // Id of the animation that was created.
     pub id: String,
 }
 // Event for animation that has been started.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AnimationStarted {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AnimationStartedEvent {
+    pub params: AnimationStartedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimationStartedParams {
     // Animation that was started.
     pub animation: Animation,
 }

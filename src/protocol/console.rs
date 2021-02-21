@@ -1,7 +1,7 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ConsoleMessageSource {
     Xml,
@@ -16,7 +16,7 @@ pub enum ConsoleMessageSource {
     Deprecation,
     Worker,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ConsoleMessageLevel {
     Log,
@@ -26,7 +26,7 @@ pub enum ConsoleMessageLevel {
     Info,
 }
 // Console message.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ConsoleMessage {
     // Message source.
@@ -76,8 +76,13 @@ impl super::Command for Enable {
 }
 
 // Issued when new console message is added.
-#[derive(Deserialize, Debug, Clone)]
-pub struct MessageAdded {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct MessageAddedEvent {
+    pub params: MessageAddedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct MessageAddedParams {
     // Console message that has been added.
     pub message: ConsoleMessage,
 }

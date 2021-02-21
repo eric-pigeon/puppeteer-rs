@@ -4,16 +4,9 @@ use serde::{Deserialize, Serialize};
 pub type BrowserContextID = String;
 pub type WindowID = i32;
 // The state of the browser window.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum WindowState {
-    Normal,
-    Minimized,
-    Maximized,
-    Fullscreen,
-}
+pub type WindowState = String;
 // Browser window bounds information
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Bounds {
     // The offset from the left edge of the screen to the window in pixels.
@@ -27,42 +20,11 @@ pub struct Bounds {
     // The window state. Default to normal.
     pub window_state: Option<WindowState>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum PermissionType {
-    AccessibilityEvents,
-    AudioCapture,
-    BackgroundSync,
-    BackgroundFetch,
-    ClipboardReadWrite,
-    ClipboardSanitizedWrite,
-    DurableStorage,
-    Flash,
-    Geolocation,
-    Midi,
-    MidiSysex,
-    Nfc,
-    Notifications,
-    PaymentHandler,
-    PeriodicBackgroundSync,
-    ProtectedMediaIdentifier,
-    Sensors,
-    VideoCapture,
-    VideoCapturePanTiltZoom,
-    IdleDetection,
-    WakeLockScreen,
-    WakeLockSystem,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum PermissionSetting {
-    Granted,
-    Denied,
-    Prompt,
-}
+pub type PermissionType = String;
+pub type PermissionSetting = String;
 // Definition of PermissionDescriptor defined in the Permissions API:
 // https://w3c.github.io/permissions/#dictdef-permissiondescriptor.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PermissionDescriptor {
     // Name of permission.
@@ -79,7 +41,7 @@ pub struct PermissionDescriptor {
     pub pan_tilt_zoom: Option<bool>,
 }
 // Chrome histogram bucket.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Bucket {
     // Minimum value (inclusive).
@@ -90,7 +52,7 @@ pub struct Bucket {
     pub count: i32,
 }
 // Chrome histogram.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Histogram {
     // Name.

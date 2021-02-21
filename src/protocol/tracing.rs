@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 // Configuration for memory dump. Used only when "memory-infra" category is enabled.
 pub type MemoryDumpConfig = std::collections::HashMap<String, serde_json::Value>;
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum TraceConfigRecordMode {
     RecordUntilFull,
@@ -11,7 +11,7 @@ pub enum TraceConfigRecordMode {
     RecordAsMuchAsPossible,
     EchoToConsole,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TraceConfig {
     // Controls how the trace buffer stores data.
@@ -33,19 +33,9 @@ pub struct TraceConfig {
 }
 // Data format of a trace. Can be either the legacy JSON format or the
 // protocol buffer format. Note that the JSON format will be deprecated soon.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum StreamFormat {
-    Json,
-    Proto,
-}
+pub type StreamFormat = String;
 // Compression type to use for traces returned via streams.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum StreamCompression {
-    None,
-    Gzip,
-}
+pub type StreamCompression = String;
 
 // Stop trace events collection.
 #[derive(Serialize, Debug)]
@@ -135,8 +125,13 @@ impl super::Command for Start {
     type ReturnObject = StartReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct BufferUsage {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct BufferUsageEvent {
+    pub params: BufferUsageParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct BufferUsageParams {
     // A number in range [0..1] that indicates the used size of event buffer as a fraction of its
     // total size.
     pub percent_full: Option<f64>,
@@ -148,14 +143,24 @@ pub struct BufferUsage {
 }
 // Contains an bucket of collected trace events. When tracing is stopped collected events will be
 // send as a sequence of dataCollected events followed by tracingComplete event.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DataCollected {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DataCollectedEvent {
+    pub params: DataCollectedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DataCollectedParams {
     pub value: Vec<serde_json::map::Map<String, serde_json::Value>>,
 }
 // Signals that tracing is stopped and there is no trace buffers pending flush, all data were
 // delivered via dataCollected events.
-#[derive(Deserialize, Debug, Clone)]
-pub struct TracingComplete {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TracingCompleteEvent {
+    pub params: TracingCompleteParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TracingCompleteParams {
     // Indicates whether some trace data is known to have been lost, e.g. because the trace ring
     // buffer wrapped around.
     pub data_loss_occurred: bool,

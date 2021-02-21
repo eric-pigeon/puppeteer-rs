@@ -2,22 +2,9 @@
 use serde::{Deserialize, Serialize};
 
 pub type AuthenticatorId = String;
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AuthenticatorProtocol {
-    U2f,
-    Ctap2,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AuthenticatorTransport {
-    Usb,
-    Nfc,
-    Ble,
-    Cable,
-    Internal,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type AuthenticatorProtocol = String;
+pub type AuthenticatorTransport = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VirtualAuthenticatorOptions {
     pub protocol: AuthenticatorProtocol,
@@ -37,7 +24,7 @@ pub struct VirtualAuthenticatorOptions {
     // Defaults to false.
     pub is_user_verified: Option<bool>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Credential {
     pub credential_id: String,

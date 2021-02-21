@@ -6,7 +6,7 @@ pub type BreakpointId = String;
 // Call frame identifier.
 pub type CallFrameId = String;
 // Location in the source code.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Location {
     // Script identifier as reported in the `Debugger.scriptParsed`.
@@ -17,14 +17,14 @@ pub struct Location {
     pub column_number: Option<i32>,
 }
 // Location in the source code.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ScriptPosition {
     pub line_number: i32,
     pub column_number: i32,
 }
 // Location range within one script.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct LocationRange {
     pub script_id: super::runtime::ScriptId,
@@ -32,7 +32,7 @@ pub struct LocationRange {
     pub end: ScriptPosition,
 }
 // JavaScript call frame. Array of call frames form the call stack.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CallFrame {
     // Call frame identifier. This identifier is only valid while the virtual machine is paused.
@@ -52,7 +52,7 @@ pub struct CallFrame {
     // The value being returned, if the function is at return point.
     pub return_value: Option<super::runtime::RemoteObject>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScopeType {
     Global,
@@ -67,7 +67,7 @@ pub enum ScopeType {
     WasmExpressionStack,
 }
 // Scope description.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Scope {
     // Scope type.
@@ -83,7 +83,7 @@ pub struct Scope {
     pub end_location: Option<Location>,
 }
 // Search match for resource.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SearchMatch {
     // Line number in resource content.
@@ -91,14 +91,14 @@ pub struct SearchMatch {
     // Line with match content.
     pub line_content: String,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum BreakLocationType {
     DebuggerStatement,
     Call,
     Return,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BreakLocation {
     // Script identifier as reported in the `Debugger.scriptParsed`.
@@ -110,13 +110,8 @@ pub struct BreakLocation {
     pub r#type: Option<String>,
 }
 // Enum of possible script languages.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ScriptLanguage {
-    JavaScript,
-    WebAssembly,
-}
-#[derive(Deserialize, Serialize, Debug, Clone)]
+pub type ScriptLanguage = String;
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum DebugSymbolsType {
     None,
@@ -125,7 +120,7 @@ pub enum DebugSymbolsType {
     ExternalDWARF,
 }
 // Debug symbols available for a wasm script.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct DebugSymbols {
     // Type of the debug symbols.
@@ -698,16 +693,26 @@ impl super::Command for StepOver {
 }
 
 // Fired when breakpoint is resolved to an actual script and location.
-#[derive(Deserialize, Debug, Clone)]
-pub struct BreakpointResolved {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct BreakpointResolvedEvent {
+    pub params: BreakpointResolvedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct BreakpointResolvedParams {
     // Breakpoint unique identifier.
     pub breakpoint_id: BreakpointId,
     // Actual breakpoint location.
     pub location: Location,
 }
 // Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria.
-#[derive(Deserialize, Debug, Clone)]
-pub struct Paused {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct PausedEvent {
+    pub params: PausedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct PausedParams {
     // Call stack the virtual machine stopped on.
     pub call_frames: Vec<CallFrame>,
     // Pause reason.
@@ -724,11 +729,21 @@ pub struct Paused {
     pub async_call_stack_trace_id: Option<super::runtime::StackTraceId>,
 }
 // Fired when the virtual machine resumed execution.
-#[derive(Deserialize, Debug, Clone)]
-pub struct Resumed {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ResumedEvent {
+    pub params: ResumedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ResumedParams {}
 // Fired when virtual machine fails to parse the script.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ScriptFailedToParse {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ScriptFailedToParseEvent {
+    pub params: ScriptFailedToParseParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ScriptFailedToParseParams {
     // Identifier of the script parsed.
     pub script_id: super::runtime::ScriptId,
     // URL or name of the script parsed (if any).
@@ -766,8 +781,13 @@ pub struct ScriptFailedToParse {
 }
 // Fired when virtual machine parses script. This event is also fired for all known and uncollected
 // scripts upon enabling debugger.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ScriptParsed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ScriptParsedEvent {
+    pub params: ScriptParsedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ScriptParsedParams {
     // Identifier of the script parsed.
     pub script_id: super::runtime::ScriptId,
     // URL or name of the script parsed (if any).

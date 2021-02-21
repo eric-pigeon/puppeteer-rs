@@ -4,32 +4,13 @@ use serde::{Deserialize, Serialize};
 // Unique frame identifier.
 pub type FrameId = String;
 // Indicates whether a frame has been identified as an ad.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AdFrameType {
-    None,
-    Child,
-    Root,
-}
+pub type AdFrameType = String;
 // Indicates whether the frame is a secure context and why it is the case.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SecureContextType {
-    Secure,
-    SecureLocalhost,
-    InsecureScheme,
-    InsecureAncestor,
-}
+pub type SecureContextType = String;
 // Indicates whether the frame is cross-origin isolated and why it is the case.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CrossOriginIsolatedContextType {
-    Isolated,
-    NotIsolated,
-    NotIsolatedFeatureDisabled,
-}
+pub type CrossOriginIsolatedContextType = String;
 // Information about the Frame on the page.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Frame {
     // Frame unique identifier.
@@ -63,7 +44,7 @@ pub struct Frame {
     pub cross_origin_isolated_context_type: CrossOriginIsolatedContextType,
 }
 // Information about the Resource on the page.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FrameResource {
     // Resource URL.
@@ -82,7 +63,7 @@ pub struct FrameResource {
     pub canceled: Option<bool>,
 }
 // Information about the Frame hierarchy along with their cached resources.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FrameResourceTree {
     // Frame information for this tree item.
@@ -93,7 +74,7 @@ pub struct FrameResourceTree {
     pub resources: Vec<FrameResource>,
 }
 // Information about the Frame hierarchy.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FrameTree {
     // Frame information for this tree item.
@@ -104,25 +85,9 @@ pub struct FrameTree {
 // Unique script identifier.
 pub type ScriptIdentifier = String;
 // Transition type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum TransitionType {
-    Link,
-    Typed,
-    Addressbar,
-    Autobookmark,
-    Autosubframe,
-    Manualsubframe,
-    Generated,
-    Autotoplevel,
-    Formsubmit,
-    Reload,
-    Keyword,
-    Keywordgenerated,
-    Other,
-}
+pub type TransitionType = String;
 // Navigation history entry.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct NavigationEntry {
     // Unique id of the navigation history entry.
@@ -137,7 +102,7 @@ pub struct NavigationEntry {
     pub transition_type: TransitionType,
 }
 // Screencast frame metadata.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ScreencastFrameMetadata {
     // Top offset in DIP.
@@ -156,16 +121,9 @@ pub struct ScreencastFrameMetadata {
     pub timestamp: Option<super::network::TimeSinceEpoch>,
 }
 // Javascript dialog type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum DialogType {
-    Alert,
-    Confirm,
-    Prompt,
-    Beforeunload,
-}
+pub type DialogType = String;
 // Error while paring app manifest.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AppManifestError {
     // Error message.
@@ -178,14 +136,14 @@ pub struct AppManifestError {
     pub column: i32,
 }
 // Parsed app manifest properties.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AppManifestParsedProperties {
     // Computed scope value
     pub scope: String,
 }
 // Layout viewport position and dimensions.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct LayoutViewport {
     // Horizontal offset relative to the document (CSS pixels).
@@ -198,7 +156,7 @@ pub struct LayoutViewport {
     pub client_height: i32,
 }
 // Visual viewport position, dimensions, and scale.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VisualViewport {
     // Horizontal offset relative to the layout viewport (CSS pixels).
@@ -219,7 +177,7 @@ pub struct VisualViewport {
     pub zoom: Option<f64>,
 }
 // Viewport for capturing screenshot.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Viewport {
     // X offset in device independent pixels (dip).
@@ -234,7 +192,7 @@ pub struct Viewport {
     pub scale: f64,
 }
 // Generic font families collection.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FontFamilies {
     // The standard font-family.
@@ -253,7 +211,7 @@ pub struct FontFamilies {
     pub pictograph: Option<String>,
 }
 // Default font sizes.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FontSizes {
     // Default standard font size.
@@ -261,27 +219,9 @@ pub struct FontSizes {
     // Default fixed font size.
     pub fixed: Option<i32>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ClientNavigationReason {
-    FormSubmissionGet,
-    FormSubmissionPost,
-    HttpHeaderRefresh,
-    ScriptInitiated,
-    MetaTagRefresh,
-    PageBlockInterstitial,
-    Reload,
-    AnchorClick,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ClientNavigationDisposition {
-    CurrentTab,
-    NewTab,
-    NewWindow,
-    Download,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type ClientNavigationReason = String;
+pub type ClientNavigationDisposition = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InstallabilityErrorArgument {
     // Argument name (e.g. name:'minimum-icon-size-in-pixels').
@@ -290,7 +230,7 @@ pub struct InstallabilityErrorArgument {
     pub value: String,
 }
 // The installability error
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InstallabilityError {
     // The error id (e.g. 'manifest-missing-suitable-icon').
@@ -299,18 +239,7 @@ pub struct InstallabilityError {
     pub error_arguments: Vec<InstallabilityErrorArgument>,
 }
 // The referring-policy used for the navigation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ReferrerPolicy {
-    NoReferrer,
-    NoReferrerWhenDowngrade,
-    Origin,
-    OriginWhenCrossOrigin,
-    SameOrigin,
-    StrictOrigin,
-    StrictOriginWhenCrossOrigin,
-    UnsafeUrl,
-}
+pub type ReferrerPolicy = String;
 
 // Deprecated, please use addScriptToEvaluateOnNewDocument instead.
 #[derive(Serialize, Debug)]
@@ -1183,13 +1112,23 @@ impl super::Command for SetInterceptFileChooserDialog {
     type ReturnObject = SetInterceptFileChooserDialogReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct DomContentEventFired {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DomContentEventFiredEvent {
+    pub params: DomContentEventFiredParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DomContentEventFiredParams {
     pub timestamp: super::network::MonotonicTime,
 }
 // Emitted only when `page.interceptFileChooser` is enabled.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FileChooserOpened {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FileChooserOpenedEvent {
+    pub params: FileChooserOpenedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FileChooserOpenedParams {
     // Id of the frame containing input node.
     pub frame_id: FrameId,
     // Input node id.
@@ -1198,8 +1137,13 @@ pub struct FileChooserOpened {
     pub mode: String,
 }
 // Fired when frame has been attached to its parent.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameAttached {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameAttachedEvent {
+    pub params: FrameAttachedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameAttachedParams {
     // Id of the frame that has been attached.
     pub frame_id: FrameId,
     // Parent frame identifier.
@@ -1208,29 +1152,54 @@ pub struct FrameAttached {
     pub stack: Option<super::runtime::StackTrace>,
 }
 // Fired when frame no longer has a scheduled navigation.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameClearedScheduledNavigation {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameClearedScheduledNavigationEvent {
+    pub params: FrameClearedScheduledNavigationParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameClearedScheduledNavigationParams {
     // Id of the frame that has cleared its scheduled navigation.
     pub frame_id: FrameId,
 }
 // Fired when frame has been detached from its parent.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameDetached {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameDetachedEvent {
+    pub params: FrameDetachedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameDetachedParams {
     // Id of the frame that has been detached.
     pub frame_id: FrameId,
 }
 // Fired once navigation of the frame has completed. Frame is now associated with the new loader.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameNavigated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameNavigatedEvent {
+    pub params: FrameNavigatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameNavigatedParams {
     // Frame object.
     pub frame: Frame,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameResized {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameResizedEvent {
+    pub params: FrameResizedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameResizedParams {}
 // Fired when a renderer-initiated navigation is requested.
 // Navigation may still be cancelled after the event is issued.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameRequestedNavigation {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameRequestedNavigationEvent {
+    pub params: FrameRequestedNavigationParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameRequestedNavigationParams {
     // Id of the frame that is being navigated.
     pub frame_id: FrameId,
     // The reason for the navigation.
@@ -1241,8 +1210,13 @@ pub struct FrameRequestedNavigation {
     pub disposition: ClientNavigationDisposition,
 }
 // Fired when frame schedules a potential navigation.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameScheduledNavigation {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameScheduledNavigationEvent {
+    pub params: FrameScheduledNavigationParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameScheduledNavigationParams {
     // Id of the frame that has scheduled a navigation.
     pub frame_id: FrameId,
     // Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
@@ -1254,20 +1228,35 @@ pub struct FrameScheduledNavigation {
     pub url: String,
 }
 // Fired when frame has started loading.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameStartedLoading {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameStartedLoadingEvent {
+    pub params: FrameStartedLoadingParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameStartedLoadingParams {
     // Id of the frame that has started loading.
     pub frame_id: FrameId,
 }
 // Fired when frame has stopped loading.
-#[derive(Deserialize, Debug, Clone)]
-pub struct FrameStoppedLoading {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FrameStoppedLoadingEvent {
+    pub params: FrameStoppedLoadingParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FrameStoppedLoadingParams {
     // Id of the frame that has stopped loading.
     pub frame_id: FrameId,
 }
 // Fired when page is about to start a download.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DownloadWillBegin {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DownloadWillBeginEvent {
+    pub params: DownloadWillBeginParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DownloadWillBeginParams {
     // Id of the frame that caused download to begin.
     pub frame_id: FrameId,
     // Global unique identifier of the download.
@@ -1278,8 +1267,13 @@ pub struct DownloadWillBegin {
     pub suggested_filename: String,
 }
 // Fired when download makes progress. Last call has |done| == true.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DownloadProgress {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DownloadProgressEvent {
+    pub params: DownloadProgressParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DownloadProgressParams {
     // Global unique identifier of the download.
     pub guid: String,
     // Total expected bytes to download.
@@ -1290,15 +1284,30 @@ pub struct DownloadProgress {
     pub state: String,
 }
 // Fired when interstitial page was hidden
-#[derive(Deserialize, Debug, Clone)]
-pub struct InterstitialHidden {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct InterstitialHiddenEvent {
+    pub params: InterstitialHiddenParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct InterstitialHiddenParams {}
 // Fired when interstitial page was shown
-#[derive(Deserialize, Debug, Clone)]
-pub struct InterstitialShown {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct InterstitialShownEvent {
+    pub params: InterstitialShownParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct InterstitialShownParams {}
 // Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
 // closed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct JavascriptDialogClosed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct JavascriptDialogClosedEvent {
+    pub params: JavascriptDialogClosedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct JavascriptDialogClosedParams {
     // Whether dialog was confirmed.
     pub result: bool,
     // User input in case of prompt.
@@ -1306,8 +1315,13 @@ pub struct JavascriptDialogClosed {
 }
 // Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
 // open.
-#[derive(Deserialize, Debug, Clone)]
-pub struct JavascriptDialogOpening {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct JavascriptDialogOpeningEvent {
+    pub params: JavascriptDialogOpeningParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct JavascriptDialogOpeningParams {
     // Frame url.
     pub url: String,
     // Message that will be displayed by the dialog.
@@ -1322,8 +1336,13 @@ pub struct JavascriptDialogOpening {
     pub default_prompt: Option<String>,
 }
 // Fired for top level page lifecycle events such as navigation, load, paint, etc.
-#[derive(Deserialize, Debug, Clone)]
-pub struct LifecycleEvent {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct LifecycleEventEvent {
+    pub params: LifecycleEventParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LifecycleEventParams {
     // Id of the frame.
     pub frame_id: FrameId,
     // Loader identifier. Empty string if the request is fetched from worker.
@@ -1331,21 +1350,36 @@ pub struct LifecycleEvent {
     pub name: String,
     pub timestamp: super::network::MonotonicTime,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct LoadEventFired {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct LoadEventFiredEvent {
+    pub params: LoadEventFiredParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadEventFiredParams {
     pub timestamp: super::network::MonotonicTime,
 }
 // Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation.
-#[derive(Deserialize, Debug, Clone)]
-pub struct NavigatedWithinDocument {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct NavigatedWithinDocumentEvent {
+    pub params: NavigatedWithinDocumentParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct NavigatedWithinDocumentParams {
     // Id of the frame.
     pub frame_id: FrameId,
     // Frame's new url.
     pub url: String,
 }
 // Compressed image data requested by the `startScreencast`.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ScreencastFrame {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ScreencastFrameEvent {
+    pub params: ScreencastFrameParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ScreencastFrameParams {
     // Base64-encoded compressed image.
     pub data: String,
     // Screencast frame metadata.
@@ -1354,15 +1388,25 @@ pub struct ScreencastFrame {
     pub session_id: i32,
 }
 // Fired when the page with currently enabled screencast was shown or hidden `.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ScreencastVisibilityChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ScreencastVisibilityChangedEvent {
+    pub params: ScreencastVisibilityChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ScreencastVisibilityChangedParams {
     // True if the page is visible.
     pub visible: bool,
 }
 // Fired when a new window is going to be opened, via window.open(), link click, form submission,
 // etc.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WindowOpen {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WindowOpenEvent {
+    pub params: WindowOpenParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WindowOpenParams {
     // The URL for the new window.
     pub url: String,
     // Window name.
@@ -1374,8 +1418,13 @@ pub struct WindowOpen {
 }
 // Issued for every compilation cache generated. Is only available
 // if Page.setGenerateCompilationCache is enabled.
-#[derive(Deserialize, Debug, Clone)]
-pub struct CompilationCacheProduced {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct CompilationCacheProducedEvent {
+    pub params: CompilationCacheProducedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompilationCacheProducedParams {
     pub url: String,
     // Base64-encoded data
     pub data: String,

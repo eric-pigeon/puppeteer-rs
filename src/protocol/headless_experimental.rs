@@ -1,14 +1,14 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenshotParamsFormat {
     Jpeg,
     Png,
 }
 // Encoding options for a screenshot.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ScreenshotParams {
     // Image compression format (defaults to png).
@@ -75,8 +75,13 @@ impl super::Command for Enable {
 // Issued when the target starts or stops needing BeginFrames.
 // Deprecated. Issue beginFrame unconditionally instead and use result from
 // beginFrame to detect whether the frames were suppressed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct NeedsBeginFramesChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct NeedsBeginFramesChangedEvent {
+    pub params: NeedsBeginFramesChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct NeedsBeginFramesChangedParams {
     // True if BeginFrames are needed, false otherwise.
     pub needs_begin_frames: bool,
 }

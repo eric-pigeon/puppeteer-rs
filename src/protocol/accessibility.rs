@@ -4,53 +4,13 @@ use serde::{Deserialize, Serialize};
 // Unique accessibility node identifier.
 pub type AXNodeId = String;
 // Enum of possible property types.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AXValueType {
-    Boolean,
-    Tristate,
-    BooleanOrUndefined,
-    Idref,
-    IdrefList,
-    Integer,
-    Node,
-    NodeList,
-    Number,
-    String,
-    ComputedString,
-    Token,
-    TokenList,
-    DomRelation,
-    Role,
-    InternalRole,
-    ValueUndefined,
-}
+pub type AXValueType = String;
 // Enum of possible property sources.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AXValueSourceType {
-    Attribute,
-    Implicit,
-    Style,
-    Contents,
-    Placeholder,
-    RelatedElement,
-}
+pub type AXValueSourceType = String;
 // Enum of possible native property sources (as a subtype of a particular AXValueSourceType).
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AXValueNativeSourceType {
-    Figcaption,
-    Label,
-    Labelfor,
-    Labelwrapped,
-    Legend,
-    Tablecaption,
-    Title,
-    Other,
-}
+pub type AXValueNativeSourceType = String;
 // A single source for a computed AX property.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AXValueSource {
     // What type of source this is.
@@ -72,7 +32,7 @@ pub struct AXValueSource {
     // Reason for the value being invalid, if it is.
     pub invalid_reason: Option<String>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AXRelatedNode {
     // The BackendNodeId of the related DOM node.
@@ -82,7 +42,7 @@ pub struct AXRelatedNode {
     // The text alternative of this node in the current context.
     pub text: Option<String>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AXProperty {
     // The name of this property.
@@ -91,7 +51,7 @@ pub struct AXProperty {
     pub value: AXValue,
 }
 // A single computed AX property.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AXValue {
     // The type of this value.
@@ -109,51 +69,9 @@ pub struct AXValue {
 // - from 'autocomplete' to 'valuetext': attributes which apply to widgets
 // - from 'checked' to 'selected': states which apply to widgets
 // - from 'activedescendant' to 'owns' - relationships between elements other than parent/child/sibling.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum AXPropertyName {
-    Busy,
-    Disabled,
-    Editable,
-    Focusable,
-    Focused,
-    Hidden,
-    HiddenRoot,
-    Invalid,
-    Keyshortcuts,
-    Settable,
-    Roledescription,
-    Live,
-    Atomic,
-    Relevant,
-    Root,
-    Autocomplete,
-    HasPopup,
-    Level,
-    Multiselectable,
-    Orientation,
-    Multiline,
-    Readonly,
-    Required,
-    Valuemin,
-    Valuemax,
-    Valuetext,
-    Checked,
-    Expanded,
-    Modal,
-    Pressed,
-    Selected,
-    Activedescendant,
-    Controls,
-    Describedby,
-    Details,
-    Errormessage,
-    Flowto,
-    Labelledby,
-    Owns,
-}
+pub type AXPropertyName = String;
 // A node in the accessibility tree.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AXNode {
     // Unique identifier for this node.

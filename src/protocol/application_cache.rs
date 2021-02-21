@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Detailed application cache resource information.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ApplicationCacheResource {
     // Resource url.
@@ -13,7 +13,7 @@ pub struct ApplicationCacheResource {
     pub r#type: String,
 }
 // Detailed application cache information.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ApplicationCache {
     // Manifest URL.
@@ -28,7 +28,7 @@ pub struct ApplicationCache {
     pub resources: Vec<ApplicationCacheResource>,
 }
 // Frame identifier - manifest URL pair.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FrameWithManifest {
     // Frame identifier.
@@ -97,8 +97,13 @@ impl super::Command for GetManifestForFrame {
     type ReturnObject = GetManifestForFrameReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct ApplicationCacheStatusUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ApplicationCacheStatusUpdatedEvent {
+    pub params: ApplicationCacheStatusUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ApplicationCacheStatusUpdatedParams {
     // Identifier of the frame containing document whose application cache updated status.
     pub frame_id: super::page::FrameId,
     // Manifest URL.
@@ -106,7 +111,12 @@ pub struct ApplicationCacheStatusUpdated {
     // Updated application cache status.
     pub status: i32,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct NetworkStateUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct NetworkStateUpdatedEvent {
+    pub params: NetworkStateUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkStateUpdatedParams {
     pub is_now_online: bool,
 }

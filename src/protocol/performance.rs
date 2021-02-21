@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Run-time execution metric.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Metric {
     // Metric name.
@@ -70,8 +70,13 @@ impl super::Command for GetMetrics {
 }
 
 // Current values of the metrics.
-#[derive(Deserialize, Debug, Clone)]
-pub struct Metrics {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct MetricsEvent {
+    pub params: MetricsParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct MetricsParams {
     // Current values of the metrics.
     pub metrics: Vec<Metric>,
     // Timestamp title.

@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 // Unique identifier of Database object.
 pub type DatabaseId = String;
 // Database object.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Database {
     // Database ID.
@@ -17,7 +17,7 @@ pub struct Database {
     pub version: String,
 }
 // Database error.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Error {
     // Error message.
@@ -76,7 +76,12 @@ impl super::Command for GetDatabaseTableNames {
     type ReturnObject = GetDatabaseTableNamesReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct AddDatabase {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AddDatabaseEvent {
+    pub params: AddDatabaseParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AddDatabaseParams {
     pub database: Database,
 }

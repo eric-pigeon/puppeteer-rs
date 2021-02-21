@@ -2,26 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Resource type as it was perceived by the rendering engine.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ResourceType {
-    Document,
-    Stylesheet,
-    Image,
-    Media,
-    Font,
-    Script,
-    TextTrack,
-    XHR,
-    Fetch,
-    EventSource,
-    WebSocket,
-    Manifest,
-    SignedExchange,
-    Ping,
-    CSPViolationReport,
-    Other,
-}
+pub type ResourceType = String;
 // Unique loader identifier.
 pub type LoaderId = String;
 // Unique request identifier.
@@ -29,24 +10,7 @@ pub type RequestId = String;
 // Unique intercepted request identifier.
 pub type InterceptionId = String;
 // Network level fetch failure reason.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ErrorReason {
-    Failed,
-    Aborted,
-    TimedOut,
-    AccessDenied,
-    ConnectionClosed,
-    ConnectionReset,
-    ConnectionRefused,
-    ConnectionAborted,
-    ConnectionFailed,
-    NameNotResolved,
-    InternetDisconnected,
-    AddressUnreachable,
-    BlockedByClient,
-    BlockedByResponse,
-}
+pub type ErrorReason = String;
 // UTC time in seconds, counted from January 1, 1970.
 pub type TimeSinceEpoch = f64;
 // Monotonically increasing time in seconds since an arbitrary point in the past.
@@ -54,39 +18,15 @@ pub type MonotonicTime = f64;
 // Request / response headers as keys / values of JSON object.
 pub type Headers = std::collections::HashMap<String, String>;
 // The underlying connection technology that the browser is supposedly using.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ConnectionType {
-    None,
-    Cellular2g,
-    Cellular3g,
-    Cellular4g,
-    Bluetooth,
-    Ethernet,
-    Wifi,
-    Wimax,
-    Other,
-}
+pub type ConnectionType = String;
 // Represents the cookie's 'SameSite' status:
 // https://tools.ietf.org/html/draft-west-first-party-cookies
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CookieSameSite {
-    Strict,
-    Lax,
-    None,
-}
+pub type CookieSameSite = String;
 // Represents the cookie's 'Priority' status:
 // https://tools.ietf.org/html/draft-west-cookie-priority-00
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CookiePriority {
-    Low,
-    Medium,
-    High,
-}
+pub type CookiePriority = String;
 // Timing information for the request.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ResourceTiming {
     // Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
@@ -128,22 +68,14 @@ pub struct ResourceTiming {
     pub receive_headers_end: f64,
 }
 // Loading priority of a resource request.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ResourcePriority {
-    VeryLow,
-    Low,
-    Medium,
-    High,
-    VeryHigh,
-}
+pub type ResourcePriority = String;
 // Post data entry for HTTP request
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PostDataEntry {
     pub bytes: Option<String>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum RequestReferrerPolicy {
     UnsafeUrl,
@@ -156,7 +88,7 @@ pub enum RequestReferrerPolicy {
     StrictOriginWhenCrossOrigin,
 }
 // HTTP request data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Request {
     // Request URL (without fragment).
@@ -186,7 +118,7 @@ pub struct Request {
     pub trust_token_params: Option<TrustTokenParams>,
 }
 // Details of a signed certificate timestamp (SCT).
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SignedCertificateTimestamp {
     // Validation status.
@@ -207,7 +139,7 @@ pub struct SignedCertificateTimestamp {
     pub signature_data: String,
 }
 // Security details about a request.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SecurityDetails {
     // Protocol name (e.g. "TLS 1.2" or "QUIC").
@@ -238,41 +170,12 @@ pub struct SecurityDetails {
     pub certificate_transparency_compliance: CertificateTransparencyCompliance,
 }
 // Whether the request complied with Certificate Transparency policy.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CertificateTransparencyCompliance {
-    Unknown,
-    NotCompliant,
-    Compliant,
-}
+pub type CertificateTransparencyCompliance = String;
 // The reason why request was blocked.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum BlockedReason {
-    Other,
-    Csp,
-    MixedContent,
-    Origin,
-    Inspector,
-    SubresourceFilter,
-    ContentType,
-    CollapsedByClient,
-    CoepFrameResourceNeedsCoepHeader,
-    CoopSandboxedIframeCannotNavigateToCoopPage,
-    CorpNotSameOrigin,
-    CorpNotSameOriginAfterDefaultedToSameOriginByCoep,
-    CorpNotSameSite,
-}
+pub type BlockedReason = String;
 // Source of serviceworker response.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ServiceWorkerResponseSource {
-    CacheStorage,
-    HttpCache,
-    FallbackCode,
-    Network,
-}
-#[derive(Deserialize, Serialize, Debug, Clone)]
+pub type ServiceWorkerResponseSource = String;
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum TrustTokenParamsRefreshPolicy {
     UseCached,
@@ -280,7 +183,7 @@ pub enum TrustTokenParamsRefreshPolicy {
 }
 // Determines what type of Trust Token operation is executed and
 // depending on the type, some additional parameters.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TrustTokenParams {
     pub r#type: TrustTokenOperationType,
@@ -291,15 +194,9 @@ pub struct TrustTokenParams {
     // records.
     pub issuers: Option<Vec<String>>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum TrustTokenOperationType {
-    Issuance,
-    Redemption,
-    Signing,
-}
+pub type TrustTokenOperationType = String;
 // HTTP response data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Response {
     // Response URL. This URL can be different from CachedResource.url in case of redirect.
@@ -350,14 +247,14 @@ pub struct Response {
     pub security_details: Option<SecurityDetails>,
 }
 // WebSocket request data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct WebSocketRequest {
     // HTTP request headers.
     pub headers: Headers,
 }
 // WebSocket response data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct WebSocketResponse {
     // HTTP response status code.
@@ -374,7 +271,7 @@ pub struct WebSocketResponse {
     pub request_headers_text: Option<String>,
 }
 // WebSocket message data. This represents an entire WebSocket message, not just a fragmented frame as the name suggests.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct WebSocketFrame {
     // WebSocket message opcode.
@@ -387,7 +284,7 @@ pub struct WebSocketFrame {
     pub payload_data: String,
 }
 // Information about the cached resource.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CachedResource {
     // Resource URL. This is the url of the original network request.
@@ -399,7 +296,7 @@ pub struct CachedResource {
     // Cached response body size.
     pub body_size: f64,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum InitiatorType {
     Parser,
@@ -409,7 +306,7 @@ pub enum InitiatorType {
     Other,
 }
 // Information about the request initiator.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Initiator {
     // Type of this initiator.
@@ -426,7 +323,7 @@ pub struct Initiator {
     pub column_number: Option<f64>,
 }
 // Cookie object
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Cookie {
     // Cookie name.
@@ -453,44 +350,11 @@ pub struct Cookie {
     pub priority: CookiePriority,
 }
 // Types of reasons why a cookie may not be stored from a response.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SetCookieBlockedReason {
-    SecureOnly,
-    SameSiteStrict,
-    SameSiteLax,
-    SameSiteUnspecifiedTreatedAsLax,
-    SameSiteNoneInsecure,
-    UserPreferences,
-    SyntaxError,
-    SchemeNotSupported,
-    OverwriteSecure,
-    InvalidDomain,
-    InvalidPrefix,
-    UnknownError,
-    SchemefulSameSiteStrict,
-    SchemefulSameSiteLax,
-    SchemefulSameSiteUnspecifiedTreatedAsLax,
-}
+pub type SetCookieBlockedReason = String;
 // Types of reasons why a cookie may not be sent with a request.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CookieBlockedReason {
-    SecureOnly,
-    NotOnPath,
-    DomainMismatch,
-    SameSiteStrict,
-    SameSiteLax,
-    SameSiteUnspecifiedTreatedAsLax,
-    SameSiteNoneInsecure,
-    UserPreferences,
-    UnknownError,
-    SchemefulSameSiteStrict,
-    SchemefulSameSiteLax,
-    SchemefulSameSiteUnspecifiedTreatedAsLax,
-}
+pub type CookieBlockedReason = String;
 // A cookie which was not stored from a response with the corresponding reason.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BlockedSetCookieWithReason {
     // The reason(s) this cookie was blocked.
@@ -504,7 +368,7 @@ pub struct BlockedSetCookieWithReason {
     pub cookie: Option<Cookie>,
 }
 // A cookie with was not sent with a request with the corresponding reason.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BlockedCookieWithReason {
     // The reason(s) the cookie was blocked.
@@ -513,7 +377,7 @@ pub struct BlockedCookieWithReason {
     pub cookie: Cookie,
 }
 // Cookie parameter object
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CookieParam {
     // Cookie name.
@@ -538,14 +402,14 @@ pub struct CookieParam {
     // Cookie Priority.
     pub priority: Option<CookiePriority>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum AuthChallengeSource {
     Server,
     Proxy,
 }
 // Authorization challenge for HTTP status code 401 or 407.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AuthChallenge {
     // Source of the authentication challenge.
@@ -557,7 +421,7 @@ pub struct AuthChallenge {
     // The realm of the challenge. May be empty.
     pub realm: String,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum AuthChallengeResponseResponse {
     Default,
@@ -565,7 +429,7 @@ pub enum AuthChallengeResponseResponse {
     ProvideCredentials,
 }
 // Response to an AuthChallenge.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AuthChallengeResponse {
     // The decision on what to do in response to the authorization challenge.  Default means
@@ -581,14 +445,9 @@ pub struct AuthChallengeResponse {
 }
 // Stages of the interception to begin intercepting. Request will intercept before the request is
 // sent. Response will intercept after the response is received.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum InterceptionStage {
-    Request,
-    HeadersReceived,
-}
+pub type InterceptionStage = String;
 // Request pattern for interception.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RequestPattern {
     // Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is
@@ -601,7 +460,7 @@ pub struct RequestPattern {
 }
 // Information about a signed exchange signature.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SignedExchangeSignature {
     // Signed exchange signature label.
@@ -625,7 +484,7 @@ pub struct SignedExchangeSignature {
 }
 // Information about a signed exchange header.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#cbor-representation
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SignedExchangeHeader {
     // Signed exchange request URL.
@@ -640,18 +499,9 @@ pub struct SignedExchangeHeader {
     pub header_integrity: String,
 }
 // Field type for a signed exchange related error.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SignedExchangeErrorField {
-    SignatureSig,
-    SignatureIntegrity,
-    SignatureCertUrl,
-    SignatureCertSha256,
-    SignatureValidityUrl,
-    SignatureTimestamps,
-}
+pub type SignedExchangeErrorField = String;
 // Information about a signed exchange response.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SignedExchangeError {
     // Error message.
@@ -662,7 +512,7 @@ pub struct SignedExchangeError {
     pub error_field: Option<SignedExchangeErrorField>,
 }
 // Information about a signed exchange response.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SignedExchangeInfo {
     // The outer response of signed HTTP exchange which was received from network.
@@ -674,15 +524,8 @@ pub struct SignedExchangeInfo {
     // Errors occurred while handling the signed exchagne.
     pub errors: Option<Vec<SignedExchangeError>>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CrossOriginOpenerPolicyValue {
-    SameOrigin,
-    SameOriginAllowPopups,
-    UnsafeNone,
-    SameOriginPlusCoep,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type CrossOriginOpenerPolicyValue = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CrossOriginOpenerPolicyStatus {
     pub value: CrossOriginOpenerPolicyValue,
@@ -690,13 +533,8 @@ pub struct CrossOriginOpenerPolicyStatus {
     pub reporting_endpoint: Option<String>,
     pub report_only_reporting_endpoint: Option<String>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CrossOriginEmbedderPolicyValue {
-    None,
-    RequireCorp,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type CrossOriginEmbedderPolicyValue = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CrossOriginEmbedderPolicyStatus {
     pub value: CrossOriginEmbedderPolicyValue,
@@ -704,14 +542,14 @@ pub struct CrossOriginEmbedderPolicyStatus {
     pub reporting_endpoint: Option<String>,
     pub report_only_reporting_endpoint: Option<String>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SecurityIsolationStatus {
     pub coop: CrossOriginOpenerPolicyStatus,
     pub coep: CrossOriginEmbedderPolicyStatus,
 }
 // An object providing the result of a network resource load.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadNetworkResourcePageResult {
     pub success: bool,
@@ -726,7 +564,7 @@ pub struct LoadNetworkResourcePageResult {
 }
 // An options object that may be extended later to better support CORS,
 // CORB and streaming.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadNetworkResourceOptions {
     pub disable_cache: bool,
@@ -1248,8 +1086,13 @@ impl super::Command for LoadNetworkResource {
 }
 
 // Fired when data chunk was received over the network.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DataReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DataReceivedEvent {
+    pub params: DataReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DataReceivedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1260,8 +1103,13 @@ pub struct DataReceived {
     pub encoded_data_length: i32,
 }
 // Fired when EventSource message is received.
-#[derive(Deserialize, Debug, Clone)]
-pub struct EventSourceMessageReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct EventSourceMessageReceivedEvent {
+    pub params: EventSourceMessageReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct EventSourceMessageReceivedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1274,8 +1122,13 @@ pub struct EventSourceMessageReceived {
     pub data: String,
 }
 // Fired when HTTP request has failed to load.
-#[derive(Deserialize, Debug, Clone)]
-pub struct LoadingFailed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct LoadingFailedEvent {
+    pub params: LoadingFailedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadingFailedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1290,8 +1143,13 @@ pub struct LoadingFailed {
     pub blocked_reason: Option<BlockedReason>,
 }
 // Fired when HTTP request has finished loading.
-#[derive(Deserialize, Debug, Clone)]
-pub struct LoadingFinished {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct LoadingFinishedEvent {
+    pub params: LoadingFinishedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadingFinishedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1305,8 +1163,13 @@ pub struct LoadingFinished {
 // Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
 // mocked.
 // Deprecated, use Fetch.requestPaused instead.
-#[derive(Deserialize, Debug, Clone)]
-pub struct RequestIntercepted {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct RequestInterceptedEvent {
+    pub params: RequestInterceptedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct RequestInterceptedParams {
     // Each request the page makes will have a unique id, however if any redirects are encountered
     // while processing that fetch, they will be reported with the same id as the original fetch.
     // Likewise if HTTP authentication is needed then the same fetch id will be used.
@@ -1340,14 +1203,24 @@ pub struct RequestIntercepted {
     pub request_id: Option<RequestId>,
 }
 // Fired if request ended up loading from cache.
-#[derive(Deserialize, Debug, Clone)]
-pub struct RequestServedFromCache {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct RequestServedFromCacheEvent {
+    pub params: RequestServedFromCacheParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct RequestServedFromCacheParams {
     // Request identifier.
     pub request_id: RequestId,
 }
 // Fired when page is about to send HTTP request.
-#[derive(Deserialize, Debug, Clone)]
-pub struct RequestWillBeSent {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct RequestWillBeSentEvent {
+    pub params: RequestWillBeSentParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct RequestWillBeSentParams {
     // Request identifier.
     pub request_id: RequestId,
     // Loader identifier. Empty string if the request is fetched from worker.
@@ -1372,8 +1245,13 @@ pub struct RequestWillBeSent {
     pub has_user_gesture: Option<bool>,
 }
 // Fired when resource loading priority is changed
-#[derive(Deserialize, Debug, Clone)]
-pub struct ResourceChangedPriority {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ResourceChangedPriorityEvent {
+    pub params: ResourceChangedPriorityParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ResourceChangedPriorityParams {
     // Request identifier.
     pub request_id: RequestId,
     // New priority
@@ -1382,16 +1260,26 @@ pub struct ResourceChangedPriority {
     pub timestamp: MonotonicTime,
 }
 // Fired when a signed exchange was received over the network
-#[derive(Deserialize, Debug, Clone)]
-pub struct SignedExchangeReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct SignedExchangeReceivedEvent {
+    pub params: SignedExchangeReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct SignedExchangeReceivedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Information about the signed exchange response.
     pub info: SignedExchangeInfo,
 }
 // Fired when HTTP response is available.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ResponseReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ResponseReceivedEvent {
+    pub params: ResponseReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ResponseReceivedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Loader identifier. Empty string if the request is fetched from worker.
@@ -1406,16 +1294,26 @@ pub struct ResponseReceived {
     pub frame_id: Option<super::page::FrameId>,
 }
 // Fired when WebSocket is closed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketClosed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketClosedEvent {
+    pub params: WebSocketClosedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketClosedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
     pub timestamp: MonotonicTime,
 }
 // Fired upon WebSocket creation.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketCreated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketCreatedEvent {
+    pub params: WebSocketCreatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketCreatedParams {
     // Request identifier.
     pub request_id: RequestId,
     // WebSocket request URL.
@@ -1424,8 +1322,13 @@ pub struct WebSocketCreated {
     pub initiator: Option<Initiator>,
 }
 // Fired when WebSocket message error occurs.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketFrameError {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketFrameErrorEvent {
+    pub params: WebSocketFrameErrorParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketFrameErrorParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1434,8 +1337,13 @@ pub struct WebSocketFrameError {
     pub error_message: String,
 }
 // Fired when WebSocket message is received.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketFrameReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketFrameReceivedEvent {
+    pub params: WebSocketFrameReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketFrameReceivedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1444,8 +1352,13 @@ pub struct WebSocketFrameReceived {
     pub response: WebSocketFrame,
 }
 // Fired when WebSocket message is sent.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketFrameSent {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketFrameSentEvent {
+    pub params: WebSocketFrameSentParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketFrameSentParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1454,8 +1367,13 @@ pub struct WebSocketFrameSent {
     pub response: WebSocketFrame,
 }
 // Fired when WebSocket handshake response becomes available.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketHandshakeResponseReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketHandshakeResponseReceivedEvent {
+    pub params: WebSocketHandshakeResponseReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketHandshakeResponseReceivedParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1464,8 +1382,13 @@ pub struct WebSocketHandshakeResponseReceived {
     pub response: WebSocketResponse,
 }
 // Fired when WebSocket is about to initiate handshake.
-#[derive(Deserialize, Debug, Clone)]
-pub struct WebSocketWillSendHandshakeRequest {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WebSocketWillSendHandshakeRequestEvent {
+    pub params: WebSocketWillSendHandshakeRequestParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketWillSendHandshakeRequestParams {
     // Request identifier.
     pub request_id: RequestId,
     // Timestamp.
@@ -1479,8 +1402,13 @@ pub struct WebSocketWillSendHandshakeRequest {
 // network stack. Not every requestWillBeSent event will have an additional
 // requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
 // or requestWillBeSentExtraInfo will be fired first for the same request.
-#[derive(Deserialize, Debug, Clone)]
-pub struct RequestWillBeSentExtraInfo {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct RequestWillBeSentExtraInfoEvent {
+    pub params: RequestWillBeSentExtraInfoParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct RequestWillBeSentExtraInfoParams {
     // Request identifier. Used to match this information to an existing requestWillBeSent event.
     pub request_id: RequestId,
     // A list of cookies potentially associated to the requested URL. This includes both cookies sent with
@@ -1492,8 +1420,13 @@ pub struct RequestWillBeSentExtraInfo {
 // Fired when additional information about a responseReceived event is available from the network
 // stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
 // it, and responseReceivedExtraInfo may be fired before or after responseReceived.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ResponseReceivedExtraInfo {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ResponseReceivedExtraInfoEvent {
+    pub params: ResponseReceivedExtraInfoParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ResponseReceivedExtraInfoParams {
     // Request identifier. Used to match this information to another responseReceived event.
     pub request_id: RequestId,
     // A list of cookies which were not stored from the response along with the corresponding

@@ -5,26 +5,11 @@ use serde::{Deserialize, Serialize};
 pub type CertificateId = i32;
 // A description of mixed content (HTTP resources on HTTPS pages), as defined by
 // https://www.w3.org/TR/mixed-content/#categories
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum MixedContentType {
-    Blockable,
-    OptionallyBlockable,
-    None,
-}
+pub type MixedContentType = String;
 // The security level of a page or resource.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SecurityState {
-    Unknown,
-    Neutral,
-    Insecure,
-    Secure,
-    Info,
-    InsecureBroken,
-}
+pub type SecurityState = String;
 // Details about the security state of the page certificate.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CertificateSecurityState {
     // Protocol name (e.g. "TLS 1.2" or "QUIC").
@@ -64,13 +49,8 @@ pub struct CertificateSecurityState {
     // True if the connection is using an obsolete SSL signature.
     pub obsolete_ssl_signature: bool,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SafetyTipStatus {
-    BadReputation,
-    Lookalike,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type SafetyTipStatus = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SafetyTipInfo {
     // Describes whether the page triggers any safety tips or reputation warnings. Default is unknown.
@@ -79,7 +59,7 @@ pub struct SafetyTipInfo {
     pub safe_url: Option<String>,
 }
 // Security state information about the page.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VisibleSecurityState {
     // The security level of the page.
@@ -92,7 +72,7 @@ pub struct VisibleSecurityState {
     pub security_state_issue_ids: Vec<String>,
 }
 // An explanation of an factor contributing to the security state.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SecurityStateExplanation {
     // Security state representing the severity of the factor being explained.
@@ -111,7 +91,7 @@ pub struct SecurityStateExplanation {
     pub recommendations: Option<Vec<String>>,
 }
 // Information about insecure content on the page.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InsecureContentStatus {
     // Always false.
@@ -131,12 +111,7 @@ pub struct InsecureContentStatus {
 }
 // The action to take when a certificate error occurs. continue will continue processing the
 // request and cancel will cancel the request.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CertificateErrorAction {
-    Continue,
-    Cancel,
-}
+pub type CertificateErrorAction = String;
 
 // Disables tracking security state changes.
 #[derive(Serialize, Debug)]
@@ -205,8 +180,13 @@ impl super::Command for SetOverrideCertificateErrors {
 // handled with the `handleCertificateError` command. Note: this event does not fire if the
 // certificate error has been allowed internally. Only one client per target should override
 // certificate errors at the same time.
-#[derive(Deserialize, Debug, Clone)]
-pub struct CertificateError {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct CertificateErrorEvent {
+    pub params: CertificateErrorParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct CertificateErrorParams {
     // The ID of the event.
     pub event_id: i32,
     // The type of the error.
@@ -215,14 +195,24 @@ pub struct CertificateError {
     pub request_url: String,
 }
 // The security state of the page changed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct VisibleSecurityStateChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct VisibleSecurityStateChangedEvent {
+    pub params: VisibleSecurityStateChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct VisibleSecurityStateChangedParams {
     // Security state information about the page.
     pub visible_security_state: VisibleSecurityState,
 }
 // The security state of the page changed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct SecurityStateChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct SecurityStateChangedEvent {
+    pub params: SecurityStateChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct SecurityStateChangedParams {
     // Security state.
     pub security_state: SecurityState,
     // True if the page was loaded over cryptographic transport such as HTTPS.

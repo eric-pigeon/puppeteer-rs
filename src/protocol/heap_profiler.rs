@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 // Heap snapshot object id.
 pub type HeapSnapshotObjectId = String;
 // Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SamplingHeapProfileNode {
     // Function location.
@@ -17,7 +17,7 @@ pub struct SamplingHeapProfileNode {
     pub children: Vec<SamplingHeapProfileNode>,
 }
 // A single sample from a sampling profile.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SamplingHeapProfileSample {
     // Allocation size in bytes attributed to the sample.
@@ -29,7 +29,7 @@ pub struct SamplingHeapProfileSample {
     pub ordinal: f64,
 }
 // Sampling profile.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SamplingHeapProfile {
     pub head: SamplingHeapProfileNode,
@@ -185,13 +185,23 @@ impl super::Command for TakeHeapSnapshot {
     type ReturnObject = TakeHeapSnapshotReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct AddHeapSnapshotChunk {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AddHeapSnapshotChunkEvent {
+    pub params: AddHeapSnapshotChunkParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AddHeapSnapshotChunkParams {
     pub chunk: String,
 }
 // If heap objects tracking has been started then backend may send update for one or more fragments
-#[derive(Deserialize, Debug, Clone)]
-pub struct HeapStatsUpdate {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct HeapStatsUpdateEvent {
+    pub params: HeapStatsUpdateParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct HeapStatsUpdateParams {
     // An array of triplets. Each triplet describes a fragment. The first integer is the fragment
     // index, the second integer is a total count of objects for the fragment, the third integer is
     // a total size of the objects for the fragment.
@@ -200,16 +210,31 @@ pub struct HeapStatsUpdate {
 // If heap objects tracking has been started then backend regularly sends a current value for last
 // seen object id and corresponding timestamp. If the were changes in the heap since last event
 // then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event.
-#[derive(Deserialize, Debug, Clone)]
-pub struct LastSeenObjectId {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct LastSeenObjectIdEvent {
+    pub params: LastSeenObjectIdParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LastSeenObjectIdParams {
     pub last_seen_object_id: i32,
     pub timestamp: f64,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct ReportHeapSnapshotProgress {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ReportHeapSnapshotProgressEvent {
+    pub params: ReportHeapSnapshotProgressParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ReportHeapSnapshotProgressParams {
     pub done: i32,
     pub total: i32,
     pub finished: Option<bool>,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct ResetProfiles {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ResetProfilesEvent {
+    pub params: ResetProfilesParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ResetProfilesParams {}

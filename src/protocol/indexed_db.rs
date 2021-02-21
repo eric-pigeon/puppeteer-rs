@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Database with an array of object stores.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct DatabaseWithObjectStores {
     // Database name.
@@ -14,7 +14,7 @@ pub struct DatabaseWithObjectStores {
     pub object_stores: Vec<ObjectStore>,
 }
 // Object store.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectStore {
     // Object store name.
@@ -27,7 +27,7 @@ pub struct ObjectStore {
     pub indexes: Vec<ObjectStoreIndex>,
 }
 // Object store index.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectStoreIndex {
     // Index name.
@@ -39,7 +39,7 @@ pub struct ObjectStoreIndex {
     // If true, index allows multiple entries for a key.
     pub multi_entry: bool,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum KeyType {
     Number,
@@ -48,7 +48,7 @@ pub enum KeyType {
     Array,
 }
 // Key.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Key {
     // Key type.
@@ -63,7 +63,7 @@ pub struct Key {
     pub array: Option<Vec<Key>>,
 }
 // Key range.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct KeyRange {
     // Lower bound.
@@ -76,7 +76,7 @@ pub struct KeyRange {
     pub upper_open: bool,
 }
 // Data entry.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct DataEntry {
     // Key object.
@@ -86,7 +86,7 @@ pub struct DataEntry {
     // Value object.
     pub value: super::runtime::RemoteObject,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum KeyPathType {
     Null,
@@ -94,7 +94,7 @@ pub enum KeyPathType {
     Array,
 }
 // Key path.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct KeyPath {
     // Key path type.

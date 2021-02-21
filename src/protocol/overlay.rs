@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Configuration data for drawing the source order of an elements children.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceOrderConfig {
     // the color to outline the givent element in.
@@ -11,7 +11,7 @@ pub struct SourceOrderConfig {
     pub child_outline_color: super::dom::RGBA,
 }
 // Configuration data for the highlighting of Grid elements.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct GridHighlightConfig {
     // Whether the extension lines from grid cells to the rulers should be shown (default: false).
@@ -56,7 +56,7 @@ pub struct GridHighlightConfig {
     pub grid_background_color: Option<super::dom::RGBA>,
 }
 // Configuration data for the highlighting of page elements.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct HighlightConfig {
     // Whether the node info tooltip should be shown (default: false).
@@ -90,15 +90,9 @@ pub struct HighlightConfig {
     // The grid layout highlight configuration (default: all transparent).
     pub grid_highlight_config: Option<GridHighlightConfig>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ColorFormat {
-    Rgb,
-    Hsl,
-    Hex,
-}
+pub type ColorFormat = String;
 // Configurations for Persistent Grid Highlight
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct GridNodeHighlightConfig {
     // A descriptor for the highlight appearance.
@@ -107,7 +101,7 @@ pub struct GridNodeHighlightConfig {
     pub node_id: super::dom::NodeId,
 }
 // Configuration for dual screen hinge
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct HingeConfig {
     // A rectangle represent hinge
@@ -117,15 +111,7 @@ pub struct HingeConfig {
     // The content box highlight outline color (default: transparent).
     pub outline_color: Option<super::dom::RGBA>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum InspectMode {
-    SearchForNode,
-    SearchForUAShadowDOM,
-    CaptureAreaScreenshot,
-    ShowDistances,
-    None,
-}
+pub type InspectMode = String;
 
 // Disables domain notifications.
 #[derive(Serialize, Debug)]
@@ -474,22 +460,42 @@ impl super::Command for SetShowHinge {
 
 // Fired when the node should be inspected. This happens after call to `setInspectMode` or when
 // user manually inspects an element.
-#[derive(Deserialize, Debug, Clone)]
-pub struct InspectNodeRequested {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct InspectNodeRequestedEvent {
+    pub params: InspectNodeRequestedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct InspectNodeRequestedParams {
     // Id of the node to inspect.
     pub backend_node_id: super::dom::BackendNodeId,
 }
 // Fired when the node should be highlighted. This happens after call to `setInspectMode`.
-#[derive(Deserialize, Debug, Clone)]
-pub struct NodeHighlightRequested {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct NodeHighlightRequestedEvent {
+    pub params: NodeHighlightRequestedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct NodeHighlightRequestedParams {
     pub node_id: super::dom::NodeId,
 }
 // Fired when user asks to capture screenshot of some area on the page.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ScreenshotRequested {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ScreenshotRequestedEvent {
+    pub params: ScreenshotRequestedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ScreenshotRequestedParams {
     // Viewport to capture, in device independent pixels (dip).
     pub viewport: super::page::Viewport,
 }
 // Fired when user cancels the inspect mode.
-#[derive(Deserialize, Debug, Clone)]
-pub struct InspectModeCanceled {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct InspectModeCanceledEvent {
+    pub params: InspectModeCanceledParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct InspectModeCanceledParams {}

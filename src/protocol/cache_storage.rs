@@ -4,18 +4,9 @@ use serde::{Deserialize, Serialize};
 // Unique identifier of the Cache object.
 pub type CacheId = String;
 // type of HTTP response cached
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum CachedResponseType {
-    Basic,
-    Cors,
-    Default,
-    Error,
-    OpaqueResponse,
-    OpaqueRedirect,
-}
+pub type CachedResponseType = String;
 // Data entry.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct DataEntry {
     // Request URL.
@@ -36,7 +27,7 @@ pub struct DataEntry {
     pub response_headers: Vec<Header>,
 }
 // Cache identifier.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Cache {
     // An opaque unique id of the cache.
@@ -46,14 +37,14 @@ pub struct Cache {
     // The name of the cache.
     pub cache_name: String,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Header {
     pub name: String,
     pub value: String,
 }
 // Cached response
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CachedResponse {
     // Entry content, base64-encoded.

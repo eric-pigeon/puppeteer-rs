@@ -23,14 +23,29 @@ impl super::Command for Enable {
 }
 
 // Fired when remote debugging connection is about to be terminated. Contains detach reason.
-#[derive(Deserialize, Debug, Clone)]
-pub struct Detached {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DetachedEvent {
+    pub params: DetachedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DetachedParams {
     // The reason why connection has been terminated.
     pub reason: String,
 }
 // Fired when debugging target has crashed
-#[derive(Deserialize, Debug, Clone)]
-pub struct TargetCrashed {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TargetCrashedEvent {
+    pub params: TargetCrashedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetCrashedParams {}
 // Fired when debugging target has reloaded after crash
-#[derive(Deserialize, Debug, Clone)]
-pub struct TargetReloadedAfterCrash {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TargetReloadedAfterCrashEvent {
+    pub params: TargetReloadedAfterCrashParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetReloadedAfterCrashParams {}

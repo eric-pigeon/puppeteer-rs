@@ -11,9 +11,6 @@ mod browser {
                 .await
                 .expect("failed to launch browser");
 
-            let sleep_time = Duration::from_secs(10);
-            sleep(sleep_time).await;
-            // drop(browser);
             assert_eq!(2 + 2, 4);
         }
     }

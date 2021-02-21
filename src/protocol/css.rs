@@ -5,16 +5,9 @@ pub type StyleSheetId = String;
 // Stylesheet type: "injected" for stylesheets injected via extension, "user-agent" for user-agent
 // stylesheets, "inspector" for stylesheets created by the inspector (i.e. those holding the "via
 // inspector" rules), "regular" for regular stylesheets.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum StyleSheetOrigin {
-    Injected,
-    UserAgent,
-    Inspector,
-    Regular,
-}
+pub type StyleSheetOrigin = String;
 // CSS rule collection for a single pseudo style.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PseudoElementMatches {
     // Pseudo element type.
@@ -23,7 +16,7 @@ pub struct PseudoElementMatches {
     pub matches: Vec<RuleMatch>,
 }
 // Inherited CSS rule collection from ancestor node.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritedStyleEntry {
     // The ancestor node's inline style, if any, in the style inheritance chain.
@@ -32,7 +25,7 @@ pub struct InheritedStyleEntry {
     pub matched_css_rules: Vec<RuleMatch>,
 }
 // Match data for a CSS rule.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RuleMatch {
     // CSS rule in the match.
@@ -41,7 +34,7 @@ pub struct RuleMatch {
     pub matching_selectors: Vec<i32>,
 }
 // Data for a simple selector (these are delimited by commas in a selector list).
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Value {
     // Value text.
@@ -50,7 +43,7 @@ pub struct Value {
     pub range: Option<SourceRange>,
 }
 // Selector list data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SelectorList {
     // Selectors in the list.
@@ -59,7 +52,7 @@ pub struct SelectorList {
     pub text: String,
 }
 // CSS stylesheet metainformation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSStyleSheetHeader {
     // The stylesheet identifier.
@@ -102,7 +95,7 @@ pub struct CSSStyleSheetHeader {
     pub end_column: f64,
 }
 // CSS rule representation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSRule {
     // The css style sheet identifier (absent for user agent stylesheet and user-specified
@@ -119,7 +112,7 @@ pub struct CSSRule {
     pub media: Option<Vec<CSSMedia>>,
 }
 // CSS coverage information.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RuleUsage {
     // The css style sheet identifier (absent for user agent stylesheet and user-specified
@@ -133,7 +126,7 @@ pub struct RuleUsage {
     pub used: bool,
 }
 // Text range within a resource. All numbers are zero-based.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceRange {
     // Start line of range.
@@ -145,7 +138,7 @@ pub struct SourceRange {
     // End column of range (exclusive).
     pub end_column: i32,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ShorthandEntry {
     // Shorthand name.
@@ -155,7 +148,7 @@ pub struct ShorthandEntry {
     // Whether the property has "!important" annotation (implies `false` if absent).
     pub important: Option<bool>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSComputedStyleProperty {
     // Computed style property name.
@@ -164,7 +157,7 @@ pub struct CSSComputedStyleProperty {
     pub value: String,
 }
 // CSS style representation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSStyle {
     // The css style sheet identifier (absent for user agent stylesheet and user-specified
@@ -180,7 +173,7 @@ pub struct CSSStyle {
     pub range: Option<SourceRange>,
 }
 // CSS property declaration data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSProperty {
     // The property name.
@@ -200,7 +193,7 @@ pub struct CSSProperty {
     // The entire property range in the enclosing style declaration (if available).
     pub range: Option<SourceRange>,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum CSSMediaSource {
     MediaRule,
@@ -209,7 +202,7 @@ pub enum CSSMediaSource {
     InlineSheet,
 }
 // CSS media rule descriptor.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSMedia {
     // Media query text.
@@ -230,7 +223,7 @@ pub struct CSSMedia {
     pub media_list: Option<Vec<MediaQuery>>,
 }
 // Media query descriptor.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MediaQuery {
     // Array of media query expressions.
@@ -239,7 +232,7 @@ pub struct MediaQuery {
     pub active: bool,
 }
 // Media query expression descriptor.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MediaQueryExpression {
     // Media query expression value.
@@ -254,7 +247,7 @@ pub struct MediaQueryExpression {
     pub computed_length: Option<f64>,
 }
 // Information about amount of glyphs that were rendered with given font.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PlatformFontUsage {
     // Font's family name reported by platform.
@@ -265,7 +258,7 @@ pub struct PlatformFontUsage {
     pub glyph_count: f64,
 }
 // Information about font variation axes for variable fonts
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FontVariationAxis {
     // The font-variation-setting tag (a.k.a. "axis tag").
@@ -281,7 +274,7 @@ pub struct FontVariationAxis {
 }
 // Properties of a web font: https://www.w3.org/TR/2008/REC-CSS2-20080411/fonts.html#font-descriptions
 // and additional information such as platformFontFamily and fontVariationAxes.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FontFace {
     // The font-family.
@@ -304,7 +297,7 @@ pub struct FontFace {
     pub font_variation_axes: Option<Vec<FontVariationAxis>>,
 }
 // CSS keyframes rule representation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSKeyframesRule {
     // Animation name.
@@ -313,7 +306,7 @@ pub struct CSSKeyframesRule {
     pub keyframes: Vec<CSSKeyframeRule>,
 }
 // CSS keyframe rule representation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSKeyframeRule {
     // The css style sheet identifier (absent for user agent stylesheet and user-specified
@@ -327,7 +320,7 @@ pub struct CSSKeyframeRule {
     pub style: CSSStyle,
 }
 // A descriptor of operation to mutate style declaration text.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct StyleDeclarationEdit {
     // The css style sheet identifier.
@@ -734,29 +727,54 @@ impl super::Command for SetLocalFontsEnabled {
 
 // Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
 // web font
-#[derive(Deserialize, Debug, Clone)]
-pub struct FontsUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct FontsUpdatedEvent {
+    pub params: FontsUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct FontsUpdatedParams {
     // The web font that has loaded.
     pub font: Option<FontFace>,
 }
 // Fires whenever a MediaQuery result changes (for example, after a browser window has been
 // resized.) The current implementation considers only viewport-dependent media features.
-#[derive(Deserialize, Debug, Clone)]
-pub struct MediaQueryResultChanged {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct MediaQueryResultChangedEvent {
+    pub params: MediaQueryResultChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct MediaQueryResultChangedParams {}
 // Fired whenever an active document stylesheet is added.
-#[derive(Deserialize, Debug, Clone)]
-pub struct StyleSheetAdded {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct StyleSheetAddedEvent {
+    pub params: StyleSheetAddedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct StyleSheetAddedParams {
     // Added stylesheet metainfo.
     pub header: CSSStyleSheetHeader,
 }
 // Fired whenever a stylesheet is changed as a result of the client operation.
-#[derive(Deserialize, Debug, Clone)]
-pub struct StyleSheetChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct StyleSheetChangedEvent {
+    pub params: StyleSheetChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct StyleSheetChangedParams {
     pub style_sheet_id: StyleSheetId,
 }
 // Fired whenever an active document stylesheet is removed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct StyleSheetRemoved {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct StyleSheetRemovedEvent {
+    pub params: StyleSheetRemovedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct StyleSheetRemovedParams {
     // Identifier of the removed stylesheet.
     pub style_sheet_id: StyleSheetId,
 }

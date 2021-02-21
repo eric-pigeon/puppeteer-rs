@@ -2,15 +2,9 @@
 use serde::{Deserialize, Serialize};
 
 // DOM breakpoint type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum DOMBreakpointType {
-    SubtreeModified,
-    AttributeModified,
-    NodeRemoved,
-}
+pub type DOMBreakpointType = String;
 // Object event listener.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct EventListener {
     // `EventListener`'s type.

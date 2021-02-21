@@ -44,7 +44,6 @@ impl Connection {
                 match message {
                     Ok(message) => match message {
                         Response(response) => {
-                            println!("{:?}", callbacks2);
                             if let Some(callback) = callbacks2.remove(&response.call_id) {
                                 callback.send(response).expect("failed to fulfill response");
                             }
@@ -84,11 +83,10 @@ impl Connection {
         let call_id = self.last_id.fetch_add(1, Ordering::SeqCst);
         let call = command.to_command_call(call_id);
         let message_text = serde_json::to_string(&call).expect("failed to serialize method");
-        println!("{:?}", message_text);
+        // println!("{:?}", message_text);
 
         let (sender, receiver) = oneshot::channel::<protocol::Response>();
         self.callbacks.insert(call_id, sender);
-        println!("{:?}", self.callbacks);
 
         self.transport.as_ref().send(&message_text);
 
@@ -126,6 +124,7 @@ impl WebSocketTransport {
         let read_stream = read.map(|result| {
             let result = result?;
             let message = result.to_text()?;
+            println!("{:?}", message);
             Ok(serde_json::from_str::<protocol::Message>(message)?)
         });
 

@@ -7,7 +7,7 @@ pub type NodeId = i32;
 // front-end.
 pub type BackendNodeId = i32;
 // Backend node with a friendly name.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BackendNode {
     // `Node`'s nodeType.
@@ -17,37 +17,12 @@ pub struct BackendNode {
     pub backend_node_id: BackendNodeId,
 }
 // Pseudo element type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum PseudoType {
-    FirstLine,
-    FirstLetter,
-    Before,
-    After,
-    Marker,
-    Backdrop,
-    Selection,
-    FirstLineInherited,
-    Scrollbar,
-    ScrollbarThumb,
-    ScrollbarButton,
-    ScrollbarTrack,
-    ScrollbarTrackPiece,
-    ScrollbarCorner,
-    Resizer,
-    InputListButton,
-}
+pub type PseudoType = String;
 // Shadow root type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ShadowRootType {
-    UserAgent,
-    Open,
-    Closed,
-}
+pub type ShadowRootType = String;
 // DOM interaction is implemented in terms of mirror objects that represent the actual DOM nodes.
 // DOMNode is a base node mirror type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Node {
     // Node identifier that is passed into the rest of the DOM messages as the `nodeId`. Backend
@@ -110,7 +85,7 @@ pub struct Node {
     pub is_svg: Option<bool>,
 }
 // A structure holding an RGBA color.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RGBA {
     // The red component, in the [0-255] range.
@@ -127,7 +102,7 @@ pub struct RGBA {
 // only working for DOM now
 pub type Quad = [f64; 8];
 // Box model.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BoxModel {
     // Content box
@@ -146,7 +121,7 @@ pub struct BoxModel {
     pub shape_outside: Option<ShapeOutsideInfo>,
 }
 // CSS Shape Outside details.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ShapeOutsideInfo {
     // Shape bounds
@@ -157,7 +132,7 @@ pub struct ShapeOutsideInfo {
     pub margin_shape: Vec<serde_json::Value>,
 }
 // Rectangle.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Rect {
     // X coordinate
@@ -169,7 +144,7 @@ pub struct Rect {
     // Rectangle height
     pub height: f64,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CSSComputedStyleProperty {
     // Computed style property name.
@@ -961,8 +936,13 @@ impl super::Command for GetFrameOwner {
 }
 
 // Fired when `Element`'s attribute is modified.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AttributeModified {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AttributeModifiedEvent {
+    pub params: AttributeModifiedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AttributeModifiedParams {
     // Id of the node that has changed.
     pub node_id: NodeId,
     // Attribute name.
@@ -971,32 +951,52 @@ pub struct AttributeModified {
     pub value: String,
 }
 // Fired when `Element`'s attribute is removed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AttributeRemoved {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AttributeRemovedEvent {
+    pub params: AttributeRemovedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AttributeRemovedParams {
     // Id of the node that has changed.
     pub node_id: NodeId,
     // A ttribute name.
     pub name: String,
 }
 // Mirrors `DOMCharacterDataModified` event.
-#[derive(Deserialize, Debug, Clone)]
-pub struct CharacterDataModified {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct CharacterDataModifiedEvent {
+    pub params: CharacterDataModifiedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterDataModifiedParams {
     // Id of the node that has changed.
     pub node_id: NodeId,
     // New text value.
     pub character_data: String,
 }
 // Fired when `Container`'s child node count has changed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ChildNodeCountUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ChildNodeCountUpdatedEvent {
+    pub params: ChildNodeCountUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ChildNodeCountUpdatedParams {
     // Id of the node that has changed.
     pub node_id: NodeId,
     // New node count.
     pub child_node_count: i32,
 }
 // Mirrors `DOMNodeInserted` event.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ChildNodeInserted {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ChildNodeInsertedEvent {
+    pub params: ChildNodeInsertedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ChildNodeInsertedParams {
     // Id of the node that has changed.
     pub parent_node_id: NodeId,
     // If of the previous siblint.
@@ -1005,41 +1005,71 @@ pub struct ChildNodeInserted {
     pub node: Node,
 }
 // Mirrors `DOMNodeRemoved` event.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ChildNodeRemoved {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ChildNodeRemovedEvent {
+    pub params: ChildNodeRemovedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ChildNodeRemovedParams {
     // Parent id.
     pub parent_node_id: NodeId,
     // Id of the node that has been removed.
     pub node_id: NodeId,
 }
 // Called when distrubution is changed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DistributedNodesUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DistributedNodesUpdatedEvent {
+    pub params: DistributedNodesUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DistributedNodesUpdatedParams {
     // Insertion point where distrubuted nodes were updated.
     pub insertion_point_id: NodeId,
     // Distributed nodes for given insertion point.
     pub distributed_nodes: Vec<BackendNode>,
 }
 // Fired when `Document` has been totally updated. Node ids are no longer valid.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DocumentUpdated {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DocumentUpdatedEvent {
+    pub params: DocumentUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DocumentUpdatedParams {}
 // Fired when `Element`'s inline style is modified via a CSS property modification.
-#[derive(Deserialize, Debug, Clone)]
-pub struct InlineStyleInvalidated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct InlineStyleInvalidatedEvent {
+    pub params: InlineStyleInvalidatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct InlineStyleInvalidatedParams {
     // Ids of the nodes for which the inline styles have been invalidated.
     pub node_ids: Vec<NodeId>,
 }
 // Called when a pseudo element is added to an element.
-#[derive(Deserialize, Debug, Clone)]
-pub struct PseudoElementAdded {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct PseudoElementAddedEvent {
+    pub params: PseudoElementAddedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct PseudoElementAddedParams {
     // Pseudo element's parent element id.
     pub parent_id: NodeId,
     // The added pseudo element.
     pub pseudo_element: Node,
 }
 // Called when a pseudo element is removed from an element.
-#[derive(Deserialize, Debug, Clone)]
-pub struct PseudoElementRemoved {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct PseudoElementRemovedEvent {
+    pub params: PseudoElementRemovedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct PseudoElementRemovedParams {
     // Pseudo element's parent element id.
     pub parent_id: NodeId,
     // The removed pseudo element id.
@@ -1047,24 +1077,39 @@ pub struct PseudoElementRemoved {
 }
 // Fired when backend wants to provide client with the missing DOM structure. This happens upon
 // most of the calls requesting node ids.
-#[derive(Deserialize, Debug, Clone)]
-pub struct SetChildNodes {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct SetChildNodesEvent {
+    pub params: SetChildNodesParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct SetChildNodesParams {
     // Parent node id to populate with children.
     pub parent_id: NodeId,
     // Child nodes array.
     pub nodes: Vec<Node>,
 }
 // Called when shadow root is popped from the element.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ShadowRootPopped {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ShadowRootPoppedEvent {
+    pub params: ShadowRootPoppedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ShadowRootPoppedParams {
     // Host element id.
     pub host_id: NodeId,
     // Shadow root id.
     pub root_id: NodeId,
 }
 // Called when shadow root is pushed into the element.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ShadowRootPushed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ShadowRootPushedEvent {
+    pub params: ShadowRootPushedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ShadowRootPushedParams {
     // Host element id.
     pub host_id: NodeId,
     // Shadow root.

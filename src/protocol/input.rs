@@ -1,7 +1,7 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TouchPoint {
     // X coordinate of the event relative to the main frame's viewport in CSS pixels.
@@ -20,23 +20,8 @@ pub struct TouchPoint {
     // Identifier used to track touch sources between events, must be unique within an event.
     pub id: Option<f64>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum GestureSourceType {
-    Default,
-    Touch,
-    Mouse,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum MouseButton {
-    None,
-    Left,
-    Middle,
-    Right,
-    Back,
-    Forward,
-}
+pub type GestureSourceType = String;
+pub type MouseButton = String;
 // UTC time in seconds, counted from January 1, 1970.
 pub type TimeSinceEpoch = f64;
 

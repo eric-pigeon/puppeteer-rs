@@ -2,14 +2,9 @@
 use serde::{Deserialize, Serialize};
 
 // Memory pressure level.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum PressureLevel {
-    Moderate,
-    Critical,
-}
+pub type PressureLevel = String;
 // Heap profile sample.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SamplingProfileNode {
     // Size of the sampled allocation.
@@ -20,14 +15,14 @@ pub struct SamplingProfileNode {
     pub stack: Vec<String>,
 }
 // Array of heap profile samples.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SamplingProfile {
     pub samples: Vec<SamplingProfileNode>,
     pub modules: Vec<Module>,
 }
 // Executable module information
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Module {
     // Name of the module.

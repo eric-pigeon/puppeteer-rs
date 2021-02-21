@@ -33,6 +33,12 @@ pub struct CommandCall<T> {
 #[derive(Deserialize, Debug, Clone, PartialEq)]
 #[serde(tag = "method")]
 pub enum Event {
+{{#each domains}}
+{{#each events}}
+  #[serde(rename = "{{../domain}}.{{name}}")]
+  {{camelize (concat ../domain (ufirst name))}}({{underscore ../domain}}::{{camelize (concat name "Event")}}),
+{{/each}}
+{{/each}}
 }
 
 #[derive(Deserialize, Debug, PartialEq, Clone)]

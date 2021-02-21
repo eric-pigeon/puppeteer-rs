@@ -147,12 +147,14 @@ Handlebars.registerHelper("comment", str => {
 Handlebars.registerHelper('domainTypePartial', (typeObject) => {
   switch(typeObject.type) {
     case 'string':
-      if (typeObject.enum != undefined) {
-        return "enumType";
-      }
-      else {
-        return "stringType";
-      }
+      // TODO does it make sense to create enum types for theres
+      return "stringType";
+      // if (typeObject.enum != undefined) {
+      //   return "enumType";
+      // }
+      // else {
+      //   return "stringType";
+      // }
     case 'object':
       if (typeObject.properties === undefined) {
         return 'objectAnyType';

@@ -4,24 +4,15 @@ use serde::{Deserialize, Serialize};
 // The Background Service that will be associated with the commands/events.
 // Every Background Service operates independently, but they share the same
 // API.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ServiceName {
-    BackgroundFetch,
-    BackgroundSync,
-    PushMessaging,
-    Notifications,
-    PaymentHandler,
-    PeriodicBackgroundSync,
-}
+pub type ServiceName = String;
 // A key-value pair for additional event information to pass along.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct EventMetadata {
     pub key: String,
     pub value: String,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BackgroundServiceEvent {
     // Timestamp of the event (in seconds).
@@ -91,14 +82,24 @@ impl super::Command for ClearEvents {
 }
 
 // Called when the recording state for the service has been updated.
-#[derive(Deserialize, Debug, Clone)]
-pub struct RecordingStateChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct RecordingStateChangedEvent {
+    pub params: RecordingStateChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct RecordingStateChangedParams {
     pub is_recording: bool,
     pub service: ServiceName,
 }
 // Called with all existing backgroundServiceEvents when enabled, and all new
 // events afterwards if enabled and recording.
-#[derive(Deserialize, Debug, Clone)]
-pub struct BackgroundServiceEventReceived {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct BackgroundServiceEventReceivedEvent {
+    pub params: BackgroundServiceEventReceivedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct BackgroundServiceEventReceivedParams {
     pub background_service_event: BackgroundServiceEvent,
 }

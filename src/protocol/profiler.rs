@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Profile node. Holds callsite information, execution statistics and child nodes.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ProfileNode {
     // Unique id of the node.
@@ -20,7 +20,7 @@ pub struct ProfileNode {
     pub position_ticks: Option<Vec<PositionTickInfo>>,
 }
 // Profile.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Profile {
     // The list of profile nodes. First item is the root node.
@@ -36,7 +36,7 @@ pub struct Profile {
     pub time_deltas: Option<Vec<i32>>,
 }
 // Specifies a number of samples attributed to a certain source position.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PositionTickInfo {
     // Source line number (1-based).
@@ -45,7 +45,7 @@ pub struct PositionTickInfo {
     pub ticks: i32,
 }
 // Coverage data for a source range.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CoverageRange {
     // JavaScript script source offset for the range start.
@@ -56,7 +56,7 @@ pub struct CoverageRange {
     pub count: i32,
 }
 // Coverage data for a JavaScript function.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCoverage {
     // JavaScript function name.
@@ -67,7 +67,7 @@ pub struct FunctionCoverage {
     pub is_block_coverage: bool,
 }
 // Coverage data for a JavaScript script.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ScriptCoverage {
     // JavaScript script id.
@@ -78,14 +78,14 @@ pub struct ScriptCoverage {
     pub functions: Vec<FunctionCoverage>,
 }
 // Describes a type collected during runtime.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TypeObject {
     // Name of a type collected with type profiling.
     pub name: String,
 }
 // Source offset and types for a parameter or return value.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TypeProfileEntry {
     // Source offset of the parameter or end of function for return values.
@@ -94,7 +94,7 @@ pub struct TypeProfileEntry {
     pub types: Vec<TypeObject>,
 }
 // Type profile data collected during runtime for a JavaScript script.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ScriptTypeProfile {
     // JavaScript script id.
@@ -105,7 +105,7 @@ pub struct ScriptTypeProfile {
     pub entries: Vec<TypeProfileEntry>,
 }
 // Collected counter information.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct CounterInfo {
     // Counter name.
@@ -114,7 +114,7 @@ pub struct CounterInfo {
     pub value: i32,
 }
 // Runtime call counter information.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RuntimeCallCounterInfo {
     // Counter name.
@@ -340,8 +340,13 @@ impl super::Command for GetRuntimeCallStats {
     type ReturnObject = GetRuntimeCallStatsReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct ConsoleProfileFinished {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ConsoleProfileFinishedEvent {
+    pub params: ConsoleProfileFinishedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ConsoleProfileFinishedParams {
     pub id: String,
     // Location of console.profileEnd().
     pub location: super::debugger::Location,
@@ -350,8 +355,13 @@ pub struct ConsoleProfileFinished {
     pub title: Option<String>,
 }
 // Sent when new profile recording is started using console.profile() call.
-#[derive(Deserialize, Debug, Clone)]
-pub struct ConsoleProfileStarted {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ConsoleProfileStartedEvent {
+    pub params: ConsoleProfileStartedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ConsoleProfileStartedParams {
     pub id: String,
     // Location of console.profile().
     pub location: super::debugger::Location,
@@ -362,8 +372,13 @@ pub struct ConsoleProfileStarted {
 // `takePreciseCoverage` for the current isolate. May only be sent if precise code
 // coverage has been started. This event can be trigged by the embedder to, for example,
 // trigger collection of coverage data immediatelly at a certain point in time.
-#[derive(Deserialize, Debug, Clone)]
-pub struct PreciseCoverageDeltaUpdate {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct PreciseCoverageDeltaUpdateEvent {
+    pub params: PreciseCoverageDeltaUpdateParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct PreciseCoverageDeltaUpdateParams {
     // Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
     pub timestamp: f64,
     // Identifier for distinguishing coverage events.

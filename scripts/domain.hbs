@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 {{#each domain.types}}
 {{#if (lookup ../enumTypes this.id)}}
   {{#each (lookup ../enumTypes this.id)}}
-    #[derive(Deserialize, Serialize, Debug, Clone)]
+    #[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
     #[serde(rename_all = "camelCase")]
     pub enum {{camelize (concat ../id (ufirst name))}} {
       {{#each enum}}
@@ -69,8 +69,13 @@ impl super::Command for {{camelize name}} {
 {{#if description}}
 // {{{comment description}}}
 {{/if}}
-#[derive(Deserialize, Debug, Clone)]
-pub struct {{camelize name}} {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct {{camelize (concat name "Event")}} {
+  pub params: {{camelize (concat name "Params")}},
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct {{camelize (concat name "Params")}} {
 {{#if parameters}}
 {{#each parameters}}
   {{#if description}}

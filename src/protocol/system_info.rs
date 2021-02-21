@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Describes a single graphics processor (GPU).
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct GPUDevice {
     // PCI ID of the GPU vendor, if available; 0 otherwise.
@@ -23,7 +23,7 @@ pub struct GPUDevice {
     pub driver_version: String,
 }
 // Describes the width and height dimensions of an entity.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Size {
     // Width in pixels.
@@ -33,7 +33,7 @@ pub struct Size {
 }
 // Describes a supported video decoding profile with its associated minimum and
 // maximum resolutions.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VideoDecodeAcceleratorCapability {
     // Video codec profile that is supported, e.g. VP9 Profile 2.
@@ -45,7 +45,7 @@ pub struct VideoDecodeAcceleratorCapability {
 }
 // Describes a supported video encoding profile with its associated maximum
 // resolution and maximum framerate.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VideoEncodeAcceleratorCapability {
     // Video codec profile that is supported, e.g H264 Main.
@@ -59,24 +59,12 @@ pub struct VideoEncodeAcceleratorCapability {
     pub max_framerate_denominator: i32,
 }
 // YUV subsampling type of the pixels of a given image.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SubsamplingFormat {
-    Yuv420,
-    Yuv422,
-    Yuv444,
-}
+pub type SubsamplingFormat = String;
 // Image format of a given image.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ImageType {
-    Jpeg,
-    Webp,
-    Unknown,
-}
+pub type ImageType = String;
 // Describes a supported image decoding profile with its associated minimum and
 // maximum resolutions and subsampling.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ImageDecodeAcceleratorCapability {
     // Image coded, e.g. Jpeg.
@@ -89,7 +77,7 @@ pub struct ImageDecodeAcceleratorCapability {
     pub subsamplings: Vec<SubsamplingFormat>,
 }
 // Provides information about the GPU(s) on the system.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct GPUInfo {
     // The graphics devices on the system. Element 0 is the primary GPU.
@@ -108,7 +96,7 @@ pub struct GPUInfo {
     pub image_decoding: Vec<ImageDecodeAcceleratorCapability>,
 }
 // Represents process info.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ProcessInfo {
     // Specifies process type.

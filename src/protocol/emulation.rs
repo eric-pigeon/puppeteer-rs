@@ -1,7 +1,7 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenOrientationType {
     PortraitPrimary,
@@ -10,7 +10,7 @@ pub enum ScreenOrientationType {
     LandscapeSecondary,
 }
 // Screen orientation.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ScreenOrientation {
     // Orientation type.
@@ -18,13 +18,13 @@ pub struct ScreenOrientation {
     // Orientation angle.
     pub angle: i32,
 }
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum DisplayFeatureOrientation {
     Vertical,
     Horizontal,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct DisplayFeature {
     // Orientation of a display feature in relation to screen
@@ -37,7 +37,7 @@ pub struct DisplayFeature {
     // A display feature that only splits content will have a 0 mask_length.
     pub mask_length: i32,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MediaFeature {
     pub name: String,
@@ -47,22 +47,16 @@ pub struct MediaFeature {
 // allow the next delayed task (if any) to run; pause: The virtual time base may not advance;
 // pauseIfNetworkFetchesPending: The virtual time base may not advance if there are any pending
 // resource fetches.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum VirtualTimePolicy {
-    Advance,
-    Pause,
-    PauseIfNetworkFetchesPending,
-}
+pub type VirtualTimePolicy = String;
 // Used to specify User Agent Cient Hints to emulate. See https://wicg.github.io/ua-client-hints
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UserAgentBrandVersion {
     pub brand: String,
     pub version: String,
 }
 // Used to specify User Agent Cient Hints to emulate. See https://wicg.github.io/ua-client-hints
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UserAgentMetadata {
     pub brands: Vec<UserAgentBrandVersion>,
@@ -472,5 +466,10 @@ impl super::Command for SetUserAgentOverride {
 }
 
 // Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.
-#[derive(Deserialize, Debug, Clone)]
-pub struct VirtualTimeBudgetExpired {}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct VirtualTimeBudgetExpiredEvent {
+    pub params: VirtualTimeBudgetExpiredParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct VirtualTimeBudgetExpiredParams {}

@@ -2,7 +2,7 @@
 use serde::{Deserialize, Serialize};
 
 // Information about a cookie that is affected by an inspector issue.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AffectedCookie {
     // The following three properties uniquely identify a cookie
@@ -11,7 +11,7 @@ pub struct AffectedCookie {
     pub domain: String,
 }
 // Information about a request that is affected by an inspector issue.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AffectedRequest {
     // The unique request id.
@@ -19,41 +19,18 @@ pub struct AffectedRequest {
     pub url: Option<String>,
 }
 // Information about the frame affected by an inspector issue.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct AffectedFrame {
     pub frame_id: super::page::FrameId,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SameSiteCookieExclusionReason {
-    ExcludeSameSiteUnspecifiedTreatedAsLax,
-    ExcludeSameSiteNoneInsecure,
-    ExcludeSameSiteLax,
-    ExcludeSameSiteStrict,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SameSiteCookieWarningReason {
-    WarnSameSiteUnspecifiedCrossSiteContext,
-    WarnSameSiteNoneInsecure,
-    WarnSameSiteUnspecifiedLaxAllowUnsafe,
-    WarnSameSiteStrictLaxDowngradeStrict,
-    WarnSameSiteStrictCrossDowngradeStrict,
-    WarnSameSiteStrictCrossDowngradeLax,
-    WarnSameSiteLaxCrossDowngradeStrict,
-    WarnSameSiteLaxCrossDowngradeLax,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum SameSiteCookieOperation {
-    SetCookie,
-    ReadCookie,
-}
+pub type SameSiteCookieExclusionReason = String;
+pub type SameSiteCookieWarningReason = String;
+pub type SameSiteCookieOperation = String;
 // This information is currently necessary, as the front-end has a difficult
 // time finding a specific cookie. With this, we can convey specific error
 // information without the cookie.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SameSiteCookieIssueDetails {
     pub cookie: AffectedCookie,
@@ -66,44 +43,9 @@ pub struct SameSiteCookieIssueDetails {
     pub cookie_url: Option<String>,
     pub request: Option<AffectedRequest>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum MixedContentResolutionStatus {
-    MixedContentBlocked,
-    MixedContentAutomaticallyUpgraded,
-    MixedContentWarning,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum MixedContentResourceType {
-    Audio,
-    Beacon,
-    CSPReport,
-    Download,
-    EventSource,
-    Favicon,
-    Font,
-    Form,
-    Frame,
-    Image,
-    Import,
-    Manifest,
-    Ping,
-    PluginData,
-    PluginResource,
-    Prefetch,
-    Resource,
-    Script,
-    ServiceWorker,
-    SharedWorker,
-    Stylesheet,
-    Track,
-    Video,
-    Worker,
-    XMLHttpRequest,
-    XSLT,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type MixedContentResolutionStatus = String;
+pub type MixedContentResourceType = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MixedContentIssueDetails {
     // The type of resource causing the mixed content issue (css, js, iframe,
@@ -125,19 +67,11 @@ pub struct MixedContentIssueDetails {
 }
 // Enum indicating the reason a response has been blocked. These reasons are
 // refinements of the net error BLOCKED_BY_RESPONSE.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum BlockedByResponseReason {
-    CoepFrameResourceNeedsCoepHeader,
-    CoopSandboxedIFrameCannotNavigateToCoopPage,
-    CorpNotSameOrigin,
-    CorpNotSameOriginAfterDefaultedToSameOriginByCoep,
-    CorpNotSameSite,
-}
+pub type BlockedByResponseReason = String;
 // Details for a request that has been blocked with the BLOCKED_BY_RESPONSE
 // code. Currently only used for COEP/COOP, but may be extended to include
 // some CSP errors in the future.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BlockedByResponseIssueDetails {
     pub request: AffectedRequest,
@@ -145,20 +79,9 @@ pub struct BlockedByResponseIssueDetails {
     pub blocked_frame: Option<AffectedFrame>,
     pub reason: BlockedByResponseReason,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum HeavyAdResolutionStatus {
-    HeavyAdBlocked,
-    HeavyAdWarning,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum HeavyAdReason {
-    NetworkTotalLimit,
-    CpuTotalLimit,
-    CpuPeakLimit,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type HeavyAdResolutionStatus = String;
+pub type HeavyAdReason = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct HeavyAdIssueDetails {
     // The resolution status, either blocking the content or warning.
@@ -168,23 +91,15 @@ pub struct HeavyAdIssueDetails {
     // The frame that was blocked.
     pub frame: AffectedFrame,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ContentSecurityPolicyViolationType {
-    KInlineViolation,
-    KEvalViolation,
-    KURLViolation,
-    KTrustedTypesSinkViolation,
-    KTrustedTypesPolicyViolation,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+pub type ContentSecurityPolicyViolationType = String;
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceCodeLocation {
     pub url: String,
     pub line_number: i32,
     pub column_number: i32,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ContentSecurityPolicyIssueDetails {
     // The url not included in allowed sources.
@@ -200,19 +115,11 @@ pub struct ContentSecurityPolicyIssueDetails {
 // A unique identifier for the type of issue. Each type may use one of the
 // optional fields in InspectorIssueDetails to convey more specific
 // information about the kind of issue.
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum InspectorIssueCode {
-    SameSiteCookieIssue,
-    MixedContentIssue,
-    BlockedByResponseIssue,
-    HeavyAdIssue,
-    ContentSecurityPolicyIssue,
-}
+pub type InspectorIssueCode = String;
 // This struct holds a list of optional fields with additional information
 // specific to the kind of issue. When adding a new issue code, please also
 // add a new optional field to this type.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InspectorIssueDetails {
     pub same_site_cookie_issue_details: Option<SameSiteCookieIssueDetails>,
@@ -222,7 +129,7 @@ pub struct InspectorIssueDetails {
     pub content_security_policy_issue_details: Option<ContentSecurityPolicyIssueDetails>,
 }
 // An inspector issue reported from the back-end.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InspectorIssue {
     pub code: InspectorIssueCode,
@@ -285,7 +192,12 @@ impl super::Command for Enable {
     type ReturnObject = EnableReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct IssueAdded {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct IssueAddedEvent {
+    pub params: IssueAddedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct IssueAddedParams {
     pub issue: InspectorIssue,
 }

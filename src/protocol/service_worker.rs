@@ -3,33 +3,17 @@ use serde::{Deserialize, Serialize};
 
 pub type RegistrationID = String;
 // ServiceWorker registration.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ServiceWorkerRegistration {
     pub registration_id: RegistrationID,
     pub scope_url: String,
     pub is_deleted: bool,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ServiceWorkerVersionRunningStatus {
-    Stopped,
-    Starting,
-    Running,
-    Stopping,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-pub enum ServiceWorkerVersionStatus {
-    New,
-    Installing,
-    Installed,
-    Activating,
-    Activated,
-    Redundant,
-}
+pub type ServiceWorkerVersionRunningStatus = String;
+pub type ServiceWorkerVersionStatus = String;
 // ServiceWorker version.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ServiceWorkerVersion {
     pub version_id: String,
@@ -46,7 +30,7 @@ pub struct ServiceWorkerVersion {
     pub target_id: Option<super::target::TargetID>,
 }
 // ServiceWorker error message.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ServiceWorkerErrorMessage {
     pub error_message: String,
@@ -202,15 +186,30 @@ impl super::Command for UpdateRegistration {
     type ReturnObject = UpdateRegistrationReturnObject;
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct WorkerErrorReported {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WorkerErrorReportedEvent {
+    pub params: WorkerErrorReportedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WorkerErrorReportedParams {
     pub error_message: ServiceWorkerErrorMessage,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct WorkerRegistrationUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WorkerRegistrationUpdatedEvent {
+    pub params: WorkerRegistrationUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WorkerRegistrationUpdatedParams {
     pub registrations: Vec<ServiceWorkerRegistration>,
 }
-#[derive(Deserialize, Debug, Clone)]
-pub struct WorkerVersionUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct WorkerVersionUpdatedEvent {
+    pub params: WorkerVersionUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct WorkerVersionUpdatedParams {
     pub versions: Vec<ServiceWorkerVersion>,
 }

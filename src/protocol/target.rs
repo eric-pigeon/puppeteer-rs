@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 pub type TargetID = String;
 // Unique identifier of attached debugging session.
 pub type SessionID = String;
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TargetInfo {
     pub target_id: TargetID,
@@ -21,7 +21,7 @@ pub struct TargetInfo {
     pub opener_frame_id: Option<super::page::FrameId>,
     pub browser_context_id: Option<super::browser::BrowserContextID>,
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RemoteLocation {
     pub host: String,
@@ -297,8 +297,13 @@ impl super::Command for SetRemoteLocations {
 }
 
 // Issued when attached to target because of auto-attach or `attachToTarget` command.
-#[derive(Deserialize, Debug, Clone)]
-pub struct AttachedToTarget {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct AttachedToTargetEvent {
+    pub params: AttachedToTargetParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct AttachedToTargetParams {
     // Identifier assigned to the session used to send/receive messages.
     pub session_id: SessionID,
     pub target_info: TargetInfo,
@@ -306,8 +311,13 @@ pub struct AttachedToTarget {
 }
 // Issued when detached from target for any reason (including `detachFromTarget` command). Can be
 // issued multiple times per target if multiple sessions have been attached to it.
-#[derive(Deserialize, Debug, Clone)]
-pub struct DetachedFromTarget {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct DetachedFromTargetEvent {
+    pub params: DetachedFromTargetParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DetachedFromTargetParams {
     // Detached session identifier.
     pub session_id: SessionID,
     // Deprecated.
@@ -315,8 +325,13 @@ pub struct DetachedFromTarget {
 }
 // Notifies about a new protocol message received from the session (as reported in
 // `attachedToTarget` event).
-#[derive(Deserialize, Debug, Clone)]
-pub struct ReceivedMessageFromTarget {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct ReceivedMessageFromTargetEvent {
+    pub params: ReceivedMessageFromTargetParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ReceivedMessageFromTargetParams {
     // Identifier of a session which sends a message.
     pub session_id: SessionID,
     pub message: String,
@@ -324,18 +339,33 @@ pub struct ReceivedMessageFromTarget {
     pub target_id: Option<TargetID>,
 }
 // Issued when a possible inspection target is created.
-#[derive(Deserialize, Debug, Clone)]
-pub struct TargetCreated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TargetCreatedEvent {
+    pub params: TargetCreatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetCreatedParams {
     pub target_info: TargetInfo,
 }
 // Issued when a target is destroyed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct TargetDestroyed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TargetDestroyedEvent {
+    pub params: TargetDestroyedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetDestroyedParams {
     pub target_id: TargetID,
 }
 // Issued when a target has crashed.
-#[derive(Deserialize, Debug, Clone)]
-pub struct TargetCrashed {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TargetCrashedEvent {
+    pub params: TargetCrashedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetCrashedParams {
     pub target_id: TargetID,
     // Termination status type.
     pub status: String,
@@ -344,7 +374,12 @@ pub struct TargetCrashed {
 }
 // Issued when some information about a target has changed. This only happens between
 // `targetCreated` and `targetDestroyed`.
-#[derive(Deserialize, Debug, Clone)]
-pub struct TargetInfoChanged {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct TargetInfoChangedEvent {
+    pub params: TargetInfoChangedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetInfoChangedParams {
     pub target_info: TargetInfo,
 }

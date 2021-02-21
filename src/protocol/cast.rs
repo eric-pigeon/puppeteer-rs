@@ -1,7 +1,7 @@
 // This file is auto-generated do not edit manually.
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Sink {
     pub name: String,
@@ -77,13 +77,23 @@ impl super::Command for StopCasting {
 
 // This is fired whenever the list of available sinks changes. A sink is a
 // device or a software surface that you can cast to.
-#[derive(Deserialize, Debug, Clone)]
-pub struct SinksUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct SinksUpdatedEvent {
+    pub params: SinksUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct SinksUpdatedParams {
     pub sinks: Vec<Sink>,
 }
 // This is fired whenever the outstanding issue/error message changes.
 // |issueMessage| is empty if there is no issue.
-#[derive(Deserialize, Debug, Clone)]
-pub struct IssueUpdated {
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct IssueUpdatedEvent {
+    pub params: IssueUpdatedParams,
+}
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct IssueUpdatedParams {
     pub issue_message: String,
 }
