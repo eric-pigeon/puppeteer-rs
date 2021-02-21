@@ -51,7 +51,7 @@ impl Command {
 
 impl Child {
     pub async fn setup_connection(&mut self, options: ConnectionOptions) -> Connection {
-        let transport = if options.use_pipe {
+        let (transport, read_stream) = if options.use_pipe {
             unimplemented!();
         } else {
             let ws_endpoint = self
@@ -61,7 +61,7 @@ impl Child {
             WebSocketTransport::new(ws_endpoint).await
         };
 
-        Connection::new(Box::new(transport))
+        Connection::new(Box::new(transport), read_stream)
     }
 
     // TODO does this need mut self?
