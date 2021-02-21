@@ -31,7 +31,7 @@ pub enum TimeDomain {
 #[derive(Serialize, Debug)]
 pub struct Enable {
     // Time domain to use for collecting and reporting duration metrics.
-    pub time_domain: Option<TimeDomain>,
+    pub time_domain: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct EnableReturnObject {}
@@ -46,7 +46,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct SetTimeDomain {
     // Time domain
-    pub time_domain: TimeDomain,
+    pub time_domain: String,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetTimeDomainReturnObject {}
@@ -67,4 +67,13 @@ impl super::Command for GetMetrics {
     const NAME: &'static str = "Performance.getMetrics";
 
     type ReturnObject = GetMetricsReturnObject;
+}
+
+// Current values of the metrics.
+#[derive(Deserialize, Debug, Clone)]
+pub struct Metrics {
+    // Current values of the metrics.
+    pub metrics: Vec<Metric>,
+    // Timestamp title.
+    pub title: String,
 }

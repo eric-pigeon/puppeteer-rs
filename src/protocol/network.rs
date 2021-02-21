@@ -178,7 +178,7 @@ pub struct Request {
     // Priority of the resource request at the time request is sent.
     pub initial_priority: ResourcePriority,
     // The referrer policy of the request, as defined in https://www.w3.org/TR/referrer-policy/
-    pub referrer_policy: RequestReferrerPolicy,
+    pub referrer_policy: String,
     // Whether is loaded via link preload.
     pub is_link_preload: Option<bool>,
     // Set for requests when the TrustToken API is used. Contains the parameters
@@ -286,7 +286,7 @@ pub struct TrustTokenParams {
     pub r#type: TrustTokenOperationType,
     // Only set for "srr-token-redemption" type and determine whether
     // to request a fresh SRR or use a still valid cached SRR.
-    pub refresh_policy: TrustTokenParamsRefreshPolicy,
+    pub refresh_policy: String,
     // Origins of issuers from whom to request tokens or redemption
     // records.
     pub issuers: Option<Vec<String>>,
@@ -413,7 +413,7 @@ pub enum InitiatorType {
 #[serde(rename_all = "camelCase")]
 pub struct Initiator {
     // Type of this initiator.
-    pub r#type: InitiatorType,
+    pub r#type: String,
     // Initiator JavaScript stack trace, set for Script only.
     pub stack: Option<super::runtime::StackTrace>,
     // Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type.
@@ -549,7 +549,7 @@ pub enum AuthChallengeSource {
 #[serde(rename_all = "camelCase")]
 pub struct AuthChallenge {
     // Source of the authentication challenge.
-    pub source: Option<AuthChallengeSource>,
+    pub source: Option<String>,
     // Origin of the challenger.
     pub origin: String,
     // The authentication scheme used, such as basic or digest
@@ -571,7 +571,7 @@ pub struct AuthChallengeResponse {
     // The decision on what to do in response to the authorization challenge.  Default means
     // deferring to the default behavior of the net stack, which will likely either the Cancel
     // authentication or display a popup dialog box.
-    pub response: AuthChallengeResponseResponse,
+    pub response: String,
     // The username to provide, possibly empty. Should only be set if response is
     // ProvideCredentials.
     pub username: Option<String>,
@@ -1245,4 +1245,264 @@ impl super::Command for LoadNetworkResource {
     const NAME: &'static str = "Network.loadNetworkResource";
 
     type ReturnObject = LoadNetworkResourceReturnObject;
+}
+
+// Fired when data chunk was received over the network.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DataReceived {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // Data chunk length.
+    pub data_length: i32,
+    // Actual bytes received (might be less than dataLength for compressed encodings).
+    pub encoded_data_length: i32,
+}
+// Fired when EventSource message is received.
+#[derive(Deserialize, Debug, Clone)]
+pub struct EventSourceMessageReceived {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // Message type.
+    pub event_name: String,
+    // Message identifier.
+    pub event_id: String,
+    // Message content.
+    pub data: String,
+}
+// Fired when HTTP request has failed to load.
+#[derive(Deserialize, Debug, Clone)]
+pub struct LoadingFailed {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // Resource type.
+    pub r#type: ResourceType,
+    // User friendly error message.
+    pub error_text: String,
+    // True if loading was canceled.
+    pub canceled: Option<bool>,
+    // The reason why loading was blocked, if any.
+    pub blocked_reason: Option<BlockedReason>,
+}
+// Fired when HTTP request has finished loading.
+#[derive(Deserialize, Debug, Clone)]
+pub struct LoadingFinished {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // Total number of bytes received for this request.
+    pub encoded_data_length: f64,
+    // Set when 1) response was blocked by Cross-Origin Read Blocking and also
+    // 2) this needs to be reported to the DevTools console.
+    pub should_report_corb_blocking: Option<bool>,
+}
+// Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
+// mocked.
+// Deprecated, use Fetch.requestPaused instead.
+#[derive(Deserialize, Debug, Clone)]
+pub struct RequestIntercepted {
+    // Each request the page makes will have a unique id, however if any redirects are encountered
+    // while processing that fetch, they will be reported with the same id as the original fetch.
+    // Likewise if HTTP authentication is needed then the same fetch id will be used.
+    pub interception_id: InterceptionId,
+    pub request: Request,
+    // The id of the frame that initiated the request.
+    pub frame_id: super::page::FrameId,
+    // How the requested resource will be used.
+    pub resource_type: ResourceType,
+    // Whether this is a navigation request, which can abort the navigation completely.
+    pub is_navigation_request: bool,
+    // Set if the request is a navigation that will result in a download.
+    // Only present after response is received from the server (i.e. HeadersReceived stage).
+    pub is_download: Option<bool>,
+    // Redirect location, only sent if a redirect was intercepted.
+    pub redirect_url: Option<String>,
+    // Details of the Authorization Challenge encountered. If this is set then
+    // continueInterceptedRequest must contain an authChallengeResponse.
+    pub auth_challenge: Option<AuthChallenge>,
+    // Response error if intercepted at response stage or if redirect occurred while intercepting
+    // request.
+    pub response_error_reason: Option<ErrorReason>,
+    // Response code if intercepted at response stage or if redirect occurred while intercepting
+    // request or auth retry occurred.
+    pub response_status_code: Option<i32>,
+    // Response headers if intercepted at the response stage or if redirect occurred while
+    // intercepting request or auth retry occurred.
+    pub response_headers: Option<Headers>,
+    // If the intercepted request had a corresponding requestWillBeSent event fired for it, then
+    // this requestId will be the same as the requestId present in the requestWillBeSent event.
+    pub request_id: Option<RequestId>,
+}
+// Fired if request ended up loading from cache.
+#[derive(Deserialize, Debug, Clone)]
+pub struct RequestServedFromCache {
+    // Request identifier.
+    pub request_id: RequestId,
+}
+// Fired when page is about to send HTTP request.
+#[derive(Deserialize, Debug, Clone)]
+pub struct RequestWillBeSent {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Loader identifier. Empty string if the request is fetched from worker.
+    pub loader_id: LoaderId,
+    // URL of the document this request is loaded for.
+    pub document_url: String,
+    // Request data.
+    pub request: Request,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // Timestamp.
+    pub wall_time: TimeSinceEpoch,
+    // Request initiator.
+    pub initiator: Initiator,
+    // Redirect response data.
+    pub redirect_response: Option<Response>,
+    // Type of this resource.
+    pub r#type: Option<ResourceType>,
+    // Frame identifier.
+    pub frame_id: Option<super::page::FrameId>,
+    // Whether the request is initiated by a user gesture. Defaults to false.
+    pub has_user_gesture: Option<bool>,
+}
+// Fired when resource loading priority is changed
+#[derive(Deserialize, Debug, Clone)]
+pub struct ResourceChangedPriority {
+    // Request identifier.
+    pub request_id: RequestId,
+    // New priority
+    pub new_priority: ResourcePriority,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+}
+// Fired when a signed exchange was received over the network
+#[derive(Deserialize, Debug, Clone)]
+pub struct SignedExchangeReceived {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Information about the signed exchange response.
+    pub info: SignedExchangeInfo,
+}
+// Fired when HTTP response is available.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ResponseReceived {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Loader identifier. Empty string if the request is fetched from worker.
+    pub loader_id: LoaderId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // Resource type.
+    pub r#type: ResourceType,
+    // Response data.
+    pub response: Response,
+    // Frame identifier.
+    pub frame_id: Option<super::page::FrameId>,
+}
+// Fired when WebSocket is closed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketClosed {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+}
+// Fired upon WebSocket creation.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketCreated {
+    // Request identifier.
+    pub request_id: RequestId,
+    // WebSocket request URL.
+    pub url: String,
+    // Request initiator.
+    pub initiator: Option<Initiator>,
+}
+// Fired when WebSocket message error occurs.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketFrameError {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // WebSocket error message.
+    pub error_message: String,
+}
+// Fired when WebSocket message is received.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketFrameReceived {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // WebSocket response data.
+    pub response: WebSocketFrame,
+}
+// Fired when WebSocket message is sent.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketFrameSent {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // WebSocket response data.
+    pub response: WebSocketFrame,
+}
+// Fired when WebSocket handshake response becomes available.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketHandshakeResponseReceived {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // WebSocket response data.
+    pub response: WebSocketResponse,
+}
+// Fired when WebSocket is about to initiate handshake.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WebSocketWillSendHandshakeRequest {
+    // Request identifier.
+    pub request_id: RequestId,
+    // Timestamp.
+    pub timestamp: MonotonicTime,
+    // UTC Timestamp.
+    pub wall_time: TimeSinceEpoch,
+    // WebSocket request data.
+    pub request: WebSocketRequest,
+}
+// Fired when additional information about a requestWillBeSent event is available from the
+// network stack. Not every requestWillBeSent event will have an additional
+// requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
+// or requestWillBeSentExtraInfo will be fired first for the same request.
+#[derive(Deserialize, Debug, Clone)]
+pub struct RequestWillBeSentExtraInfo {
+    // Request identifier. Used to match this information to an existing requestWillBeSent event.
+    pub request_id: RequestId,
+    // A list of cookies potentially associated to the requested URL. This includes both cookies sent with
+    // the request and the ones not sent; the latter are distinguished by having blockedReason field set.
+    pub associated_cookies: Vec<BlockedCookieWithReason>,
+    // Raw request headers as they will be sent over the wire.
+    pub headers: Headers,
+}
+// Fired when additional information about a responseReceived event is available from the network
+// stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
+// it, and responseReceivedExtraInfo may be fired before or after responseReceived.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ResponseReceivedExtraInfo {
+    // Request identifier. Used to match this information to another responseReceived event.
+    pub request_id: RequestId,
+    // A list of cookies which were not stored from the response along with the corresponding
+    // reasons for blocking. The cookies here may not be valid due to syntax errors, which
+    // are represented by the invalid cookie line string instead of a proper cookie.
+    pub blocked_cookies: Vec<BlockedSetCookieWithReason>,
+    // Raw response headers as they were received over the wire.
+    pub headers: Headers,
+    // Raw response header text as it was received over the wire. The raw text may not always be
+    // available, such as in the case of HTTP/2 or QUIC.
+    pub headers_text: Option<String>,
 }

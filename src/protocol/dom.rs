@@ -959,3 +959,114 @@ impl super::Command for GetFrameOwner {
 
     type ReturnObject = GetFrameOwnerReturnObject;
 }
+
+// Fired when `Element`'s attribute is modified.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AttributeModified {
+    // Id of the node that has changed.
+    pub node_id: NodeId,
+    // Attribute name.
+    pub name: String,
+    // Attribute value.
+    pub value: String,
+}
+// Fired when `Element`'s attribute is removed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AttributeRemoved {
+    // Id of the node that has changed.
+    pub node_id: NodeId,
+    // A ttribute name.
+    pub name: String,
+}
+// Mirrors `DOMCharacterDataModified` event.
+#[derive(Deserialize, Debug, Clone)]
+pub struct CharacterDataModified {
+    // Id of the node that has changed.
+    pub node_id: NodeId,
+    // New text value.
+    pub character_data: String,
+}
+// Fired when `Container`'s child node count has changed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ChildNodeCountUpdated {
+    // Id of the node that has changed.
+    pub node_id: NodeId,
+    // New node count.
+    pub child_node_count: i32,
+}
+// Mirrors `DOMNodeInserted` event.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ChildNodeInserted {
+    // Id of the node that has changed.
+    pub parent_node_id: NodeId,
+    // If of the previous siblint.
+    pub previous_node_id: NodeId,
+    // Inserted node data.
+    pub node: Node,
+}
+// Mirrors `DOMNodeRemoved` event.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ChildNodeRemoved {
+    // Parent id.
+    pub parent_node_id: NodeId,
+    // Id of the node that has been removed.
+    pub node_id: NodeId,
+}
+// Called when distrubution is changed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DistributedNodesUpdated {
+    // Insertion point where distrubuted nodes were updated.
+    pub insertion_point_id: NodeId,
+    // Distributed nodes for given insertion point.
+    pub distributed_nodes: Vec<BackendNode>,
+}
+// Fired when `Document` has been totally updated. Node ids are no longer valid.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DocumentUpdated {}
+// Fired when `Element`'s inline style is modified via a CSS property modification.
+#[derive(Deserialize, Debug, Clone)]
+pub struct InlineStyleInvalidated {
+    // Ids of the nodes for which the inline styles have been invalidated.
+    pub node_ids: Vec<NodeId>,
+}
+// Called when a pseudo element is added to an element.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PseudoElementAdded {
+    // Pseudo element's parent element id.
+    pub parent_id: NodeId,
+    // The added pseudo element.
+    pub pseudo_element: Node,
+}
+// Called when a pseudo element is removed from an element.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PseudoElementRemoved {
+    // Pseudo element's parent element id.
+    pub parent_id: NodeId,
+    // The removed pseudo element id.
+    pub pseudo_element_id: NodeId,
+}
+// Fired when backend wants to provide client with the missing DOM structure. This happens upon
+// most of the calls requesting node ids.
+#[derive(Deserialize, Debug, Clone)]
+pub struct SetChildNodes {
+    // Parent node id to populate with children.
+    pub parent_id: NodeId,
+    // Child nodes array.
+    pub nodes: Vec<Node>,
+}
+// Called when shadow root is popped from the element.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ShadowRootPopped {
+    // Host element id.
+    pub host_id: NodeId,
+    // Shadow root id.
+    pub root_id: NodeId,
+}
+// Called when shadow root is pushed into the element.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ShadowRootPushed {
+    // Host element id.
+    pub host_id: NodeId,
+    // Shadow root.
+    pub root: Node,
+}

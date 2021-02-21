@@ -53,9 +53,9 @@ pub enum RemoteObjectSubtype {
 #[serde(rename_all = "camelCase")]
 pub struct RemoteObject {
     // Object type.
-    pub r#type: RemoteObjectType,
+    pub r#type: String,
     // Object subtype hint. Specified for `object` or `wasm` type values only.
-    pub subtype: Option<RemoteObjectSubtype>,
+    pub subtype: Option<String>,
     // Object class (constructor) name. Specified for `object` type values only.
     pub class_name: Option<String>,
     // Remote object value in case of primitive values or JSON values (if it was requested).
@@ -115,9 +115,9 @@ pub enum ObjectPreviewSubtype {
 #[serde(rename_all = "camelCase")]
 pub struct ObjectPreview {
     // Object type.
-    pub r#type: ObjectPreviewType,
+    pub r#type: String,
     // Object subtype hint. Specified for `object` type values only.
-    pub subtype: Option<ObjectPreviewSubtype>,
+    pub subtype: Option<String>,
     // String representation of the object.
     pub description: Option<String>,
     // True iff some of the properties or entries of the original object did not fit.
@@ -162,13 +162,13 @@ pub struct PropertyPreview {
     // Property name.
     pub name: String,
     // Object type. Accessor means that the property itself is an accessor property.
-    pub r#type: PropertyPreviewType,
+    pub r#type: String,
     // User-friendly property value string.
     pub value: Option<String>,
     // Nested value preview.
     pub value_preview: Option<ObjectPreview>,
     // Object subtype hint. Specified for `object` type values only.
-    pub subtype: Option<PropertyPreviewSubtype>,
+    pub subtype: Option<String>,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -744,4 +744,70 @@ impl super::Command for RemoveBinding {
     const NAME: &'static str = "Runtime.removeBinding";
 
     type ReturnObject = RemoveBindingReturnObject;
+}
+
+// Notification is issued every time when binding is called.
+#[derive(Deserialize, Debug, Clone)]
+pub struct BindingCalled {
+    pub name: String,
+    pub payload: String,
+    // Identifier of the context where the call was made.
+    pub execution_context_id: ExecutionContextId,
+}
+// Issued when console API was called.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ConsoleAPICalled {
+    // Type of the call.
+    pub r#type: String,
+    // Call arguments.
+    pub args: Vec<RemoteObject>,
+    // Identifier of the context where the call was made.
+    pub execution_context_id: ExecutionContextId,
+    // Call timestamp.
+    pub timestamp: Timestamp,
+    // Stack trace captured when the call was made. The async stack chain is automatically reported for
+    // the following call types: `assert`, `error`, `trace`, `warning`. For other types the async call
+    // chain can be retrieved using `Debugger.getStackTrace` and `stackTrace.parentId` field.
+    pub stack_trace: Option<StackTrace>,
+    // Console context descriptor for calls on non-default console context (not console.*):
+    // 'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
+    // on named context.
+    pub context: Option<String>,
+}
+// Issued when unhandled exception was revoked.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ExceptionRevoked {
+    // Reason describing why exception was revoked.
+    pub reason: String,
+    // The id of revoked exception, as reported in `exceptionThrown`.
+    pub exception_id: i32,
+}
+// Issued when exception was thrown and unhandled.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ExceptionThrown {
+    // Timestamp of the exception.
+    pub timestamp: Timestamp,
+    pub exception_details: ExceptionDetails,
+}
+// Issued when new execution context is created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ExecutionContextCreated {
+    // A newly created execution context.
+    pub context: ExecutionContextDescription,
+}
+// Issued when execution context is destroyed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ExecutionContextDestroyed {
+    // Id of the destroyed context
+    pub execution_context_id: ExecutionContextId,
+}
+// Issued when all executionContexts were cleared in browser
+#[derive(Deserialize, Debug, Clone)]
+pub struct ExecutionContextsCleared {}
+// Issued when object should be inspected (for example, as a result of inspect() command line API
+// call).
+#[derive(Deserialize, Debug, Clone)]
+pub struct InspectRequested {
+    pub object: RemoteObject,
+    // TODO objectProperty
 }

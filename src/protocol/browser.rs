@@ -165,7 +165,7 @@ pub struct SetDownloadBehavior {
     // Whether to allow all or deny all download requests, or use default Chrome behavior if
     // available (otherwise deny). |allowAndName| allows download and names files according to
     // their dowmload guids.
-    pub behavior: Behavior,
+    pub behavior: String,
     // BrowserContext to set download behavior. When omitted, default browser context is used.
     pub browser_context_id: Option<BrowserContextID>,
     // The default path to save downloaded files to. This is requred if behavior is set to 'allow'

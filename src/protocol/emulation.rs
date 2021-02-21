@@ -14,7 +14,7 @@ pub enum ScreenOrientationType {
 #[serde(rename_all = "camelCase")]
 pub struct ScreenOrientation {
     // Orientation type.
-    pub r#type: ScreenOrientationType,
+    pub r#type: String,
     // Orientation angle.
     pub angle: i32,
 }
@@ -28,7 +28,7 @@ pub enum DisplayFeatureOrientation {
 #[serde(rename_all = "camelCase")]
 pub struct DisplayFeature {
     // Orientation of a display feature in relation to screen
-    pub orientation: DisplayFeatureOrientation,
+    pub orientation: String,
     // The offset from the screen origin in either the x (for vertical
     // orientation) or y (for horizontal orientation) direction.
     pub offset: i32,
@@ -235,7 +235,7 @@ pub struct SetEmitTouchEventsForMouse {
     // Whether touch emulation based on mouse input should be enabled.
     pub enabled: bool,
     // Touch/gesture events configuration. Default: current platform.
-    pub configuration: Option<Configuration>,
+    pub configuration: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetEmitTouchEventsForMouseReturnObject {}
@@ -273,7 +273,7 @@ pub enum Type {
 #[derive(Serialize, Debug)]
 pub struct SetEmulatedVisionDeficiency {
     // Vision deficiency to emulate.
-    pub r#type: Type,
+    pub r#type: String,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetEmulatedVisionDeficiencyReturnObject {}
@@ -470,3 +470,7 @@ impl super::Command for SetUserAgentOverride {
 
     type ReturnObject = SetUserAgentOverrideReturnObject;
 }
+
+// Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.
+#[derive(Deserialize, Debug, Clone)]
+pub struct VirtualTimeBudgetExpired {}

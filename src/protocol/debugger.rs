@@ -71,7 +71,7 @@ pub enum ScopeType {
 #[serde(rename_all = "camelCase")]
 pub struct Scope {
     // Scope type.
-    pub r#type: ScopeType,
+    pub r#type: String,
     // Object representing the scope. For `global` and `with` scopes it represents the actual
     // object; for the rest of the scopes, it is artificial transient object enumerating scope
     // variables as its properties.
@@ -107,7 +107,7 @@ pub struct BreakLocation {
     pub line_number: i32,
     // Column number in the script (0-based).
     pub column_number: Option<i32>,
-    pub r#type: Option<BreakLocationType>,
+    pub r#type: Option<String>,
 }
 // Enum of possible script languages.
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -129,7 +129,7 @@ pub enum DebugSymbolsType {
 #[serde(rename_all = "camelCase")]
 pub struct DebugSymbols {
     // Type of the debug symbols.
-    pub r#type: DebugSymbolsType,
+    pub r#type: String,
     // URL of the external symbol source.
     pub external_url: Option<String>,
 }
@@ -145,7 +145,7 @@ pub enum TargetCallFrames {
 pub struct ContinueToLocation {
     // Location to continue to.
     pub location: Location,
-    pub target_call_frames: Option<TargetCallFrames>,
+    pub target_call_frames: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct ContinueToLocationReturnObject {}
@@ -481,7 +481,7 @@ pub enum Instrumentation {
 #[derive(Serialize, Debug)]
 pub struct SetInstrumentationBreakpoint {
     // Instrumentation name.
-    pub instrumentation: Instrumentation,
+    pub instrumentation: String,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetInstrumentationBreakpointReturnObject {
@@ -572,7 +572,7 @@ pub enum State {
 #[derive(Serialize, Debug)]
 pub struct SetPauseOnExceptions {
     // Pause on exceptions mode.
-    pub state: State,
+    pub state: String,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetPauseOnExceptionsReturnObject {}
@@ -695,4 +695,115 @@ impl super::Command for StepOver {
     const NAME: &'static str = "Debugger.stepOver";
 
     type ReturnObject = StepOverReturnObject;
+}
+
+// Fired when breakpoint is resolved to an actual script and location.
+#[derive(Deserialize, Debug, Clone)]
+pub struct BreakpointResolved {
+    // Breakpoint unique identifier.
+    pub breakpoint_id: BreakpointId,
+    // Actual breakpoint location.
+    pub location: Location,
+}
+// Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria.
+#[derive(Deserialize, Debug, Clone)]
+pub struct Paused {
+    // Call stack the virtual machine stopped on.
+    pub call_frames: Vec<CallFrame>,
+    // Pause reason.
+    pub reason: String,
+    // Object containing break-specific auxiliary properties.
+    // TODO objectProperty
+    // Hit breakpoints IDs
+    pub hit_breakpoints: Option<Vec<String>>,
+    // Async stack trace, if any.
+    pub async_stack_trace: Option<super::runtime::StackTrace>,
+    // Async stack trace, if any.
+    pub async_stack_trace_id: Option<super::runtime::StackTraceId>,
+    // Never present, will be removed.
+    pub async_call_stack_trace_id: Option<super::runtime::StackTraceId>,
+}
+// Fired when the virtual machine resumed execution.
+#[derive(Deserialize, Debug, Clone)]
+pub struct Resumed {}
+// Fired when virtual machine fails to parse the script.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ScriptFailedToParse {
+    // Identifier of the script parsed.
+    pub script_id: super::runtime::ScriptId,
+    // URL or name of the script parsed (if any).
+    pub url: String,
+    // Line offset of the script within the resource with given URL (for script tags).
+    pub start_line: i32,
+    // Column offset of the script within the resource with given URL.
+    pub start_column: i32,
+    // Last line of the script.
+    pub end_line: i32,
+    // Length of the last line of the script.
+    pub end_column: i32,
+    // Specifies script creation context.
+    pub execution_context_id: super::runtime::ExecutionContextId,
+    // Content hash of the script.
+    pub hash: String,
+    // Embedder-specific auxiliary data.
+    // TODO objectProperty
+    // URL of source map associated with script (if any).
+    pub source_map_url: Option<String>,
+    // True, if this script has sourceURL.
+    pub has_source_url: Option<bool>,
+    // True, if this script is ES6 module.
+    pub is_module: Option<bool>,
+    // This script length.
+    pub length: Option<i32>,
+    // JavaScript top stack frame of where the script parsed event was triggered if available.
+    pub stack_trace: Option<super::runtime::StackTrace>,
+    // If the scriptLanguage is WebAssembly, the code section offset in the module.
+    pub code_offset: Option<i32>,
+    // The language of the script.
+    pub script_language: Option<super::debugger::ScriptLanguage>,
+    // The name the embedder supplied for this script.
+    pub embedder_name: Option<String>,
+}
+// Fired when virtual machine parses script. This event is also fired for all known and uncollected
+// scripts upon enabling debugger.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ScriptParsed {
+    // Identifier of the script parsed.
+    pub script_id: super::runtime::ScriptId,
+    // URL or name of the script parsed (if any).
+    pub url: String,
+    // Line offset of the script within the resource with given URL (for script tags).
+    pub start_line: i32,
+    // Column offset of the script within the resource with given URL.
+    pub start_column: i32,
+    // Last line of the script.
+    pub end_line: i32,
+    // Length of the last line of the script.
+    pub end_column: i32,
+    // Specifies script creation context.
+    pub execution_context_id: super::runtime::ExecutionContextId,
+    // Content hash of the script.
+    pub hash: String,
+    // Embedder-specific auxiliary data.
+    // TODO objectProperty
+    // True, if this script is generated as a result of the live edit operation.
+    pub is_live_edit: Option<bool>,
+    // URL of source map associated with script (if any).
+    pub source_map_url: Option<String>,
+    // True, if this script has sourceURL.
+    pub has_source_url: Option<bool>,
+    // True, if this script is ES6 module.
+    pub is_module: Option<bool>,
+    // This script length.
+    pub length: Option<i32>,
+    // JavaScript top stack frame of where the script parsed event was triggered if available.
+    pub stack_trace: Option<super::runtime::StackTrace>,
+    // If the scriptLanguage is WebAssembly, the code section offset in the module.
+    pub code_offset: Option<i32>,
+    // The language of the script.
+    pub script_language: Option<super::debugger::ScriptLanguage>,
+    // If the scriptLanguage is WebASsembly, the source of debug symbols for the module.
+    pub debug_symbols: Option<super::debugger::DebugSymbols>,
+    // The name the embedder supplied for this script.
+    pub embedder_name: Option<String>,
 }

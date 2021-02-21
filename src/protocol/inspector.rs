@@ -21,3 +21,16 @@ impl super::Command for Enable {
 
     type ReturnObject = EnableReturnObject;
 }
+
+// Fired when remote debugging connection is about to be terminated. Contains detach reason.
+#[derive(Deserialize, Debug, Clone)]
+pub struct Detached {
+    // The reason why connection has been terminated.
+    pub reason: String,
+}
+// Fired when debugging target has crashed
+#[derive(Deserialize, Debug, Clone)]
+pub struct TargetCrashed {}
+// Fired when debugging target has reloaded after crash
+#[derive(Deserialize, Debug, Clone)]
+pub struct TargetReloadedAfterCrash {}

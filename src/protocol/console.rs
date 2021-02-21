@@ -30,9 +30,9 @@ pub enum ConsoleMessageLevel {
 #[serde(rename_all = "camelCase")]
 pub struct ConsoleMessage {
     // Message source.
-    pub source: ConsoleMessageSource,
+    pub source: String,
     // Message severity.
-    pub level: ConsoleMessageLevel,
+    pub level: String,
     // Message text.
     pub text: String,
     // URL of the message origin.
@@ -73,4 +73,11 @@ impl super::Command for Enable {
     const NAME: &'static str = "Console.enable";
 
     type ReturnObject = EnableReturnObject;
+}
+
+// Issued when new console message is added.
+#[derive(Deserialize, Debug, Clone)]
+pub struct MessageAdded {
+    // Console message that has been added.
+    pub message: ConsoleMessage,
 }

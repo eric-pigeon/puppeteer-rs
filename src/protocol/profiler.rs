@@ -339,3 +339,35 @@ impl super::Command for GetRuntimeCallStats {
 
     type ReturnObject = GetRuntimeCallStatsReturnObject;
 }
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct ConsoleProfileFinished {
+    pub id: String,
+    // Location of console.profileEnd().
+    pub location: super::debugger::Location,
+    pub profile: Profile,
+    // Profile title passed as an argument to console.profile().
+    pub title: Option<String>,
+}
+// Sent when new profile recording is started using console.profile() call.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ConsoleProfileStarted {
+    pub id: String,
+    // Location of console.profile().
+    pub location: super::debugger::Location,
+    // Profile title passed as an argument to console.profile().
+    pub title: Option<String>,
+}
+// Reports coverage delta since the last poll (either from an event like this, or from
+// `takePreciseCoverage` for the current isolate. May only be sent if precise code
+// coverage has been started. This event can be trigged by the embedder to, for example,
+// trigger collection of coverage data immediatelly at a certain point in time.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PreciseCoverageDeltaUpdate {
+    // Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
+    pub timestamp: f64,
+    // Identifier for distinguishing coverage events.
+    pub occassion: String,
+    // Coverage data for the current isolate.
+    pub result: Vec<ScriptCoverage>,
+}

@@ -42,8 +42,8 @@ const rustType = (jsType, ref, optional, isArray) => {
         type = "String";
         break;
       case 'object':
-        console.log(jsType);
-        process.exit(1);
+        type = "serde_json::map::Map<String, serde_json::Value>";
+        break;
       case 'number':
         type = "f64";
         break;
@@ -180,12 +180,14 @@ Handlebars.registerHelper('propertyTypePartial', (propertyTypeObject) => {
   }
   switch(propertyTypeObject.type) {
     case 'string':
-      if (propertyTypeObject.enum != undefined) {
-        return "enumProperty";
-      }
-      else {
-        return "stringProperty";
-      }
+      return "stringProperty";
+      // TODO does it make sense to create enum types for theres
+      // if (propertyTypeObject.enum != undefined) {
+      //   return "enumProperty";
+      // }
+      // else {
+      //   return "stringProperty";
+      // }
     case 'object':
       return "objectProperty";
     case 'array':

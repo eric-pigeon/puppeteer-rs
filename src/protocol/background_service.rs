@@ -89,3 +89,16 @@ impl super::Command for ClearEvents {
 
     type ReturnObject = ClearEventsReturnObject;
 }
+
+// Called when the recording state for the service has been updated.
+#[derive(Deserialize, Debug, Clone)]
+pub struct RecordingStateChanged {
+    pub is_recording: bool,
+    pub service: ServiceName,
+}
+// Called with all existing backgroundServiceEvents when enabled, and all new
+// events afterwards if enabled and recording.
+#[derive(Deserialize, Debug, Clone)]
+pub struct BackgroundServiceEventReceived {
+    pub background_service_event: BackgroundServiceEvent,
+}

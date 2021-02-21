@@ -27,7 +27,7 @@ pub struct Animation {
     // `Animation`'s current time.
     pub current_time: f64,
     // Animation type of `Animation`.
-    pub r#type: AnimationType,
+    pub r#type: String,
     // `Animation`'s source animation node.
     pub source: Option<AnimationEffect>,
     // A unique ID for `Animation` representing the sources that triggered this CSS
@@ -215,4 +215,23 @@ impl super::Command for SetTiming {
     const NAME: &'static str = "Animation.setTiming";
 
     type ReturnObject = SetTimingReturnObject;
+}
+
+// Event for when an animation has been cancelled.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AnimationCanceled {
+    // Id of the animation that was cancelled.
+    pub id: String,
+}
+// Event for each animation that has been created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AnimationCreated {
+    // Id of the animation that was created.
+    pub id: String,
+}
+// Event for animation that has been started.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AnimationStarted {
+    // Animation that was started.
+    pub animation: Animation,
 }

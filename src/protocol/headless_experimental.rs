@@ -12,7 +12,7 @@ pub enum ScreenshotParamsFormat {
 #[serde(rename_all = "camelCase")]
 pub struct ScreenshotParams {
     // Image compression format (defaults to png).
-    pub format: Option<ScreenshotParamsFormat>,
+    pub format: Option<String>,
     // Compression quality from range [0..100] (jpeg only).
     pub quality: Option<i32>,
 }
@@ -70,4 +70,13 @@ impl super::Command for Enable {
     const NAME: &'static str = "HeadlessExperimental.enable";
 
     type ReturnObject = EnableReturnObject;
+}
+
+// Issued when the target starts or stops needing BeginFrames.
+// Deprecated. Issue beginFrame unconditionally instead and use result from
+// beginFrame to detect whether the frames were suppressed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NeedsBeginFramesChanged {
+    // True if BeginFrames are needed, false otherwise.
+    pub needs_begin_frames: bool,
 }

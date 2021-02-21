@@ -471,3 +471,25 @@ impl super::Command for SetShowHinge {
 
     type ReturnObject = SetShowHingeReturnObject;
 }
+
+// Fired when the node should be inspected. This happens after call to `setInspectMode` or when
+// user manually inspects an element.
+#[derive(Deserialize, Debug, Clone)]
+pub struct InspectNodeRequested {
+    // Id of the node to inspect.
+    pub backend_node_id: super::dom::BackendNodeId,
+}
+// Fired when the node should be highlighted. This happens after call to `setInspectMode`.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NodeHighlightRequested {
+    pub node_id: super::dom::NodeId,
+}
+// Fired when user asks to capture screenshot of some area on the page.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ScreenshotRequested {
+    // Viewport to capture, in device independent pixels (dip).
+    pub viewport: super::page::Viewport,
+}
+// Fired when user cancels the inspect mode.
+#[derive(Deserialize, Debug, Clone)]
+pub struct InspectModeCanceled {}

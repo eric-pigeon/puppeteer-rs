@@ -74,3 +74,16 @@ impl super::Command for StopCasting {
 
     type ReturnObject = StopCastingReturnObject;
 }
+
+// This is fired whenever the list of available sinks changes. A sink is a
+// device or a software surface that you can cast to.
+#[derive(Deserialize, Debug, Clone)]
+pub struct SinksUpdated {
+    pub sinks: Vec<Sink>,
+}
+// This is fired whenever the outstanding issue/error message changes.
+// |issueMessage| is empty if there is no issue.
+#[derive(Deserialize, Debug, Clone)]
+pub struct IssueUpdated {
+    pub issue_message: String,
+}

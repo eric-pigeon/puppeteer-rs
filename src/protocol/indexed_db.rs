@@ -52,7 +52,7 @@ pub enum KeyType {
 #[serde(rename_all = "camelCase")]
 pub struct Key {
     // Key type.
-    pub r#type: KeyType,
+    pub r#type: String,
     // Number value.
     pub number: Option<f64>,
     // String value.
@@ -98,7 +98,7 @@ pub enum KeyPathType {
 #[serde(rename_all = "camelCase")]
 pub struct KeyPath {
     // Key path type.
-    pub r#type: KeyPathType,
+    pub r#type: String,
     // String value.
     pub string: Option<String>,
     // Array value.

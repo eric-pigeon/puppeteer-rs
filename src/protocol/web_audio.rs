@@ -142,3 +142,87 @@ impl super::Command for GetRealtimeData {
 
     type ReturnObject = GetRealtimeDataReturnObject;
 }
+
+// Notifies that a new BaseAudioContext has been created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ContextCreated {
+    pub context: BaseAudioContext,
+}
+// Notifies that an existing BaseAudioContext will be destroyed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ContextWillBeDestroyed {
+    pub context_id: GraphObjectId,
+}
+// Notifies that existing BaseAudioContext has changed some properties (id stays the same)..
+#[derive(Deserialize, Debug, Clone)]
+pub struct ContextChanged {
+    pub context: BaseAudioContext,
+}
+// Notifies that the construction of an AudioListener has finished.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AudioListenerCreated {
+    pub listener: AudioListener,
+}
+// Notifies that a new AudioListener has been created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AudioListenerWillBeDestroyed {
+    pub context_id: GraphObjectId,
+    pub listener_id: GraphObjectId,
+}
+// Notifies that a new AudioNode has been created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AudioNodeCreated {
+    pub node: AudioNode,
+}
+// Notifies that an existing AudioNode has been destroyed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AudioNodeWillBeDestroyed {
+    pub context_id: GraphObjectId,
+    pub node_id: GraphObjectId,
+}
+// Notifies that a new AudioParam has been created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AudioParamCreated {
+    pub param: AudioParam,
+}
+// Notifies that an existing AudioParam has been destroyed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AudioParamWillBeDestroyed {
+    pub context_id: GraphObjectId,
+    pub node_id: GraphObjectId,
+    pub param_id: GraphObjectId,
+}
+// Notifies that two AudioNodes are connected.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NodesConnected {
+    pub context_id: GraphObjectId,
+    pub source_id: GraphObjectId,
+    pub destination_id: GraphObjectId,
+    pub source_output_index: Option<f64>,
+    pub destination_input_index: Option<f64>,
+}
+// Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NodesDisconnected {
+    pub context_id: GraphObjectId,
+    pub source_id: GraphObjectId,
+    pub destination_id: GraphObjectId,
+    pub source_output_index: Option<f64>,
+    pub destination_input_index: Option<f64>,
+}
+// Notifies that an AudioNode is connected to an AudioParam.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NodeParamConnected {
+    pub context_id: GraphObjectId,
+    pub source_id: GraphObjectId,
+    pub destination_id: GraphObjectId,
+    pub source_output_index: Option<f64>,
+}
+// Notifies that an AudioNode is disconnected to an AudioParam.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NodeParamDisconnected {
+    pub context_id: GraphObjectId,
+    pub source_id: GraphObjectId,
+    pub destination_id: GraphObjectId,
+    pub source_output_index: Option<f64>,
+}

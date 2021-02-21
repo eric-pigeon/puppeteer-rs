@@ -15,7 +15,7 @@ pub enum TraceConfigRecordMode {
 #[serde(rename_all = "camelCase")]
 pub struct TraceConfig {
     // Controls how the trace buffer stores data.
-    pub record_mode: Option<TraceConfigRecordMode>,
+    pub record_mode: Option<String>,
     // Turns on JavaScript stack sampling.
     pub enable_sampling: Option<bool>,
     // Turns on system tracing.
@@ -118,7 +118,7 @@ pub struct Start {
     pub buffer_usage_reporting_interval: Option<f64>,
     // Whether to report trace events as series of dataCollected events or to save trace to a
     // stream (defaults to `ReportEvents`).
-    pub transfer_mode: Option<TransferMode>,
+    pub transfer_mode: Option<String>,
     // Trace data format to use. This only applies when using `ReturnAsStream`
     // transfer mode (defaults to `json`).
     pub stream_format: Option<StreamFormat>,
@@ -133,4 +133,36 @@ impl super::Command for Start {
     const NAME: &'static str = "Tracing.start";
 
     type ReturnObject = StartReturnObject;
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct BufferUsage {
+    // A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+    // total size.
+    pub percent_full: Option<f64>,
+    // An approximate number of events in the trace log.
+    pub event_count: Option<f64>,
+    // A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+    // total size.
+    pub value: Option<f64>,
+}
+// Contains an bucket of collected trace events. When tracing is stopped collected events will be
+// send as a sequence of dataCollected events followed by tracingComplete event.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DataCollected {
+    pub value: Vec<serde_json::map::Map<String, serde_json::Value>>,
+}
+// Signals that tracing is stopped and there is no trace buffers pending flush, all data were
+// delivered via dataCollected events.
+#[derive(Deserialize, Debug, Clone)]
+pub struct TracingComplete {
+    // Indicates whether some trace data is known to have been lost, e.g. because the trace ring
+    // buffer wrapped around.
+    pub data_loss_occurred: bool,
+    // A handle of the stream that holds resulting trace data.
+    pub stream: Option<super::io::StreamHandle>,
+    // Trace data format of returned stream.
+    pub trace_format: Option<StreamFormat>,
+    // Compression format of returned stream.
+    pub stream_compression: Option<StreamCompression>,
 }

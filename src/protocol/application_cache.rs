@@ -96,3 +96,17 @@ impl super::Command for GetManifestForFrame {
 
     type ReturnObject = GetManifestForFrameReturnObject;
 }
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct ApplicationCacheStatusUpdated {
+    // Identifier of the frame containing document whose application cache updated status.
+    pub frame_id: super::page::FrameId,
+    // Manifest URL.
+    pub manifest_url: String,
+    // Updated application cache status.
+    pub status: i32,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct NetworkStateUpdated {
+    pub is_now_online: bool,
+}

@@ -65,3 +65,19 @@ impl super::Command for {{camelize name}} {
 {{/each}}
 
 {{! events }}
+{{#each domain.events}}
+{{#if description}}
+// {{{comment description}}}
+{{/if}}
+#[derive(Deserialize, Debug, Clone)]
+pub struct {{camelize name}} {
+{{#if parameters}}
+{{#each parameters}}
+  {{#if description}}
+  // {{{comment description}}}
+  {{/if}}
+  {{> (propertyTypePartial this) }}
+{{/each}}
+{{/if}}
+}
+{{/each}}

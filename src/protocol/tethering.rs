@@ -27,3 +27,12 @@ impl super::Command for Unbind {
 
     type ReturnObject = UnbindReturnObject;
 }
+
+// Informs that port was successfully bound and got a specified connection id.
+#[derive(Deserialize, Debug, Clone)]
+pub struct Accepted {
+    // Port number that was successfully bound.
+    pub port: i32,
+    // Connection id to be used.
+    pub connection_id: String,
+}

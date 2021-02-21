@@ -75,3 +75,8 @@ impl super::Command for GetDatabaseTableNames {
 
     type ReturnObject = GetDatabaseTableNamesReturnObject;
 }
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct AddDatabase {
+    pub database: Database,
+}

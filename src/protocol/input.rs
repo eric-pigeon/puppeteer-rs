@@ -52,7 +52,7 @@ pub enum Type {
 #[derive(Serialize, Debug)]
 pub struct DispatchKeyEvent {
     // Type of the key event.
-    pub r#type: Type,
+    pub r#type: String,
     // Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
     // (default: 0).
     pub modifiers: Option<i32>,
@@ -120,7 +120,7 @@ pub enum PointerType {
 #[derive(Serialize, Debug)]
 pub struct DispatchMouseEvent {
     // Type of the mouse event.
-    pub r#type: Type,
+    pub r#type: String,
     // X coordinate of the event relative to the main frame's viewport in CSS pixels.
     pub x: f64,
     // Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
@@ -143,7 +143,7 @@ pub struct DispatchMouseEvent {
     // Y delta in CSS pixels for mouse wheel event (default: 0).
     pub delta_y: Option<f64>,
     // Pointer type (default: "mouse").
-    pub pointer_type: Option<PointerType>,
+    pub pointer_type: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct DispatchMouseEventReturnObject {}
@@ -157,7 +157,7 @@ impl super::Command for DispatchMouseEvent {
 pub struct DispatchTouchEvent {
     // Type of the touch event. TouchEnd and TouchCancel must not contain any touch points, while
     // TouchStart and TouchMove must contains at least one.
-    pub r#type: Type,
+    pub r#type: String,
     // Active touch points on the touch device. One event per any changed point (compared to
     // previous touch event in a sequence) is generated, emulating pressing/moving/releasing points
     // one by one.
@@ -179,7 +179,7 @@ impl super::Command for DispatchTouchEvent {
 #[derive(Serialize, Debug)]
 pub struct EmulateTouchFromMouseEvent {
     // Type of the mouse event.
-    pub r#type: Type,
+    pub r#type: String,
     // X coordinate of the mouse pointer in DIP.
     pub x: i32,
     // Y coordinate of the mouse pointer in DIP.

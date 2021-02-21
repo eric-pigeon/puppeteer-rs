@@ -366,7 +366,7 @@ pub enum Format {
 #[derive(Serialize, Debug)]
 pub struct CaptureScreenshot {
     // Image compression format (defaults to png).
-    pub format: Option<Format>,
+    pub format: Option<String>,
     // Compression quality from range [0..100] (jpeg only).
     pub quality: Option<i32>,
     // Capture the screenshot of a given region only.
@@ -389,7 +389,7 @@ impl super::Command for CaptureScreenshot {
 #[derive(Serialize, Debug)]
 pub struct CaptureSnapshot {
     // Format (defaults to mhtml).
-    pub format: Option<Format>,
+    pub format: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct CaptureSnapshotReturnObject {
@@ -736,7 +736,7 @@ pub struct PrintToPDF {
     // in which case the content will be scaled to fit the paper size.
     pub prefer_css_page_size: Option<bool>,
     // return as stream
-    pub transfer_mode: Option<TransferMode>,
+    pub transfer_mode: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct PrintToPDFReturnObject {
@@ -961,7 +961,7 @@ pub enum Behavior {
 pub struct SetDownloadBehavior {
     // Whether to allow all or deny all download requests, or use default Chrome behavior if
     // available (otherwise deny).
-    pub behavior: Behavior,
+    pub behavior: String,
     // The default path to save downloaded files to. This is requred if behavior is set to 'allow'
     pub download_path: Option<String>,
 }
@@ -1015,7 +1015,7 @@ pub struct SetTouchEmulationEnabled {
     // Whether the touch event emulation should be enabled.
     pub enabled: bool,
     // Touch/gesture events configuration. Default: current platform.
-    pub configuration: Option<Configuration>,
+    pub configuration: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetTouchEmulationEnabledReturnObject {}
@@ -1028,7 +1028,7 @@ impl super::Command for SetTouchEmulationEnabled {
 #[derive(Serialize, Debug)]
 pub struct StartScreencast {
     // Image compression format.
-    pub format: Option<Format>,
+    pub format: Option<String>,
     // Compression quality from range [0..100].
     pub quality: Option<i32>,
     // Maximum screenshot width.
@@ -1087,7 +1087,7 @@ pub enum State {
 #[derive(Serialize, Debug)]
 pub struct SetWebLifecycleState {
     // Target lifecycle state
-    pub state: State,
+    pub state: String,
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct SetWebLifecycleStateReturnObject {}
@@ -1181,4 +1181,202 @@ impl super::Command for SetInterceptFileChooserDialog {
     const NAME: &'static str = "Page.setInterceptFileChooserDialog";
 
     type ReturnObject = SetInterceptFileChooserDialogReturnObject;
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct DomContentEventFired {
+    pub timestamp: super::network::MonotonicTime,
+}
+// Emitted only when `page.interceptFileChooser` is enabled.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FileChooserOpened {
+    // Id of the frame containing input node.
+    pub frame_id: FrameId,
+    // Input node id.
+    pub backend_node_id: super::dom::BackendNodeId,
+    // Input mode.
+    pub mode: String,
+}
+// Fired when frame has been attached to its parent.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameAttached {
+    // Id of the frame that has been attached.
+    pub frame_id: FrameId,
+    // Parent frame identifier.
+    pub parent_frame_id: FrameId,
+    // JavaScript stack trace of when frame was attached, only set if frame initiated from script.
+    pub stack: Option<super::runtime::StackTrace>,
+}
+// Fired when frame no longer has a scheduled navigation.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameClearedScheduledNavigation {
+    // Id of the frame that has cleared its scheduled navigation.
+    pub frame_id: FrameId,
+}
+// Fired when frame has been detached from its parent.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameDetached {
+    // Id of the frame that has been detached.
+    pub frame_id: FrameId,
+}
+// Fired once navigation of the frame has completed. Frame is now associated with the new loader.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameNavigated {
+    // Frame object.
+    pub frame: Frame,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameResized {}
+// Fired when a renderer-initiated navigation is requested.
+// Navigation may still be cancelled after the event is issued.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameRequestedNavigation {
+    // Id of the frame that is being navigated.
+    pub frame_id: FrameId,
+    // The reason for the navigation.
+    pub reason: ClientNavigationReason,
+    // The destination URL for the requested navigation.
+    pub url: String,
+    // The disposition for the navigation.
+    pub disposition: ClientNavigationDisposition,
+}
+// Fired when frame schedules a potential navigation.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameScheduledNavigation {
+    // Id of the frame that has scheduled a navigation.
+    pub frame_id: FrameId,
+    // Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
+    // guaranteed to start.
+    pub delay: f64,
+    // The reason for the navigation.
+    pub reason: ClientNavigationReason,
+    // The destination URL for the scheduled navigation.
+    pub url: String,
+}
+// Fired when frame has started loading.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameStartedLoading {
+    // Id of the frame that has started loading.
+    pub frame_id: FrameId,
+}
+// Fired when frame has stopped loading.
+#[derive(Deserialize, Debug, Clone)]
+pub struct FrameStoppedLoading {
+    // Id of the frame that has stopped loading.
+    pub frame_id: FrameId,
+}
+// Fired when page is about to start a download.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DownloadWillBegin {
+    // Id of the frame that caused download to begin.
+    pub frame_id: FrameId,
+    // Global unique identifier of the download.
+    pub guid: String,
+    // URL of the resource being downloaded.
+    pub url: String,
+    // Suggested file name of the resource (the actual name of the file saved on disk may differ).
+    pub suggested_filename: String,
+}
+// Fired when download makes progress. Last call has |done| == true.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DownloadProgress {
+    // Global unique identifier of the download.
+    pub guid: String,
+    // Total expected bytes to download.
+    pub total_bytes: f64,
+    // Total bytes received.
+    pub received_bytes: f64,
+    // Download status.
+    pub state: String,
+}
+// Fired when interstitial page was hidden
+#[derive(Deserialize, Debug, Clone)]
+pub struct InterstitialHidden {}
+// Fired when interstitial page was shown
+#[derive(Deserialize, Debug, Clone)]
+pub struct InterstitialShown {}
+// Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
+// closed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct JavascriptDialogClosed {
+    // Whether dialog was confirmed.
+    pub result: bool,
+    // User input in case of prompt.
+    pub user_input: String,
+}
+// Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
+// open.
+#[derive(Deserialize, Debug, Clone)]
+pub struct JavascriptDialogOpening {
+    // Frame url.
+    pub url: String,
+    // Message that will be displayed by the dialog.
+    pub message: String,
+    // Dialog type.
+    pub r#type: DialogType,
+    // True iff browser is capable showing or acting on the given dialog. When browser has no
+    // dialog handler for given target, calling alert while Page domain is engaged will stall
+    // the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
+    pub has_browser_handler: bool,
+    // Default dialog prompt.
+    pub default_prompt: Option<String>,
+}
+// Fired for top level page lifecycle events such as navigation, load, paint, etc.
+#[derive(Deserialize, Debug, Clone)]
+pub struct LifecycleEvent {
+    // Id of the frame.
+    pub frame_id: FrameId,
+    // Loader identifier. Empty string if the request is fetched from worker.
+    pub loader_id: super::network::LoaderId,
+    pub name: String,
+    pub timestamp: super::network::MonotonicTime,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct LoadEventFired {
+    pub timestamp: super::network::MonotonicTime,
+}
+// Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation.
+#[derive(Deserialize, Debug, Clone)]
+pub struct NavigatedWithinDocument {
+    // Id of the frame.
+    pub frame_id: FrameId,
+    // Frame's new url.
+    pub url: String,
+}
+// Compressed image data requested by the `startScreencast`.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ScreencastFrame {
+    // Base64-encoded compressed image.
+    pub data: String,
+    // Screencast frame metadata.
+    pub metadata: ScreencastFrameMetadata,
+    // Frame number.
+    pub session_id: i32,
+}
+// Fired when the page with currently enabled screencast was shown or hidden `.
+#[derive(Deserialize, Debug, Clone)]
+pub struct ScreencastVisibilityChanged {
+    // True if the page is visible.
+    pub visible: bool,
+}
+// Fired when a new window is going to be opened, via window.open(), link click, form submission,
+// etc.
+#[derive(Deserialize, Debug, Clone)]
+pub struct WindowOpen {
+    // The URL for the new window.
+    pub url: String,
+    // Window name.
+    pub window_name: String,
+    // An array of enabled window features.
+    pub window_features: Vec<String>,
+    // Whether or not it was triggered by user gesture.
+    pub user_gesture: bool,
+}
+// Issued for every compilation cache generated. Is only available
+// if Page.setGenerateCompilationCache is enabled.
+#[derive(Deserialize, Debug, Clone)]
+pub struct CompilationCacheProduced {
+    pub url: String,
+    // Base64-encoded data
+    pub data: String,
 }

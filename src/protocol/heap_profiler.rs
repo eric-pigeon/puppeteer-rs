@@ -184,3 +184,32 @@ impl super::Command for TakeHeapSnapshot {
 
     type ReturnObject = TakeHeapSnapshotReturnObject;
 }
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct AddHeapSnapshotChunk {
+    pub chunk: String,
+}
+// If heap objects tracking has been started then backend may send update for one or more fragments
+#[derive(Deserialize, Debug, Clone)]
+pub struct HeapStatsUpdate {
+    // An array of triplets. Each triplet describes a fragment. The first integer is the fragment
+    // index, the second integer is a total count of objects for the fragment, the third integer is
+    // a total size of the objects for the fragment.
+    pub stats_update: Vec<i32>,
+}
+// If heap objects tracking has been started then backend regularly sends a current value for last
+// seen object id and corresponding timestamp. If the were changes in the heap since last event
+// then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event.
+#[derive(Deserialize, Debug, Clone)]
+pub struct LastSeenObjectId {
+    pub last_seen_object_id: i32,
+    pub timestamp: f64,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct ReportHeapSnapshotProgress {
+    pub done: i32,
+    pub total: i32,
+    pub finished: Option<bool>,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct ResetProfiles {}

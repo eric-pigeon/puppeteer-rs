@@ -201,3 +201,16 @@ impl super::Command for UpdateRegistration {
 
     type ReturnObject = UpdateRegistrationReturnObject;
 }
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct WorkerErrorReported {
+    pub error_message: ServiceWorkerErrorMessage,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct WorkerRegistrationUpdated {
+    pub registrations: Vec<ServiceWorkerRegistration>,
+}
+#[derive(Deserialize, Debug, Clone)]
+pub struct WorkerVersionUpdated {
+    pub versions: Vec<ServiceWorkerVersion>,
+}

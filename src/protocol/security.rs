@@ -200,3 +200,38 @@ impl super::Command for SetOverrideCertificateErrors {
 
     type ReturnObject = SetOverrideCertificateErrorsReturnObject;
 }
+
+// There is a certificate error. If overriding certificate errors is enabled, then it should be
+// handled with the `handleCertificateError` command. Note: this event does not fire if the
+// certificate error has been allowed internally. Only one client per target should override
+// certificate errors at the same time.
+#[derive(Deserialize, Debug, Clone)]
+pub struct CertificateError {
+    // The ID of the event.
+    pub event_id: i32,
+    // The type of the error.
+    pub error_type: String,
+    // The url that was requested.
+    pub request_url: String,
+}
+// The security state of the page changed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct VisibleSecurityStateChanged {
+    // Security state information about the page.
+    pub visible_security_state: VisibleSecurityState,
+}
+// The security state of the page changed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct SecurityStateChanged {
+    // Security state.
+    pub security_state: SecurityState,
+    // True if the page was loaded over cryptographic transport such as HTTPS.
+    pub scheme_is_cryptographic: bool,
+    // List of explanations for the security state. If the overall security state is `insecure` or
+    // `warning`, at least one corresponding explanation should be included.
+    pub explanations: Vec<SecurityStateExplanation>,
+    // Information about insecure content on the page.
+    pub insecure_content_status: InsecureContentStatus,
+    // Overrides user-visible description of the state.
+    pub summary: Option<String>,
+}

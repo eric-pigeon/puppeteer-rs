@@ -181,3 +181,34 @@ impl super::Command for UntrackIndexedDBForOrigin {
 
     type ReturnObject = UntrackIndexedDBForOriginReturnObject;
 }
+
+// A cache's contents have been modified.
+#[derive(Deserialize, Debug, Clone)]
+pub struct CacheStorageContentUpdated {
+    // Origin to update.
+    pub origin: String,
+    // Name of cache in origin.
+    pub cache_name: String,
+}
+// A cache has been added/deleted.
+#[derive(Deserialize, Debug, Clone)]
+pub struct CacheStorageListUpdated {
+    // Origin to update.
+    pub origin: String,
+}
+// The origin's IndexedDB object store has been modified.
+#[derive(Deserialize, Debug, Clone)]
+pub struct IndexedDBContentUpdated {
+    // Origin to update.
+    pub origin: String,
+    // Database to update.
+    pub database_name: String,
+    // ObjectStore to update.
+    pub object_store_name: String,
+}
+// The origin's IndexedDB database list has been modified.
+#[derive(Deserialize, Debug, Clone)]
+pub struct IndexedDBListUpdated {
+    // Origin to update.
+    pub origin: String,
+}

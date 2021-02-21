@@ -243,7 +243,7 @@ pub struct GetEncodedResponse {
     // Identifier of the network request to get content for.
     pub request_id: super::network::RequestId,
     // The encoding to use.
-    pub encoding: Encoding,
+    pub encoding: String,
     // The quality of the encoding (0-1). (defaults to 1)
     pub quality: Option<f64>,
     // Whether to only return the size information (defaults to false).
@@ -283,4 +283,9 @@ impl super::Command for Enable {
     const NAME: &'static str = "Audits.enable";
 
     type ReturnObject = EnableReturnObject;
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct IssueAdded {
+    pub issue: InspectorIssue,
 }

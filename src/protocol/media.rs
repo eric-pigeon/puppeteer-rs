@@ -26,7 +26,7 @@ pub struct PlayerMessage {
     // going to be moving away from using PipelineStatus for errors and
     // introducing a new error type which should hopefully let us integrate
     // the error log level into the PlayerError type.
-    pub level: PlayerMessageLevel,
+    pub level: String,
     pub message: String,
 }
 // Corresponds to kMediaPropertyChange
@@ -53,7 +53,7 @@ pub enum PlayerErrorType {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerError {
-    pub r#type: PlayerErrorType,
+    pub r#type: String,
     // When this switches to using media::Status instead of PipelineStatus
     // we can remove "errorCode" and replace it with the fields from
     // a Status instance. This also seems like a duplicate of the error
@@ -81,4 +81,38 @@ impl super::Command for Disable {
     const NAME: &'static str = "Media.disable";
 
     type ReturnObject = DisableReturnObject;
+}
+
+// This can be called multiple times, and can be used to set / override /
+// remove player properties. A null propValue indicates removal.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PlayerPropertiesChanged {
+    pub player_id: PlayerId,
+    pub properties: Vec<PlayerProperty>,
+}
+// Send events as a list, allowing them to be batched on the browser for less
+// congestion. If batched, events must ALWAYS be in chronological order.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PlayerEventsAdded {
+    pub player_id: PlayerId,
+    pub events: Vec<PlayerEvent>,
+}
+// Send a list of any messages that need to be delivered.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PlayerMessagesLogged {
+    pub player_id: PlayerId,
+    pub messages: Vec<PlayerMessage>,
+}
+// Send a list of any errors that need to be delivered.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PlayerErrorsRaised {
+    pub player_id: PlayerId,
+    pub errors: Vec<PlayerError>,
+}
+// Called whenever a player is created, or when a new agent joins and recieves
+// a list of active players. If an agent is restored, it will recieve the full
+// list of player ids and all events again.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PlayersCreated {
+    pub players: Vec<PlayerId>,
 }

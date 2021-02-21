@@ -295,3 +295,56 @@ impl super::Command for SetRemoteLocations {
 
     type ReturnObject = SetRemoteLocationsReturnObject;
 }
+
+// Issued when attached to target because of auto-attach or `attachToTarget` command.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AttachedToTarget {
+    // Identifier assigned to the session used to send/receive messages.
+    pub session_id: SessionID,
+    pub target_info: TargetInfo,
+    pub waiting_for_debugger: bool,
+}
+// Issued when detached from target for any reason (including `detachFromTarget` command). Can be
+// issued multiple times per target if multiple sessions have been attached to it.
+#[derive(Deserialize, Debug, Clone)]
+pub struct DetachedFromTarget {
+    // Detached session identifier.
+    pub session_id: SessionID,
+    // Deprecated.
+    pub target_id: Option<TargetID>,
+}
+// Notifies about a new protocol message received from the session (as reported in
+// `attachedToTarget` event).
+#[derive(Deserialize, Debug, Clone)]
+pub struct ReceivedMessageFromTarget {
+    // Identifier of a session which sends a message.
+    pub session_id: SessionID,
+    pub message: String,
+    // Deprecated.
+    pub target_id: Option<TargetID>,
+}
+// Issued when a possible inspection target is created.
+#[derive(Deserialize, Debug, Clone)]
+pub struct TargetCreated {
+    pub target_info: TargetInfo,
+}
+// Issued when a target is destroyed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct TargetDestroyed {
+    pub target_id: TargetID,
+}
+// Issued when a target has crashed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct TargetCrashed {
+    pub target_id: TargetID,
+    // Termination status type.
+    pub status: String,
+    // Termination error code.
+    pub error_code: i32,
+}
+// Issued when some information about a target has changed. This only happens between
+// `targetCreated` and `targetDestroyed`.
+#[derive(Deserialize, Debug, Clone)]
+pub struct TargetInfoChanged {
+    pub target_info: TargetInfo,
+}

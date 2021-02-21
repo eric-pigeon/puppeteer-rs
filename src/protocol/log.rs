@@ -31,9 +31,9 @@ pub enum LogEntryLevel {
 #[serde(rename_all = "camelCase")]
 pub struct LogEntry {
     // Log entry source.
-    pub source: LogEntrySource,
+    pub source: String,
     // Log entry severity.
-    pub level: LogEntryLevel,
+    pub level: String,
     // Logged text.
     pub text: String,
     // Timestamp when this entry was added.
@@ -67,7 +67,7 @@ pub enum ViolationSettingName {
 #[serde(rename_all = "camelCase")]
 pub struct ViolationSetting {
     // Violation type.
-    pub name: ViolationSettingName,
+    pub name: String,
     // Time threshold to trigger upon.
     pub threshold: f64,
 }
@@ -125,4 +125,11 @@ impl super::Command for StopViolationsReport {
     const NAME: &'static str = "Log.stopViolationsReport";
 
     type ReturnObject = StopViolationsReportReturnObject;
+}
+
+// Issued when new message was logged.
+#[derive(Deserialize, Debug, Clone)]
+pub struct EntryAdded {
+    // The entry.
+    pub entry: LogEntry,
 }

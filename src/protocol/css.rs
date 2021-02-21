@@ -218,7 +218,7 @@ pub struct CSSMedia {
     // specified by an @import rule, "linkedSheet" if specified by a "media" attribute in a linked
     // stylesheet's LINK tag, "inlineSheet" if specified by a "media" attribute in an inline
     // stylesheet's STYLE tag.
-    pub source: CSSMediaSource,
+    pub source: String,
     // URL of the document containing the media query description.
     pub source_url: Option<String>,
     // The associated rule (@media or @import) header range in the enclosing stylesheet (if
@@ -730,4 +730,33 @@ impl super::Command for SetLocalFontsEnabled {
     const NAME: &'static str = "CSS.setLocalFontsEnabled";
 
     type ReturnObject = SetLocalFontsEnabledReturnObject;
+}
+
+// Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
+// web font
+#[derive(Deserialize, Debug, Clone)]
+pub struct FontsUpdated {
+    // The web font that has loaded.
+    pub font: Option<FontFace>,
+}
+// Fires whenever a MediaQuery result changes (for example, after a browser window has been
+// resized.) The current implementation considers only viewport-dependent media features.
+#[derive(Deserialize, Debug, Clone)]
+pub struct MediaQueryResultChanged {}
+// Fired whenever an active document stylesheet is added.
+#[derive(Deserialize, Debug, Clone)]
+pub struct StyleSheetAdded {
+    // Added stylesheet metainfo.
+    pub header: CSSStyleSheetHeader,
+}
+// Fired whenever a stylesheet is changed as a result of the client operation.
+#[derive(Deserialize, Debug, Clone)]
+pub struct StyleSheetChanged {
+    pub style_sheet_id: StyleSheetId,
+}
+// Fired whenever an active document stylesheet is removed.
+#[derive(Deserialize, Debug, Clone)]
+pub struct StyleSheetRemoved {
+    // Identifier of the removed stylesheet.
+    pub style_sheet_id: StyleSheetId,
 }

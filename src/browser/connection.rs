@@ -16,7 +16,6 @@ use crate::protocol::{
     self,
     Message::{ConnectionShutdown, Event, Response},
 };
-use std::pin::Pin;
 
 pub struct ConnectionOptions {
     pub use_pipe: bool,
@@ -47,7 +46,7 @@ impl Connection {
                         Response(response) => {
                             println!("{:?}", callbacks2);
                             if let Some(callback) = callbacks2.remove(&response.call_id) {
-                                callback.send(response);
+                                callback.send(response).expect("failed to fulfill response");
                             }
                         }
                         Event(event) => {

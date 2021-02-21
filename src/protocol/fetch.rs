@@ -41,7 +41,7 @@ pub enum AuthChallengeSource {
 #[serde(rename_all = "camelCase")]
 pub struct AuthChallenge {
     // Source of the authentication challenge.
-    pub source: Option<AuthChallengeSource>,
+    pub source: Option<String>,
     // Origin of the challenger.
     pub origin: String,
     // The authentication scheme used, such as basic or digest
@@ -63,7 +63,7 @@ pub struct AuthChallengeResponse {
     // The decision on what to do in response to the authorization challenge.  Default means
     // deferring to the default behavior of the net stack, which will likely either the Cancel
     // authentication or display a popup dialog box.
-    pub response: AuthChallengeResponseResponse,
+    pub response: String,
     // The username to provide, possibly empty. Should only be set if response is
     // ProvideCredentials.
     pub username: Option<String>,
@@ -224,4 +224,48 @@ impl super::Command for TakeResponseBodyAsStream {
     const NAME: &'static str = "Fetch.takeResponseBodyAsStream";
 
     type ReturnObject = TakeResponseBodyAsStreamReturnObject;
+}
+
+// Issued when the domain is enabled and the request URL matches the
+// specified filter. The request is paused until the client responds
+// with one of continueRequest, failRequest or fulfillRequest.
+// The stage of the request can be determined by presence of responseErrorReason
+// and responseStatusCode -- the request is at the response stage if either
+// of these fields is present and in the request stage otherwise.
+#[derive(Deserialize, Debug, Clone)]
+pub struct RequestPaused {
+    // Each request the page makes will have a unique id.
+    pub request_id: RequestId,
+    // The details of the request.
+    pub request: super::network::Request,
+    // The id of the frame that initiated the request.
+    pub frame_id: super::page::FrameId,
+    // How the requested resource will be used.
+    pub resource_type: super::network::ResourceType,
+    // Response error if intercepted at response stage.
+    pub response_error_reason: Option<super::network::ErrorReason>,
+    // Response code if intercepted at response stage.
+    pub response_status_code: Option<i32>,
+    // Response headers if intercepted at the response stage.
+    pub response_headers: Option<Vec<HeaderEntry>>,
+    // If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
+    // then this networkId will be the same as the requestId present in the requestWillBeSent event.
+    pub network_id: Option<RequestId>,
+}
+// Issued when the domain is enabled with handleAuthRequests set to true.
+// The request is paused until client responds with continueWithAuth.
+#[derive(Deserialize, Debug, Clone)]
+pub struct AuthRequired {
+    // Each request the page makes will have a unique id.
+    pub request_id: RequestId,
+    // The details of the request.
+    pub request: super::network::Request,
+    // The id of the frame that initiated the request.
+    pub frame_id: super::page::FrameId,
+    // How the requested resource will be used.
+    pub resource_type: super::network::ResourceType,
+    // Details of the Authorization Challenge encountered.
+    // If this is set, client should respond with continueRequest that
+    // contains AuthChallengeResponse.
+    pub auth_challenge: AuthChallenge,
 }
