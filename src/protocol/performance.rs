@@ -15,6 +15,7 @@ pub struct Metric {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Performance.disable";
@@ -34,6 +35,7 @@ pub struct Enable {
     pub time_domain: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Performance.enable";
@@ -49,6 +51,7 @@ pub struct SetTimeDomain {
     pub time_domain: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetTimeDomainReturnObject {}
 impl super::Command for SetTimeDomain {
     const NAME: &'static str = "Performance.setTimeDomain";
@@ -59,6 +62,7 @@ impl super::Command for SetTimeDomain {
 #[derive(Serialize, Debug)]
 pub struct GetMetrics {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetMetricsReturnObject {
     // Current values for run-time metrics.
     pub metrics: Vec<Metric>,

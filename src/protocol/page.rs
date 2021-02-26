@@ -247,6 +247,7 @@ pub struct AddScriptToEvaluateOnLoad {
     pub script_source: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddScriptToEvaluateOnLoadReturnObject {
     // Identifier of the added script.
     pub identifier: ScriptIdentifier,
@@ -266,6 +267,7 @@ pub struct AddScriptToEvaluateOnNewDocument {
     pub world_name: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddScriptToEvaluateOnNewDocumentReturnObject {
     // Identifier of the added script.
     pub identifier: ScriptIdentifier,
@@ -279,6 +281,7 @@ impl super::Command for AddScriptToEvaluateOnNewDocument {
 #[derive(Serialize, Debug)]
 pub struct BringToFront {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct BringToFrontReturnObject {}
 impl super::Command for BringToFront {
     const NAME: &'static str = "Page.bringToFront";
@@ -304,6 +307,7 @@ pub struct CaptureScreenshot {
     pub from_surface: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CaptureScreenshotReturnObject {
     // Base64-encoded image data.
     pub data: String,
@@ -321,6 +325,7 @@ pub struct CaptureSnapshot {
     pub format: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CaptureSnapshotReturnObject {
     // Serialized page data.
     pub data: String,
@@ -334,6 +339,7 @@ impl super::Command for CaptureSnapshot {
 #[derive(Serialize, Debug)]
 pub struct ClearDeviceMetricsOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearDeviceMetricsOverrideReturnObject {}
 impl super::Command for ClearDeviceMetricsOverride {
     const NAME: &'static str = "Page.clearDeviceMetricsOverride";
@@ -344,6 +350,7 @@ impl super::Command for ClearDeviceMetricsOverride {
 #[derive(Serialize, Debug)]
 pub struct ClearDeviceOrientationOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearDeviceOrientationOverrideReturnObject {}
 impl super::Command for ClearDeviceOrientationOverride {
     const NAME: &'static str = "Page.clearDeviceOrientationOverride";
@@ -354,6 +361,7 @@ impl super::Command for ClearDeviceOrientationOverride {
 #[derive(Serialize, Debug)]
 pub struct ClearGeolocationOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearGeolocationOverrideReturnObject {}
 impl super::Command for ClearGeolocationOverride {
     const NAME: &'static str = "Page.clearGeolocationOverride";
@@ -372,6 +380,7 @@ pub struct CreateIsolatedWorld {
     pub grant_univeral_access: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateIsolatedWorldReturnObject {
     // Execution context of the isolated world.
     pub execution_context_id: super::runtime::ExecutionContextId,
@@ -390,6 +399,7 @@ pub struct DeleteCookie {
     pub url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeleteCookieReturnObject {}
 impl super::Command for DeleteCookie {
     const NAME: &'static str = "Page.deleteCookie";
@@ -400,6 +410,7 @@ impl super::Command for DeleteCookie {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Page.disable";
@@ -410,6 +421,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Page.enable";
@@ -419,6 +431,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct GetAppManifest {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetAppManifestReturnObject {
     // Manifest location.
     pub url: String,
@@ -436,6 +449,7 @@ impl super::Command for GetAppManifest {
 #[derive(Serialize, Debug)]
 pub struct GetInstallabilityErrors {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetInstallabilityErrorsReturnObject {
     pub installability_errors: Vec<InstallabilityError>,
 }
@@ -447,6 +461,7 @@ impl super::Command for GetInstallabilityErrors {
 #[derive(Serialize, Debug)]
 pub struct GetManifestIcons {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetManifestIconsReturnObject {
     pub primary_icon: Option<String>,
 }
@@ -460,6 +475,7 @@ impl super::Command for GetManifestIcons {
 #[derive(Serialize, Debug)]
 pub struct GetCookies {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<super::network::Cookie>,
@@ -473,6 +489,7 @@ impl super::Command for GetCookies {
 #[derive(Serialize, Debug)]
 pub struct GetFrameTree {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFrameTreeReturnObject {
     // Present frame tree structure.
     pub frame_tree: FrameTree,
@@ -486,6 +503,7 @@ impl super::Command for GetFrameTree {
 #[derive(Serialize, Debug)]
 pub struct GetLayoutMetrics {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetLayoutMetricsReturnObject {
     // Metrics relating to the layout viewport.
     pub layout_viewport: LayoutViewport,
@@ -503,6 +521,7 @@ impl super::Command for GetLayoutMetrics {
 #[derive(Serialize, Debug)]
 pub struct GetNavigationHistory {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetNavigationHistoryReturnObject {
     // Index of the current navigation history entry.
     pub current_index: i32,
@@ -518,6 +537,7 @@ impl super::Command for GetNavigationHistory {
 #[derive(Serialize, Debug)]
 pub struct ResetNavigationHistory {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResetNavigationHistoryReturnObject {}
 impl super::Command for ResetNavigationHistory {
     const NAME: &'static str = "Page.resetNavigationHistory";
@@ -533,6 +553,7 @@ pub struct GetResourceContent {
     pub url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetResourceContentReturnObject {
     // Resource content.
     pub content: String,
@@ -548,6 +569,7 @@ impl super::Command for GetResourceContent {
 #[derive(Serialize, Debug)]
 pub struct GetResourceTree {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetResourceTreeReturnObject {
     // Present frame / resource tree structure.
     pub frame_tree: FrameResourceTree,
@@ -567,6 +589,7 @@ pub struct HandleJavaScriptDialog {
     pub prompt_text: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HandleJavaScriptDialogReturnObject {}
 impl super::Command for HandleJavaScriptDialog {
     const NAME: &'static str = "Page.handleJavaScriptDialog";
@@ -588,6 +611,7 @@ pub struct Navigate {
     pub referrer_policy: Option<ReferrerPolicy>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct NavigateReturnObject {
     // Frame id that has navigated (or failed to navigate)
     pub frame_id: FrameId,
@@ -608,6 +632,7 @@ pub struct NavigateToHistoryEntry {
     pub entry_id: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct NavigateToHistoryEntryReturnObject {}
 impl super::Command for NavigateToHistoryEntry {
     const NAME: &'static str = "Page.navigateToHistoryEntry";
@@ -668,6 +693,7 @@ pub struct PrintToPDF {
     pub transfer_mode: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PrintToPDFReturnObject {
     // Base64-encoded pdf data. Empty if |returnAsStream| is specified.
     pub data: String,
@@ -689,6 +715,7 @@ pub struct Reload {
     pub script_to_evaluate_on_load: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ReloadReturnObject {}
 impl super::Command for Reload {
     const NAME: &'static str = "Page.reload";
@@ -701,6 +728,7 @@ pub struct RemoveScriptToEvaluateOnLoad {
     pub identifier: ScriptIdentifier,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveScriptToEvaluateOnLoadReturnObject {}
 impl super::Command for RemoveScriptToEvaluateOnLoad {
     const NAME: &'static str = "Page.removeScriptToEvaluateOnLoad";
@@ -713,6 +741,7 @@ pub struct RemoveScriptToEvaluateOnNewDocument {
     pub identifier: ScriptIdentifier,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveScriptToEvaluateOnNewDocumentReturnObject {}
 impl super::Command for RemoveScriptToEvaluateOnNewDocument {
     const NAME: &'static str = "Page.removeScriptToEvaluateOnNewDocument";
@@ -726,6 +755,7 @@ pub struct ScreencastFrameAck {
     pub session_id: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ScreencastFrameAckReturnObject {}
 impl super::Command for ScreencastFrameAck {
     const NAME: &'static str = "Page.screencastFrameAck";
@@ -747,6 +777,7 @@ pub struct SearchInResource {
     pub is_regex: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchInResourceReturnObject {
     // List of search matches.
     pub result: Vec<super::debugger::SearchMatch>,
@@ -763,6 +794,7 @@ pub struct SetAdBlockingEnabled {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAdBlockingEnabledReturnObject {}
 impl super::Command for SetAdBlockingEnabled {
     const NAME: &'static str = "Page.setAdBlockingEnabled";
@@ -776,6 +808,7 @@ pub struct SetBypassCSP {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBypassCSPReturnObject {}
 impl super::Command for SetBypassCSP {
     const NAME: &'static str = "Page.setBypassCSP";
@@ -814,6 +847,7 @@ pub struct SetDeviceMetricsOverride {
     pub viewport: Option<Viewport>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDeviceMetricsOverrideReturnObject {}
 impl super::Command for SetDeviceMetricsOverride {
     const NAME: &'static str = "Page.setDeviceMetricsOverride";
@@ -831,6 +865,7 @@ pub struct SetDeviceOrientationOverride {
     pub gamma: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDeviceOrientationOverrideReturnObject {}
 impl super::Command for SetDeviceOrientationOverride {
     const NAME: &'static str = "Page.setDeviceOrientationOverride";
@@ -844,6 +879,7 @@ pub struct SetFontFamilies {
     pub font_families: FontFamilies,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetFontFamiliesReturnObject {}
 impl super::Command for SetFontFamilies {
     const NAME: &'static str = "Page.setFontFamilies";
@@ -857,6 +893,7 @@ pub struct SetFontSizes {
     pub font_sizes: FontSizes,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetFontSizesReturnObject {}
 impl super::Command for SetFontSizes {
     const NAME: &'static str = "Page.setFontSizes";
@@ -872,6 +909,7 @@ pub struct SetDocumentContent {
     pub html: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDocumentContentReturnObject {}
 impl super::Command for SetDocumentContent {
     const NAME: &'static str = "Page.setDocumentContent";
@@ -895,6 +933,7 @@ pub struct SetDownloadBehavior {
     pub download_path: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDownloadBehaviorReturnObject {}
 impl super::Command for SetDownloadBehavior {
     const NAME: &'static str = "Page.setDownloadBehavior";
@@ -913,6 +952,7 @@ pub struct SetGeolocationOverride {
     pub accuracy: Option<f64>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetGeolocationOverrideReturnObject {}
 impl super::Command for SetGeolocationOverride {
     const NAME: &'static str = "Page.setGeolocationOverride";
@@ -926,6 +966,7 @@ pub struct SetLifecycleEventsEnabled {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetLifecycleEventsEnabledReturnObject {}
 impl super::Command for SetLifecycleEventsEnabled {
     const NAME: &'static str = "Page.setLifecycleEventsEnabled";
@@ -947,6 +988,7 @@ pub struct SetTouchEmulationEnabled {
     pub configuration: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetTouchEmulationEnabledReturnObject {}
 impl super::Command for SetTouchEmulationEnabled {
     const NAME: &'static str = "Page.setTouchEmulationEnabled";
@@ -968,6 +1010,7 @@ pub struct StartScreencast {
     pub every_nth_frame: Option<i32>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartScreencastReturnObject {}
 impl super::Command for StartScreencast {
     const NAME: &'static str = "Page.startScreencast";
@@ -978,6 +1021,7 @@ impl super::Command for StartScreencast {
 #[derive(Serialize, Debug)]
 pub struct StopLoading {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopLoadingReturnObject {}
 impl super::Command for StopLoading {
     const NAME: &'static str = "Page.stopLoading";
@@ -988,6 +1032,7 @@ impl super::Command for StopLoading {
 #[derive(Serialize, Debug)]
 pub struct Crash {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CrashReturnObject {}
 impl super::Command for Crash {
     const NAME: &'static str = "Page.crash";
@@ -998,6 +1043,7 @@ impl super::Command for Crash {
 #[derive(Serialize, Debug)]
 pub struct Close {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CloseReturnObject {}
 impl super::Command for Close {
     const NAME: &'static str = "Page.close";
@@ -1019,6 +1065,7 @@ pub struct SetWebLifecycleState {
     pub state: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetWebLifecycleStateReturnObject {}
 impl super::Command for SetWebLifecycleState {
     const NAME: &'static str = "Page.setWebLifecycleState";
@@ -1029,6 +1076,7 @@ impl super::Command for SetWebLifecycleState {
 #[derive(Serialize, Debug)]
 pub struct StopScreencast {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopScreencastReturnObject {}
 impl super::Command for StopScreencast {
     const NAME: &'static str = "Page.stopScreencast";
@@ -1041,6 +1089,7 @@ pub struct SetProduceCompilationCache {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetProduceCompilationCacheReturnObject {}
 impl super::Command for SetProduceCompilationCache {
     const NAME: &'static str = "Page.setProduceCompilationCache";
@@ -1056,6 +1105,7 @@ pub struct AddCompilationCache {
     pub data: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddCompilationCacheReturnObject {}
 impl super::Command for AddCompilationCache {
     const NAME: &'static str = "Page.addCompilationCache";
@@ -1066,6 +1116,7 @@ impl super::Command for AddCompilationCache {
 #[derive(Serialize, Debug)]
 pub struct ClearCompilationCache {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearCompilationCacheReturnObject {}
 impl super::Command for ClearCompilationCache {
     const NAME: &'static str = "Page.clearCompilationCache";
@@ -1081,6 +1132,7 @@ pub struct GenerateTestReport {
     pub group: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GenerateTestReportReturnObject {}
 impl super::Command for GenerateTestReport {
     const NAME: &'static str = "Page.generateTestReport";
@@ -1091,6 +1143,7 @@ impl super::Command for GenerateTestReport {
 #[derive(Serialize, Debug)]
 pub struct WaitForDebugger {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct WaitForDebuggerReturnObject {}
 impl super::Command for WaitForDebugger {
     const NAME: &'static str = "Page.waitForDebugger";
@@ -1105,6 +1158,7 @@ pub struct SetInterceptFileChooserDialog {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetInterceptFileChooserDialogReturnObject {}
 impl super::Command for SetInterceptFileChooserDialog {
     const NAME: &'static str = "Page.setInterceptFileChooserDialog";

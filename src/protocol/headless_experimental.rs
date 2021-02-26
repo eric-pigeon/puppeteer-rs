@@ -39,6 +39,7 @@ pub struct BeginFrame {
     pub screenshot: Option<ScreenshotParams>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct BeginFrameReturnObject {
     // Whether the BeginFrame resulted in damage and, thus, a new frame was committed to the
     // display. Reported for diagnostic uses, may be removed in the future.
@@ -55,6 +56,7 @@ impl super::Command for BeginFrame {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "HeadlessExperimental.disable";
@@ -65,6 +67,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "HeadlessExperimental.enable";

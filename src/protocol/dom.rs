@@ -160,6 +160,7 @@ pub struct CollectClassNamesFromSubtree {
     pub node_id: NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CollectClassNamesFromSubtreeReturnObject {
     // Class name list.
     pub class_names: Vec<String>,
@@ -182,6 +183,7 @@ pub struct CopyTo {
     pub insert_before_node_id: Option<NodeId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CopyToReturnObject {
     // Id of the node clone.
     pub node_id: NodeId,
@@ -209,6 +211,7 @@ pub struct DescribeNode {
     pub pierce: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DescribeNodeReturnObject {
     // Node description.
     pub node: Node,
@@ -234,6 +237,7 @@ pub struct ScrollIntoViewIfNeeded {
     pub rect: Option<Rect>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ScrollIntoViewIfNeededReturnObject {}
 impl super::Command for ScrollIntoViewIfNeeded {
     const NAME: &'static str = "DOM.scrollIntoViewIfNeeded";
@@ -244,6 +248,7 @@ impl super::Command for ScrollIntoViewIfNeeded {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "DOM.disable";
@@ -258,6 +263,7 @@ pub struct DiscardSearchResults {
     pub search_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DiscardSearchResultsReturnObject {}
 impl super::Command for DiscardSearchResults {
     const NAME: &'static str = "DOM.discardSearchResults";
@@ -268,6 +274,7 @@ impl super::Command for DiscardSearchResults {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "DOM.enable";
@@ -285,6 +292,7 @@ pub struct Focus {
     pub object_id: Option<super::runtime::RemoteObjectId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FocusReturnObject {}
 impl super::Command for Focus {
     const NAME: &'static str = "DOM.focus";
@@ -298,6 +306,7 @@ pub struct GetAttributes {
     pub node_id: NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetAttributesReturnObject {
     // An interleaved array of node attribute names and values.
     pub attributes: Vec<String>,
@@ -318,6 +327,7 @@ pub struct GetBoxModel {
     pub object_id: Option<super::runtime::RemoteObjectId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetBoxModelReturnObject {
     // Box model for the node.
     pub model: BoxModel,
@@ -339,6 +349,7 @@ pub struct GetContentQuads {
     pub object_id: Option<super::runtime::RemoteObjectId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetContentQuadsReturnObject {
     // Quads that describe node layout relative to viewport.
     pub quads: Vec<Quad>,
@@ -359,6 +370,7 @@ pub struct GetDocument {
     pub pierce: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetDocumentReturnObject {
     // Resulting node.
     pub root: Node,
@@ -381,6 +393,7 @@ pub struct GetFlattenedDocument {
     pub pierce: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFlattenedDocumentReturnObject {
     // Resulting node.
     pub nodes: Vec<Node>,
@@ -402,6 +415,7 @@ pub struct GetNodesForSubtreeByStyle {
     pub pierce: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetNodesForSubtreeByStyleReturnObject {
     // Resulting nodes.
     pub node_ids: Vec<NodeId>,
@@ -425,6 +439,7 @@ pub struct GetNodeForLocation {
     pub ignore_pointer_events_none: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetNodeForLocationReturnObject {
     // Resulting node.
     pub backend_node_id: BackendNodeId,
@@ -449,6 +464,7 @@ pub struct GetOuterHTML {
     pub object_id: Option<super::runtime::RemoteObjectId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetOuterHTMLReturnObject {
     // Outer HTML markup.
     pub outer_html: String,
@@ -465,6 +481,7 @@ pub struct GetRelayoutBoundary {
     pub node_id: NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetRelayoutBoundaryReturnObject {
     // Relayout boundary node id for the given node.
     pub node_id: NodeId,
@@ -486,6 +503,7 @@ pub struct GetSearchResults {
     pub to_index: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetSearchResultsReturnObject {
     // Ids of the search result nodes.
     pub node_ids: Vec<NodeId>,
@@ -499,6 +517,7 @@ impl super::Command for GetSearchResults {
 #[derive(Serialize, Debug)]
 pub struct HideHighlight {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HideHighlightReturnObject {}
 impl super::Command for HideHighlight {
     const NAME: &'static str = "DOM.hideHighlight";
@@ -509,6 +528,7 @@ impl super::Command for HideHighlight {
 #[derive(Serialize, Debug)]
 pub struct HighlightNode {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightNodeReturnObject {}
 impl super::Command for HighlightNode {
     const NAME: &'static str = "DOM.highlightNode";
@@ -519,6 +539,7 @@ impl super::Command for HighlightNode {
 #[derive(Serialize, Debug)]
 pub struct HighlightRect {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightRectReturnObject {}
 impl super::Command for HighlightRect {
     const NAME: &'static str = "DOM.highlightRect";
@@ -529,6 +550,7 @@ impl super::Command for HighlightRect {
 #[derive(Serialize, Debug)]
 pub struct MarkUndoableState {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MarkUndoableStateReturnObject {}
 impl super::Command for MarkUndoableState {
     const NAME: &'static str = "DOM.markUndoableState";
@@ -547,6 +569,7 @@ pub struct MoveTo {
     pub insert_before_node_id: Option<NodeId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MoveToReturnObject {
     // New id of the moved node.
     pub node_id: NodeId,
@@ -566,6 +589,7 @@ pub struct PerformSearch {
     pub include_user_agent_shadow_dom: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PerformSearchReturnObject {
     // Unique search session identifier.
     pub search_id: String,
@@ -584,6 +608,7 @@ pub struct PushNodeByPathToFrontend {
     pub path: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PushNodeByPathToFrontendReturnObject {
     // Id of the node for given path.
     pub node_id: NodeId,
@@ -600,6 +625,7 @@ pub struct PushNodesByBackendIdsToFrontend {
     pub backend_node_ids: Vec<BackendNodeId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PushNodesByBackendIdsToFrontendReturnObject {
     // The array of ids of pushed nodes that correspond to the backend ids specified in
     // backendNodeIds.
@@ -619,6 +645,7 @@ pub struct QuerySelector {
     pub selector: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct QuerySelectorReturnObject {
     // Query selector result.
     pub node_id: NodeId,
@@ -637,6 +664,7 @@ pub struct QuerySelectorAll {
     pub selector: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct QuerySelectorAllReturnObject {
     // Query selector result.
     pub node_ids: Vec<NodeId>,
@@ -650,6 +678,7 @@ impl super::Command for QuerySelectorAll {
 #[derive(Serialize, Debug)]
 pub struct Redo {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RedoReturnObject {}
 impl super::Command for Redo {
     const NAME: &'static str = "DOM.redo";
@@ -665,6 +694,7 @@ pub struct RemoveAttribute {
     pub name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveAttributeReturnObject {}
 impl super::Command for RemoveAttribute {
     const NAME: &'static str = "DOM.removeAttribute";
@@ -678,6 +708,7 @@ pub struct RemoveNode {
     pub node_id: NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveNodeReturnObject {}
 impl super::Command for RemoveNode {
     const NAME: &'static str = "DOM.removeNode";
@@ -699,6 +730,7 @@ pub struct RequestChildNodes {
     pub pierce: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestChildNodesReturnObject {}
 impl super::Command for RequestChildNodes {
     const NAME: &'static str = "DOM.requestChildNodes";
@@ -714,6 +746,7 @@ pub struct RequestNode {
     pub object_id: super::runtime::RemoteObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestNodeReturnObject {
     // Node id for given object.
     pub node_id: NodeId,
@@ -736,6 +769,7 @@ pub struct ResolveNode {
     pub execution_context_id: Option<super::runtime::ExecutionContextId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResolveNodeReturnObject {
     // JavaScript object wrapper for given node.
     pub object: super::runtime::RemoteObject,
@@ -756,6 +790,7 @@ pub struct SetAttributeValue {
     pub value: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAttributeValueReturnObject {}
 impl super::Command for SetAttributeValue {
     const NAME: &'static str = "DOM.setAttributeValue";
@@ -775,6 +810,7 @@ pub struct SetAttributesAsText {
     pub name: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAttributesAsTextReturnObject {}
 impl super::Command for SetAttributesAsText {
     const NAME: &'static str = "DOM.setAttributesAsText";
@@ -794,6 +830,7 @@ pub struct SetFileInputFiles {
     pub object_id: Option<super::runtime::RemoteObjectId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetFileInputFilesReturnObject {}
 impl super::Command for SetFileInputFiles {
     const NAME: &'static str = "DOM.setFileInputFiles";
@@ -807,6 +844,7 @@ pub struct SetNodeStackTracesEnabled {
     pub enable: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetNodeStackTracesEnabledReturnObject {}
 impl super::Command for SetNodeStackTracesEnabled {
     const NAME: &'static str = "DOM.setNodeStackTracesEnabled";
@@ -820,6 +858,7 @@ pub struct GetNodeStackTraces {
     pub node_id: NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetNodeStackTracesReturnObject {
     // Creation stack trace, if available.
     pub creation: Option<super::runtime::StackTrace>,
@@ -837,6 +876,7 @@ pub struct GetFileInfo {
     pub object_id: super::runtime::RemoteObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFileInfoReturnObject {
     pub path: String,
 }
@@ -853,6 +893,7 @@ pub struct SetInspectedNode {
     pub node_id: NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetInspectedNodeReturnObject {}
 impl super::Command for SetInspectedNode {
     const NAME: &'static str = "DOM.setInspectedNode";
@@ -868,6 +909,7 @@ pub struct SetNodeName {
     pub name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetNodeNameReturnObject {
     // New node's id.
     pub node_id: NodeId,
@@ -886,6 +928,7 @@ pub struct SetNodeValue {
     pub value: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetNodeValueReturnObject {}
 impl super::Command for SetNodeValue {
     const NAME: &'static str = "DOM.setNodeValue";
@@ -901,6 +944,7 @@ pub struct SetOuterHTML {
     pub outer_html: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetOuterHTMLReturnObject {}
 impl super::Command for SetOuterHTML {
     const NAME: &'static str = "DOM.setOuterHTML";
@@ -911,6 +955,7 @@ impl super::Command for SetOuterHTML {
 #[derive(Serialize, Debug)]
 pub struct Undo {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UndoReturnObject {}
 impl super::Command for Undo {
     const NAME: &'static str = "DOM.undo";
@@ -923,6 +968,7 @@ pub struct GetFrameOwner {
     pub frame_id: super::page::FrameId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFrameOwnerReturnObject {
     // Resulting node.
     pub backend_node_id: BackendNodeId,

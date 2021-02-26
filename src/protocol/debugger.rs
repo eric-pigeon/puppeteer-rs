@@ -143,6 +143,7 @@ pub struct ContinueToLocation {
     pub target_call_frames: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ContinueToLocationReturnObject {}
 impl super::Command for ContinueToLocation {
     const NAME: &'static str = "Debugger.continueToLocation";
@@ -153,6 +154,7 @@ impl super::Command for ContinueToLocation {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Debugger.disable";
@@ -168,6 +170,7 @@ pub struct Enable {
     pub max_scripts_cache_size: Option<f64>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {
     // Unique identifier of the debugger.
     pub debugger_id: super::runtime::UniqueDebuggerId,
@@ -203,6 +206,7 @@ pub struct EvaluateOnCallFrame {
     pub timeout: Option<super::runtime::TimeDelta>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EvaluateOnCallFrameReturnObject {
     // Object wrapper for the evaluation result.
     pub result: super::runtime::RemoteObject,
@@ -225,6 +229,7 @@ pub struct ExecuteWasmEvaluator {
     pub timeout: Option<super::runtime::TimeDelta>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ExecuteWasmEvaluatorReturnObject {
     // Object wrapper for the evaluation result.
     pub result: super::runtime::RemoteObject,
@@ -249,6 +254,7 @@ pub struct GetPossibleBreakpoints {
     pub restrict_to_function: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetPossibleBreakpointsReturnObject {
     // List of the possible breakpoint locations.
     pub locations: Vec<BreakLocation>,
@@ -265,6 +271,7 @@ pub struct GetScriptSource {
     pub script_id: super::runtime::ScriptId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetScriptSourceReturnObject {
     // Script source (empty in case of Wasm bytecode).
     pub script_source: String,
@@ -283,6 +290,7 @@ pub struct GetWasmBytecode {
     pub script_id: super::runtime::ScriptId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetWasmBytecodeReturnObject {
     // Script source.
     pub bytecode: String,
@@ -298,6 +306,7 @@ pub struct GetStackTrace {
     pub stack_trace_id: super::runtime::StackTraceId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetStackTraceReturnObject {
     pub stack_trace: super::runtime::StackTrace,
 }
@@ -310,6 +319,7 @@ impl super::Command for GetStackTrace {
 #[derive(Serialize, Debug)]
 pub struct Pause {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PauseReturnObject {}
 impl super::Command for Pause {
     const NAME: &'static str = "Debugger.pause";
@@ -322,6 +332,7 @@ pub struct PauseOnAsyncCall {
     pub parent_stack_trace_id: super::runtime::StackTraceId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PauseOnAsyncCallReturnObject {}
 impl super::Command for PauseOnAsyncCall {
     const NAME: &'static str = "Debugger.pauseOnAsyncCall";
@@ -334,6 +345,7 @@ pub struct RemoveBreakpoint {
     pub breakpoint_id: BreakpointId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveBreakpointReturnObject {}
 impl super::Command for RemoveBreakpoint {
     const NAME: &'static str = "Debugger.removeBreakpoint";
@@ -347,6 +359,7 @@ pub struct RestartFrame {
     pub call_frame_id: CallFrameId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RestartFrameReturnObject {
     // New stack trace.
     pub call_frames: Vec<CallFrame>,
@@ -371,6 +384,7 @@ pub struct Resume {
     pub terminate_on_resume: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResumeReturnObject {}
 impl super::Command for Resume {
     const NAME: &'static str = "Debugger.resume";
@@ -390,6 +404,7 @@ pub struct SearchInContent {
     pub is_regex: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchInContentReturnObject {
     // List of search matches.
     pub result: Vec<SearchMatch>,
@@ -407,6 +422,7 @@ pub struct SetAsyncCallStackDepth {
     pub max_depth: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAsyncCallStackDepthReturnObject {}
 impl super::Command for SetAsyncCallStackDepth {
     const NAME: &'static str = "Debugger.setAsyncCallStackDepth";
@@ -422,6 +438,7 @@ pub struct SetBlackboxPatterns {
     pub patterns: Vec<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBlackboxPatternsReturnObject {}
 impl super::Command for SetBlackboxPatterns {
     const NAME: &'static str = "Debugger.setBlackboxPatterns";
@@ -439,6 +456,7 @@ pub struct SetBlackboxedRanges {
     pub positions: Vec<ScriptPosition>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBlackboxedRangesReturnObject {}
 impl super::Command for SetBlackboxedRanges {
     const NAME: &'static str = "Debugger.setBlackboxedRanges";
@@ -455,6 +473,7 @@ pub struct SetBreakpoint {
     pub condition: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBreakpointReturnObject {
     // Id of the created breakpoint for further reference.
     pub breakpoint_id: BreakpointId,
@@ -479,6 +498,7 @@ pub struct SetInstrumentationBreakpoint {
     pub instrumentation: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetInstrumentationBreakpointReturnObject {
     // Id of the created breakpoint for further reference.
     pub breakpoint_id: BreakpointId,
@@ -510,6 +530,7 @@ pub struct SetBreakpointByUrl {
     pub condition: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBreakpointByUrlReturnObject {
     // Id of the created breakpoint for further reference.
     pub breakpoint_id: BreakpointId,
@@ -533,6 +554,7 @@ pub struct SetBreakpointOnFunctionCall {
     pub condition: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBreakpointOnFunctionCallReturnObject {
     // Id of the created breakpoint for further reference.
     pub breakpoint_id: BreakpointId,
@@ -549,6 +571,7 @@ pub struct SetBreakpointsActive {
     pub active: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBreakpointsActiveReturnObject {}
 impl super::Command for SetBreakpointsActive {
     const NAME: &'static str = "Debugger.setBreakpointsActive";
@@ -570,6 +593,7 @@ pub struct SetPauseOnExceptions {
     pub state: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPauseOnExceptionsReturnObject {}
 impl super::Command for SetPauseOnExceptions {
     const NAME: &'static str = "Debugger.setPauseOnExceptions";
@@ -583,6 +607,7 @@ pub struct SetReturnValue {
     pub new_value: super::runtime::CallArgument,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetReturnValueReturnObject {}
 impl super::Command for SetReturnValue {
     const NAME: &'static str = "Debugger.setReturnValue";
@@ -601,6 +626,7 @@ pub struct SetScriptSource {
     pub dry_run: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetScriptSourceReturnObject {
     // New stack trace in case editing has happened while VM was stopped.
     pub call_frames: Option<Vec<CallFrame>>,
@@ -625,6 +651,7 @@ pub struct SetSkipAllPauses {
     pub skip: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetSkipAllPausesReturnObject {}
 impl super::Command for SetSkipAllPauses {
     const NAME: &'static str = "Debugger.setSkipAllPauses";
@@ -646,6 +673,7 @@ pub struct SetVariableValue {
     pub call_frame_id: CallFrameId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetVariableValueReturnObject {}
 impl super::Command for SetVariableValue {
     const NAME: &'static str = "Debugger.setVariableValue";
@@ -662,6 +690,7 @@ pub struct StepInto {
     pub skip_list: Option<Vec<LocationRange>>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StepIntoReturnObject {}
 impl super::Command for StepInto {
     const NAME: &'static str = "Debugger.stepInto";
@@ -672,6 +701,7 @@ impl super::Command for StepInto {
 #[derive(Serialize, Debug)]
 pub struct StepOut {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StepOutReturnObject {}
 impl super::Command for StepOut {
     const NAME: &'static str = "Debugger.stepOut";
@@ -685,6 +715,7 @@ pub struct StepOver {
     pub skip_list: Option<Vec<LocationRange>>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StepOverReturnObject {}
 impl super::Command for StepOver {
     const NAME: &'static str = "Debugger.stepOver";

@@ -157,6 +157,7 @@ pub struct GetEncodedResponse {
     pub size_only: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetEncodedResponseReturnObject {
     // The encoded body as a base64 string. Omitted if sizeOnly is true.
     pub body: Option<String>,
@@ -174,6 +175,7 @@ impl super::Command for GetEncodedResponse {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Audits.disable";
@@ -185,6 +187,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Audits.enable";

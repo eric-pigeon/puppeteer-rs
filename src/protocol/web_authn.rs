@@ -48,6 +48,7 @@ pub struct Credential {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "WebAuthn.enable";
@@ -58,6 +59,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "WebAuthn.disable";
@@ -70,6 +72,7 @@ pub struct AddVirtualAuthenticator {
     pub options: VirtualAuthenticatorOptions,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddVirtualAuthenticatorReturnObject {
     pub authenticator_id: AuthenticatorId,
 }
@@ -84,6 +87,7 @@ pub struct RemoveVirtualAuthenticator {
     pub authenticator_id: AuthenticatorId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveVirtualAuthenticatorReturnObject {}
 impl super::Command for RemoveVirtualAuthenticator {
     const NAME: &'static str = "WebAuthn.removeVirtualAuthenticator";
@@ -97,6 +101,7 @@ pub struct AddCredential {
     pub credential: Credential,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddCredentialReturnObject {}
 impl super::Command for AddCredential {
     const NAME: &'static str = "WebAuthn.addCredential";
@@ -111,6 +116,7 @@ pub struct GetCredential {
     pub credential_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCredentialReturnObject {
     pub credential: Credential,
 }
@@ -125,6 +131,7 @@ pub struct GetCredentials {
     pub authenticator_id: AuthenticatorId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCredentialsReturnObject {
     pub credentials: Vec<Credential>,
 }
@@ -140,6 +147,7 @@ pub struct RemoveCredential {
     pub credential_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveCredentialReturnObject {}
 impl super::Command for RemoveCredential {
     const NAME: &'static str = "WebAuthn.removeCredential";
@@ -152,6 +160,7 @@ pub struct ClearCredentials {
     pub authenticator_id: AuthenticatorId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearCredentialsReturnObject {}
 impl super::Command for ClearCredentials {
     const NAME: &'static str = "WebAuthn.clearCredentials";
@@ -166,6 +175,7 @@ pub struct SetUserVerified {
     pub is_user_verified: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetUserVerifiedReturnObject {}
 impl super::Command for SetUserVerified {
     const NAME: &'static str = "WebAuthn.setUserVerified";
@@ -180,6 +190,7 @@ pub struct SetAutomaticPresenceSimulation {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAutomaticPresenceSimulationReturnObject {}
 impl super::Command for SetAutomaticPresenceSimulation {
     const NAME: &'static str = "WebAuthn.setAutomaticPresenceSimulation";

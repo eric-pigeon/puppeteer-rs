@@ -58,6 +58,7 @@ pub struct DeleteCache {
     pub cache_id: CacheId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeleteCacheReturnObject {}
 impl super::Command for DeleteCache {
     const NAME: &'static str = "CacheStorage.deleteCache";
@@ -73,6 +74,7 @@ pub struct DeleteEntry {
     pub request: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeleteEntryReturnObject {}
 impl super::Command for DeleteEntry {
     const NAME: &'static str = "CacheStorage.deleteEntry";
@@ -86,6 +88,7 @@ pub struct RequestCacheNames {
     pub security_origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestCacheNamesReturnObject {
     // Caches for the security origin.
     pub caches: Vec<Cache>,
@@ -106,6 +109,7 @@ pub struct RequestCachedResponse {
     pub request_headers: Vec<Header>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestCachedResponseReturnObject {
     // Response read from the cache.
     pub response: CachedResponse,
@@ -128,6 +132,7 @@ pub struct RequestEntries {
     pub path_filter: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestEntriesReturnObject {
     // Array of object store data entries.
     pub cache_data_entries: Vec<DataEntry>,

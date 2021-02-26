@@ -338,6 +338,7 @@ pub struct AwaitPromise {
     pub generate_preview: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AwaitPromiseReturnObject {
     // Promise result. Will contain rejected value if promise was rejected.
     pub result: RemoteObject,
@@ -381,6 +382,7 @@ pub struct CallFunctionOn {
     pub object_group: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CallFunctionOnReturnObject {
     // Call result.
     pub result: RemoteObject,
@@ -406,6 +408,7 @@ pub struct CompileScript {
     pub execution_context_id: Option<ExecutionContextId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CompileScriptReturnObject {
     // Id of the script.
     pub script_id: Option<ScriptId>,
@@ -421,6 +424,7 @@ impl super::Command for CompileScript {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Runtime.disable";
@@ -431,6 +435,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct DiscardConsoleEntries {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DiscardConsoleEntriesReturnObject {}
 impl super::Command for DiscardConsoleEntries {
     const NAME: &'static str = "Runtime.discardConsoleEntries";
@@ -443,6 +448,7 @@ impl super::Command for DiscardConsoleEntries {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Runtime.enable";
@@ -491,6 +497,7 @@ pub struct Evaluate {
     pub allow_unsafe_eval_blocked_by_csp: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EvaluateReturnObject {
     // Evaluation result.
     pub result: RemoteObject,
@@ -506,6 +513,7 @@ impl super::Command for Evaluate {
 #[derive(Serialize, Debug)]
 pub struct GetIsolateId {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetIsolateIdReturnObject {
     // The isolate id.
     pub id: String,
@@ -520,6 +528,7 @@ impl super::Command for GetIsolateId {
 #[derive(Serialize, Debug)]
 pub struct GetHeapUsage {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetHeapUsageReturnObject {
     // Used heap size in bytes.
     pub used_size: f64,
@@ -547,6 +556,7 @@ pub struct GetProperties {
     pub generate_preview: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetPropertiesReturnObject {
     // Object properties.
     pub result: Vec<PropertyDescriptor>,
@@ -569,6 +579,7 @@ pub struct GlobalLexicalScopeNames {
     pub execution_context_id: Option<ExecutionContextId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GlobalLexicalScopeNamesReturnObject {
     pub names: Vec<String>,
 }
@@ -585,6 +596,7 @@ pub struct QueryObjects {
     pub object_group: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct QueryObjectsReturnObject {
     // Array with objects.
     pub objects: RemoteObject,
@@ -601,6 +613,7 @@ pub struct ReleaseObject {
     pub object_id: RemoteObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ReleaseObjectReturnObject {}
 impl super::Command for ReleaseObject {
     const NAME: &'static str = "Runtime.releaseObject";
@@ -614,6 +627,7 @@ pub struct ReleaseObjectGroup {
     pub object_group: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ReleaseObjectGroupReturnObject {}
 impl super::Command for ReleaseObjectGroup {
     const NAME: &'static str = "Runtime.releaseObjectGroup";
@@ -624,6 +638,7 @@ impl super::Command for ReleaseObjectGroup {
 #[derive(Serialize, Debug)]
 pub struct RunIfWaitingForDebugger {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RunIfWaitingForDebuggerReturnObject {}
 impl super::Command for RunIfWaitingForDebugger {
     const NAME: &'static str = "Runtime.runIfWaitingForDebugger";
@@ -654,6 +669,7 @@ pub struct RunScript {
     pub await_promise: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RunScriptReturnObject {
     // Run result.
     pub result: RemoteObject,
@@ -673,6 +689,7 @@ pub struct SetAsyncCallStackDepth {
     pub max_depth: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAsyncCallStackDepthReturnObject {}
 impl super::Command for SetAsyncCallStackDepth {
     const NAME: &'static str = "Runtime.setAsyncCallStackDepth";
@@ -684,6 +701,7 @@ pub struct SetCustomObjectFormatterEnabled {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetCustomObjectFormatterEnabledReturnObject {}
 impl super::Command for SetCustomObjectFormatterEnabled {
     const NAME: &'static str = "Runtime.setCustomObjectFormatterEnabled";
@@ -695,6 +713,7 @@ pub struct SetMaxCallStackSizeToCapture {
     pub size: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetMaxCallStackSizeToCaptureReturnObject {}
 impl super::Command for SetMaxCallStackSizeToCapture {
     const NAME: &'static str = "Runtime.setMaxCallStackSizeToCapture";
@@ -706,6 +725,7 @@ impl super::Command for SetMaxCallStackSizeToCapture {
 #[derive(Serialize, Debug)]
 pub struct TerminateExecution {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TerminateExecutionReturnObject {}
 impl super::Command for TerminateExecution {
     const NAME: &'static str = "Runtime.terminateExecution";
@@ -726,6 +746,7 @@ pub struct AddBinding {
     pub execution_context_id: Option<ExecutionContextId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddBindingReturnObject {}
 impl super::Command for AddBinding {
     const NAME: &'static str = "Runtime.addBinding";
@@ -739,6 +760,7 @@ pub struct RemoveBinding {
     pub name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveBindingReturnObject {}
 impl super::Command for RemoveBinding {
     const NAME: &'static str = "Runtime.removeBinding";

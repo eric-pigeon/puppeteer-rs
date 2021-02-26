@@ -112,6 +112,7 @@ pub struct ProcessInfo {
 #[derive(Serialize, Debug)]
 pub struct GetInfo {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetInfoReturnObject {
     // Information about the GPUs on the system.
     pub gpu: GPUInfo,
@@ -134,6 +135,7 @@ impl super::Command for GetInfo {
 #[derive(Serialize, Debug)]
 pub struct GetProcessInfo {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetProcessInfoReturnObject {
     // An array of process info blocks.
     pub process_info: Vec<ProcessInfo>,

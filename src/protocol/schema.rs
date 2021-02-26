@@ -15,6 +15,7 @@ pub struct Domain {
 #[derive(Serialize, Debug)]
 pub struct GetDomains {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetDomainsReturnObject {
     // List of supported domains.
     pub domains: Vec<Domain>,

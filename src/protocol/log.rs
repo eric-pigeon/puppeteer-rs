@@ -76,6 +76,7 @@ pub struct ViolationSetting {
 #[derive(Serialize, Debug)]
 pub struct Clear {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearReturnObject {}
 impl super::Command for Clear {
     const NAME: &'static str = "Log.clear";
@@ -86,6 +87,7 @@ impl super::Command for Clear {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Log.disable";
@@ -97,6 +99,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Log.enable";
@@ -110,6 +113,7 @@ pub struct StartViolationsReport {
     pub config: Vec<ViolationSetting>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartViolationsReportReturnObject {}
 impl super::Command for StartViolationsReport {
     const NAME: &'static str = "Log.startViolationsReport";
@@ -120,6 +124,7 @@ impl super::Command for StartViolationsReport {
 #[derive(Serialize, Debug)]
 pub struct StopViolationsReport {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopViolationsReportReturnObject {}
 impl super::Command for StopViolationsReport {
     const NAME: &'static str = "Log.stopViolationsReport";

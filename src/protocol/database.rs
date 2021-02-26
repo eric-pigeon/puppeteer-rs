@@ -30,6 +30,7 @@ pub struct Error {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Database.disable";
@@ -40,6 +41,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Database.enable";
@@ -52,6 +54,7 @@ pub struct ExecuteSQL {
     pub query: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ExecuteSQLReturnObject {
     pub column_names: Option<Vec<String>>,
     pub values: Option<Vec<serde_json::Value>>,
@@ -67,6 +70,7 @@ pub struct GetDatabaseTableNames {
     pub database_id: DatabaseId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetDatabaseTableNamesReturnObject {
     pub table_names: Vec<String>,
 }

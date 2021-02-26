@@ -82,6 +82,7 @@ pub struct KeyframeStyle {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Animation.disable";
@@ -92,6 +93,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Animation.enable";
@@ -105,6 +107,7 @@ pub struct GetCurrentTime {
     pub id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCurrentTimeReturnObject {
     // Current time of the page.
     pub current_time: f64,
@@ -118,6 +121,7 @@ impl super::Command for GetCurrentTime {
 #[derive(Serialize, Debug)]
 pub struct GetPlaybackRate {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetPlaybackRateReturnObject {
     // Playback rate for animations on page.
     pub playback_rate: f64,
@@ -134,6 +138,7 @@ pub struct ReleaseAnimations {
     pub animations: Vec<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ReleaseAnimationsReturnObject {}
 impl super::Command for ReleaseAnimations {
     const NAME: &'static str = "Animation.releaseAnimations";
@@ -147,6 +152,7 @@ pub struct ResolveAnimation {
     pub animation_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResolveAnimationReturnObject {
     // Corresponding remote object.
     pub remote_object: super::runtime::RemoteObject,
@@ -165,6 +171,7 @@ pub struct SeekAnimations {
     pub current_time: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SeekAnimationsReturnObject {}
 impl super::Command for SeekAnimations {
     const NAME: &'static str = "Animation.seekAnimations";
@@ -180,6 +187,7 @@ pub struct SetPaused {
     pub paused: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPausedReturnObject {}
 impl super::Command for SetPaused {
     const NAME: &'static str = "Animation.setPaused";
@@ -193,6 +201,7 @@ pub struct SetPlaybackRate {
     pub playback_rate: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPlaybackRateReturnObject {}
 impl super::Command for SetPlaybackRate {
     const NAME: &'static str = "Animation.setPlaybackRate";
@@ -210,6 +219,7 @@ pub struct SetTiming {
     pub delay: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetTimingReturnObject {}
 impl super::Command for SetTiming {
     const NAME: &'static str = "Animation.setTiming";

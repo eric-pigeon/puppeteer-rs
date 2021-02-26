@@ -117,6 +117,7 @@ pub type CertificateErrorAction = String;
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Security.disable";
@@ -127,6 +128,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Security.enable";
@@ -140,6 +142,7 @@ pub struct SetIgnoreCertificateErrors {
     pub ignore: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetIgnoreCertificateErrorsReturnObject {}
 impl super::Command for SetIgnoreCertificateErrors {
     const NAME: &'static str = "Security.setIgnoreCertificateErrors";
@@ -155,6 +158,7 @@ pub struct HandleCertificateError {
     pub action: CertificateErrorAction,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HandleCertificateErrorReturnObject {}
 impl super::Command for HandleCertificateError {
     const NAME: &'static str = "Security.handleCertificateError";
@@ -169,6 +173,7 @@ pub struct SetOverrideCertificateErrors {
     pub r#override: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetOverrideCertificateErrorsReturnObject {}
 impl super::Command for SetOverrideCertificateErrors {
     const NAME: &'static str = "Security.setOverrideCertificateErrors";

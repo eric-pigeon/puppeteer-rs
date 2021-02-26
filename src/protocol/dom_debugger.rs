@@ -42,6 +42,7 @@ pub struct GetEventListeners {
     pub pierce: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetEventListenersReturnObject {
     // Array of relevant listeners.
     pub listeners: Vec<EventListener>,
@@ -60,6 +61,7 @@ pub struct RemoveDOMBreakpoint {
     pub r#type: DOMBreakpointType,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveDOMBreakpointReturnObject {}
 impl super::Command for RemoveDOMBreakpoint {
     const NAME: &'static str = "DOMDebugger.removeDOMBreakpoint";
@@ -75,6 +77,7 @@ pub struct RemoveEventListenerBreakpoint {
     pub target_name: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveEventListenerBreakpointReturnObject {}
 impl super::Command for RemoveEventListenerBreakpoint {
     const NAME: &'static str = "DOMDebugger.removeEventListenerBreakpoint";
@@ -88,6 +91,7 @@ pub struct RemoveInstrumentationBreakpoint {
     pub event_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveInstrumentationBreakpointReturnObject {}
 impl super::Command for RemoveInstrumentationBreakpoint {
     const NAME: &'static str = "DOMDebugger.removeInstrumentationBreakpoint";
@@ -101,6 +105,7 @@ pub struct RemoveXHRBreakpoint {
     pub url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveXHRBreakpointReturnObject {}
 impl super::Command for RemoveXHRBreakpoint {
     const NAME: &'static str = "DOMDebugger.removeXHRBreakpoint";
@@ -116,6 +121,7 @@ pub struct SetDOMBreakpoint {
     pub r#type: DOMBreakpointType,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDOMBreakpointReturnObject {}
 impl super::Command for SetDOMBreakpoint {
     const NAME: &'static str = "DOMDebugger.setDOMBreakpoint";
@@ -132,6 +138,7 @@ pub struct SetEventListenerBreakpoint {
     pub target_name: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetEventListenerBreakpointReturnObject {}
 impl super::Command for SetEventListenerBreakpoint {
     const NAME: &'static str = "DOMDebugger.setEventListenerBreakpoint";
@@ -145,6 +152,7 @@ pub struct SetInstrumentationBreakpoint {
     pub event_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetInstrumentationBreakpointReturnObject {}
 impl super::Command for SetInstrumentationBreakpoint {
     const NAME: &'static str = "DOMDebugger.setInstrumentationBreakpoint";
@@ -158,6 +166,7 @@ pub struct SetXHRBreakpoint {
     pub url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetXHRBreakpointReturnObject {}
 impl super::Command for SetXHRBreakpoint {
     const NAME: &'static str = "DOMDebugger.setXHRBreakpoint";

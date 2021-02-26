@@ -41,6 +41,7 @@ pub type StreamCompression = String;
 #[derive(Serialize, Debug)]
 pub struct End {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EndReturnObject {}
 impl super::Command for End {
     const NAME: &'static str = "Tracing.end";
@@ -51,6 +52,7 @@ impl super::Command for End {
 #[derive(Serialize, Debug)]
 pub struct GetCategories {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCategoriesReturnObject {
     // A list of supported tracing categories.
     pub categories: Vec<String>,
@@ -67,6 +69,7 @@ pub struct RecordClockSyncMarker {
     pub sync_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RecordClockSyncMarkerReturnObject {}
 impl super::Command for RecordClockSyncMarker {
     const NAME: &'static str = "Tracing.recordClockSyncMarker";
@@ -80,6 +83,7 @@ pub struct RequestMemoryDump {
     pub deterministic: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestMemoryDumpReturnObject {
     // GUID of the resulting global memory dump.
     pub dump_guid: String,
@@ -118,6 +122,7 @@ pub struct Start {
     pub trace_config: Option<TraceConfig>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartReturnObject {}
 impl super::Command for Start {
     const NAME: &'static str = "Tracing.start";

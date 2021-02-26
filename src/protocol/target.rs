@@ -34,6 +34,7 @@ pub struct ActivateTarget {
     pub target_id: TargetID,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ActivateTargetReturnObject {}
 impl super::Command for ActivateTarget {
     const NAME: &'static str = "Target.activateTarget";
@@ -50,6 +51,7 @@ pub struct AttachToTarget {
     pub flatten: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AttachToTargetReturnObject {
     // Id assigned to the session.
     pub session_id: SessionID,
@@ -63,6 +65,7 @@ impl super::Command for AttachToTarget {
 #[derive(Serialize, Debug)]
 pub struct AttachToBrowserTarget {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AttachToBrowserTargetReturnObject {
     // Id assigned to the session.
     pub session_id: SessionID,
@@ -78,6 +81,7 @@ pub struct CloseTarget {
     pub target_id: TargetID,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CloseTargetReturnObject {
     // Always set to true. If an error occurs, the response indicates protocol error.
     pub success: bool,
@@ -102,6 +106,7 @@ pub struct ExposeDevToolsProtocol {
     pub binding_name: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ExposeDevToolsProtocolReturnObject {}
 impl super::Command for ExposeDevToolsProtocol {
     const NAME: &'static str = "Target.exposeDevToolsProtocol";
@@ -120,6 +125,7 @@ pub struct CreateBrowserContext {
     pub proxy_bypass_list: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateBrowserContextReturnObject {
     // The id of the context created.
     pub browser_context_id: super::browser::BrowserContextID,
@@ -133,6 +139,7 @@ impl super::Command for CreateBrowserContext {
 #[derive(Serialize, Debug)]
 pub struct GetBrowserContexts {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetBrowserContextsReturnObject {
     // An array of browser context ids.
     pub browser_context_ids: Vec<super::browser::BrowserContextID>,
@@ -163,6 +170,7 @@ pub struct CreateTarget {
     pub background: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateTargetReturnObject {
     // The id of the page opened.
     pub target_id: TargetID,
@@ -181,6 +189,7 @@ pub struct DetachFromTarget {
     pub target_id: Option<TargetID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DetachFromTargetReturnObject {}
 impl super::Command for DetachFromTarget {
     const NAME: &'static str = "Target.detachFromTarget";
@@ -194,6 +203,7 @@ pub struct DisposeBrowserContext {
     pub browser_context_id: super::browser::BrowserContextID,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisposeBrowserContextReturnObject {}
 impl super::Command for DisposeBrowserContext {
     const NAME: &'static str = "Target.disposeBrowserContext";
@@ -206,6 +216,7 @@ pub struct GetTargetInfo {
     pub target_id: Option<TargetID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetTargetInfoReturnObject {
     pub target_info: TargetInfo,
 }
@@ -218,6 +229,7 @@ impl super::Command for GetTargetInfo {
 #[derive(Serialize, Debug)]
 pub struct GetTargets {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetTargetsReturnObject {
     // The list of targets.
     pub target_infos: Vec<TargetInfo>,
@@ -239,6 +251,7 @@ pub struct SendMessageToTarget {
     pub target_id: Option<TargetID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SendMessageToTargetReturnObject {}
 impl super::Command for SendMessageToTarget {
     const NAME: &'static str = "Target.sendMessageToTarget";
@@ -261,6 +274,7 @@ pub struct SetAutoAttach {
     pub flatten: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAutoAttachReturnObject {}
 impl super::Command for SetAutoAttach {
     const NAME: &'static str = "Target.setAutoAttach";
@@ -275,6 +289,7 @@ pub struct SetDiscoverTargets {
     pub discover: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDiscoverTargetsReturnObject {}
 impl super::Command for SetDiscoverTargets {
     const NAME: &'static str = "Target.setDiscoverTargets";
@@ -289,6 +304,7 @@ pub struct SetRemoteLocations {
     pub locations: Vec<RemoteLocation>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetRemoteLocationsReturnObject {}
 impl super::Command for SetRemoteLocations {
     const NAME: &'static str = "Target.setRemoteLocations";

@@ -117,6 +117,7 @@ pub type InspectMode = String;
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Overlay.disable";
@@ -127,6 +128,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Overlay.enable";
@@ -148,6 +150,7 @@ pub struct GetHighlightObjectForTest {
     pub show_accessibility_info: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetHighlightObjectForTestReturnObject {
     // Highlight data for the node.
 // TODO objectProperty
@@ -164,6 +167,7 @@ pub struct GetGridHighlightObjectsForTest {
     pub node_ids: Vec<super::dom::NodeId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetGridHighlightObjectsForTestReturnObject {
     // Grid Highlight data for the node ids provided.
 // TODO objectProperty
@@ -180,6 +184,7 @@ pub struct GetSourceOrderHighlightObjectForTest {
     pub node_id: super::dom::NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetSourceOrderHighlightObjectForTestReturnObject {
     // Source order highlight data for the node id provided.
 // TODO objectProperty
@@ -193,6 +198,7 @@ impl super::Command for GetSourceOrderHighlightObjectForTest {
 #[derive(Serialize, Debug)]
 pub struct HideHighlight {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HideHighlightReturnObject {}
 impl super::Command for HideHighlight {
     const NAME: &'static str = "Overlay.hideHighlight";
@@ -210,6 +216,7 @@ pub struct HighlightFrame {
     pub content_outline_color: Option<super::dom::RGBA>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightFrameReturnObject {}
 impl super::Command for HighlightFrame {
     const NAME: &'static str = "Overlay.highlightFrame";
@@ -232,6 +239,7 @@ pub struct HighlightNode {
     pub selector: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightNodeReturnObject {}
 impl super::Command for HighlightNode {
     const NAME: &'static str = "Overlay.highlightNode";
@@ -249,6 +257,7 @@ pub struct HighlightQuad {
     pub outline_color: Option<super::dom::RGBA>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightQuadReturnObject {}
 impl super::Command for HighlightQuad {
     const NAME: &'static str = "Overlay.highlightQuad";
@@ -272,6 +281,7 @@ pub struct HighlightRect {
     pub outline_color: Option<super::dom::RGBA>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightRectReturnObject {}
 impl super::Command for HighlightRect {
     const NAME: &'static str = "Overlay.highlightRect";
@@ -292,6 +302,7 @@ pub struct HighlightSourceOrder {
     pub object_id: Option<super::runtime::RemoteObjectId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HighlightSourceOrderReturnObject {}
 impl super::Command for HighlightSourceOrder {
     const NAME: &'static str = "Overlay.highlightSourceOrder";
@@ -309,6 +320,7 @@ pub struct SetInspectMode {
     pub highlight_config: Option<HighlightConfig>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetInspectModeReturnObject {}
 impl super::Command for SetInspectMode {
     const NAME: &'static str = "Overlay.setInspectMode";
@@ -322,6 +334,7 @@ pub struct SetShowAdHighlights {
     pub show: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowAdHighlightsReturnObject {}
 impl super::Command for SetShowAdHighlights {
     const NAME: &'static str = "Overlay.setShowAdHighlights";
@@ -334,6 +347,7 @@ pub struct SetPausedInDebuggerMessage {
     pub message: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPausedInDebuggerMessageReturnObject {}
 impl super::Command for SetPausedInDebuggerMessage {
     const NAME: &'static str = "Overlay.setPausedInDebuggerMessage";
@@ -347,6 +361,7 @@ pub struct SetShowDebugBorders {
     pub show: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowDebugBordersReturnObject {}
 impl super::Command for SetShowDebugBorders {
     const NAME: &'static str = "Overlay.setShowDebugBorders";
@@ -360,6 +375,7 @@ pub struct SetShowFPSCounter {
     pub show: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowFPSCounterReturnObject {}
 impl super::Command for SetShowFPSCounter {
     const NAME: &'static str = "Overlay.setShowFPSCounter";
@@ -373,6 +389,7 @@ pub struct SetShowGridOverlays {
     pub grid_node_highlight_configs: Vec<GridNodeHighlightConfig>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowGridOverlaysReturnObject {}
 impl super::Command for SetShowGridOverlays {
     const NAME: &'static str = "Overlay.setShowGridOverlays";
@@ -386,6 +403,7 @@ pub struct SetShowPaintRects {
     pub result: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowPaintRectsReturnObject {}
 impl super::Command for SetShowPaintRects {
     const NAME: &'static str = "Overlay.setShowPaintRects";
@@ -399,6 +417,7 @@ pub struct SetShowLayoutShiftRegions {
     pub result: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowLayoutShiftRegionsReturnObject {}
 impl super::Command for SetShowLayoutShiftRegions {
     const NAME: &'static str = "Overlay.setShowLayoutShiftRegions";
@@ -412,6 +431,7 @@ pub struct SetShowScrollBottleneckRects {
     pub show: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowScrollBottleneckRectsReturnObject {}
 impl super::Command for SetShowScrollBottleneckRects {
     const NAME: &'static str = "Overlay.setShowScrollBottleneckRects";
@@ -425,6 +445,7 @@ pub struct SetShowHitTestBorders {
     pub show: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowHitTestBordersReturnObject {}
 impl super::Command for SetShowHitTestBorders {
     const NAME: &'static str = "Overlay.setShowHitTestBorders";
@@ -438,6 +459,7 @@ pub struct SetShowViewportSizeOnResize {
     pub show: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowViewportSizeOnResizeReturnObject {}
 impl super::Command for SetShowViewportSizeOnResize {
     const NAME: &'static str = "Overlay.setShowViewportSizeOnResize";
@@ -451,6 +473,7 @@ pub struct SetShowHinge {
     pub hinge_config: Option<HingeConfig>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetShowHingeReturnObject {}
 impl super::Command for SetShowHinge {
     const NAME: &'static str = "Overlay.setShowHinge";

@@ -71,6 +71,7 @@ pub struct AuthChallengeResponse {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Fetch.disable";
@@ -90,6 +91,7 @@ pub struct Enable {
     pub handle_auth_requests: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Fetch.enable";
@@ -105,6 +107,7 @@ pub struct FailRequest {
     pub error_reason: super::network::ErrorReason,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FailRequestReturnObject {}
 impl super::Command for FailRequest {
     const NAME: &'static str = "Fetch.failRequest";
@@ -132,6 +135,7 @@ pub struct FulfillRequest {
     pub response_phrase: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FulfillRequestReturnObject {}
 impl super::Command for FulfillRequest {
     const NAME: &'static str = "Fetch.fulfillRequest";
@@ -153,6 +157,7 @@ pub struct ContinueRequest {
     pub headers: Option<Vec<HeaderEntry>>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ContinueRequestReturnObject {}
 impl super::Command for ContinueRequest {
     const NAME: &'static str = "Fetch.continueRequest";
@@ -168,6 +173,7 @@ pub struct ContinueWithAuth {
     pub auth_challenge_response: AuthChallengeResponse,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ContinueWithAuthReturnObject {}
 impl super::Command for ContinueWithAuth {
     const NAME: &'static str = "Fetch.continueWithAuth";
@@ -186,6 +192,7 @@ pub struct GetResponseBody {
     pub request_id: RequestId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetResponseBodyReturnObject {
     // Response body.
     pub body: String,
@@ -212,6 +219,7 @@ pub struct TakeResponseBodyAsStream {
     pub request_id: RequestId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakeResponseBodyAsStreamReturnObject {
     pub stream: super::io::StreamHandle,
 }

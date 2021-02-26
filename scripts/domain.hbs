@@ -47,6 +47,7 @@ pub struct {{camelize name}} {
 {{/if}}
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct {{camelize (concat name "ReturnObject")}} {
 {{#if returns}}
   {{#each returns}}

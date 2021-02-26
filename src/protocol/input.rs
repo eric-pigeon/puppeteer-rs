@@ -75,6 +75,7 @@ pub struct DispatchKeyEvent {
     pub commands: Option<Vec<String>>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DispatchKeyEventReturnObject {}
 impl super::Command for DispatchKeyEvent {
     const NAME: &'static str = "Input.dispatchKeyEvent";
@@ -89,6 +90,7 @@ pub struct InsertText {
     pub text: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct InsertTextReturnObject {}
 impl super::Command for InsertText {
     const NAME: &'static str = "Input.insertText";
@@ -131,6 +133,7 @@ pub struct DispatchMouseEvent {
     pub pointer_type: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DispatchMouseEventReturnObject {}
 impl super::Command for DispatchMouseEvent {
     const NAME: &'static str = "Input.dispatchMouseEvent";
@@ -154,6 +157,7 @@ pub struct DispatchTouchEvent {
     pub timestamp: Option<TimeSinceEpoch>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DispatchTouchEventReturnObject {}
 impl super::Command for DispatchTouchEvent {
     const NAME: &'static str = "Input.dispatchTouchEvent";
@@ -184,6 +188,7 @@ pub struct EmulateTouchFromMouseEvent {
     pub click_count: Option<i32>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EmulateTouchFromMouseEventReturnObject {}
 impl super::Command for EmulateTouchFromMouseEvent {
     const NAME: &'static str = "Input.emulateTouchFromMouseEvent";
@@ -197,6 +202,7 @@ pub struct SetIgnoreInputEvents {
     pub ignore: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetIgnoreInputEventsReturnObject {}
 impl super::Command for SetIgnoreInputEvents {
     const NAME: &'static str = "Input.setIgnoreInputEvents";
@@ -219,6 +225,7 @@ pub struct SynthesizePinchGesture {
     pub gesture_source_type: Option<GestureSourceType>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SynthesizePinchGestureReturnObject {}
 impl super::Command for SynthesizePinchGesture {
     const NAME: &'static str = "Input.synthesizePinchGesture";
@@ -257,6 +264,7 @@ pub struct SynthesizeScrollGesture {
     pub interaction_marker_name: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SynthesizeScrollGestureReturnObject {}
 impl super::Command for SynthesizeScrollGesture {
     const NAME: &'static str = "Input.synthesizeScrollGesture";
@@ -279,6 +287,7 @@ pub struct SynthesizeTapGesture {
     pub gesture_source_type: Option<GestureSourceType>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SynthesizeTapGestureReturnObject {}
 impl super::Command for SynthesizeTapGesture {
     const NAME: &'static str = "Input.synthesizeTapGesture";

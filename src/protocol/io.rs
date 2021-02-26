@@ -12,6 +12,7 @@ pub struct Close {
     pub handle: StreamHandle,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CloseReturnObject {}
 impl super::Command for Close {
     const NAME: &'static str = "IO.close";
@@ -30,6 +31,7 @@ pub struct Read {
     pub size: Option<i32>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ReadReturnObject {
     // Set if the data is base64-encoded
     pub base64_encoded: Option<bool>,
@@ -50,6 +52,7 @@ pub struct ResolveBlob {
     pub object_id: super::runtime::RemoteObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResolveBlobReturnObject {
     // UUID of the specified Blob.
     pub uuid: String,

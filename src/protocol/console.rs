@@ -47,6 +47,7 @@ pub struct ConsoleMessage {
 #[derive(Serialize, Debug)]
 pub struct ClearMessages {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearMessagesReturnObject {}
 impl super::Command for ClearMessages {
     const NAME: &'static str = "Console.clearMessages";
@@ -57,6 +58,7 @@ impl super::Command for ClearMessages {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Console.disable";
@@ -68,6 +70,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Console.enable";

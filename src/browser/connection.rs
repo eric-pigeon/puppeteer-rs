@@ -41,6 +41,7 @@ impl Connection {
         let _join_handle = tokio::spawn(async move {
             while let Some(message) = read_stream.next().await {
                 // TODO this is uglyyyyyy
+                println!("{:?}", message);
                 match message {
                     Ok(message) => match message {
                         Response(response) => {
@@ -49,7 +50,16 @@ impl Connection {
                             }
                         }
                         Event(event) => {
-                            println!("{:?}", event)
+                            match event {
+                                protocol::Event::TargetAttachedToTarget(_event) => {
+                                    // TODO
+                                }
+                                protocol::Event::TargetDetachedFromTarget(_event) => {
+                                    // TODO
+                                }
+                                // TODO
+                                _ => {}
+                            }
                         }
                         ConnectionShutdown => {
                             // TODO
@@ -83,7 +93,6 @@ impl Connection {
         let call_id = self.last_id.fetch_add(1, Ordering::SeqCst);
         let call = command.to_command_call(call_id);
         let message_text = serde_json::to_string(&call).expect("failed to serialize method");
-        // println!("{:?}", message_text);
 
         let (sender, receiver) = oneshot::channel::<protocol::Response>();
         self.callbacks.insert(call_id, sender);
@@ -92,8 +101,6 @@ impl Connection {
 
         async move {
             let response = receiver.await;
-            // TODO
-            println!("{:?}", response);
             let tmp = response.unwrap().result.unwrap();
             let result: C::ReturnObject = serde_json::from_value(tmp).unwrap();
             Ok(result)
@@ -101,7 +108,7 @@ impl Connection {
     }
 }
 
-type ReadStream = dyn futures::Stream<Item = Result<protocol::Message, TodoError>> + Unpin + Send;
+type ReadStream = dyn futures::Stream<Item = Result<protocol::Message, ReadError>> + Unpin + Send;
 
 pub trait ConnectionTransport {
     fn send(&self, message: &str);
@@ -140,23 +147,23 @@ impl ConnectionTransport for WebSocketTransport {
     }
 }
 
-// TODO name this
+// TODO better name this
 #[derive(Debug)]
-pub enum TodoError {
+pub enum ReadError {
     TungsteniteError(tokio_tungstenite::tungstenite::Error),
     JsonError(serde_json::Error),
     // TOOD
     // ProtcolError(String),
 }
 
-impl From<serde_json::Error> for TodoError {
+impl From<serde_json::Error> for ReadError {
     fn from(error: serde_json::Error) -> Self {
-        TodoError::JsonError(error)
+        ReadError::JsonError(error)
     }
 }
 
-impl From<tokio_tungstenite::tungstenite::Error> for TodoError {
+impl From<tokio_tungstenite::tungstenite::Error> for ReadError {
     fn from(error: tokio_tungstenite::tungstenite::Error) -> Self {
-        TodoError::TungsteniteError(error)
+        ReadError::TungsteniteError(error)
     }
 }

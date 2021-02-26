@@ -116,6 +116,7 @@ pub struct ClearObjectStore {
     pub object_store_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearObjectStoreReturnObject {}
 impl super::Command for ClearObjectStore {
     const NAME: &'static str = "IndexedDB.clearObjectStore";
@@ -131,6 +132,7 @@ pub struct DeleteDatabase {
     pub database_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeleteDatabaseReturnObject {}
 impl super::Command for DeleteDatabase {
     const NAME: &'static str = "IndexedDB.deleteDatabase";
@@ -147,6 +149,7 @@ pub struct DeleteObjectStoreEntries {
     pub key_range: KeyRange,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeleteObjectStoreEntriesReturnObject {}
 impl super::Command for DeleteObjectStoreEntries {
     const NAME: &'static str = "IndexedDB.deleteObjectStoreEntries";
@@ -157,6 +160,7 @@ impl super::Command for DeleteObjectStoreEntries {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "IndexedDB.disable";
@@ -167,6 +171,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "IndexedDB.enable";
@@ -192,6 +197,7 @@ pub struct RequestData {
     pub key_range: Option<KeyRange>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestDataReturnObject {
     // Array of object store data entries.
     pub object_store_data_entries: Vec<DataEntry>,
@@ -214,6 +220,7 @@ pub struct GetMetadata {
     pub object_store_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetMetadataReturnObject {
     // the entries count
     pub entries_count: f64,
@@ -236,6 +243,7 @@ pub struct RequestDatabase {
     pub database_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestDatabaseReturnObject {
     // Database with an array of object stores.
     pub database_with_object_stores: DatabaseWithObjectStores,
@@ -252,6 +260,7 @@ pub struct RequestDatabaseNames {
     pub security_origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct RequestDatabaseNamesReturnObject {
     // Database names for origin.
     pub database_names: Vec<String>,

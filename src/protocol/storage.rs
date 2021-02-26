@@ -22,6 +22,7 @@ pub struct ClearDataForOrigin {
     pub storage_types: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearDataForOriginReturnObject {}
 impl super::Command for ClearDataForOrigin {
     const NAME: &'static str = "Storage.clearDataForOrigin";
@@ -35,6 +36,7 @@ pub struct GetCookies {
     pub browser_context_id: Option<super::browser::BrowserContextID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<super::network::Cookie>,
@@ -53,6 +55,7 @@ pub struct SetCookies {
     pub browser_context_id: Option<super::browser::BrowserContextID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetCookiesReturnObject {}
 impl super::Command for SetCookies {
     const NAME: &'static str = "Storage.setCookies";
@@ -66,6 +69,7 @@ pub struct ClearCookies {
     pub browser_context_id: Option<super::browser::BrowserContextID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearCookiesReturnObject {}
 impl super::Command for ClearCookies {
     const NAME: &'static str = "Storage.clearCookies";
@@ -79,6 +83,7 @@ pub struct GetUsageAndQuota {
     pub origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetUsageAndQuotaReturnObject {
     // Storage usage (bytes).
     pub usage: f64,
@@ -109,6 +114,7 @@ pub struct OverrideQuotaForOrigin {
     pub quota_size: Option<f64>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct OverrideQuotaForOriginReturnObject {}
 impl super::Command for OverrideQuotaForOrigin {
     const NAME: &'static str = "Storage.overrideQuotaForOrigin";
@@ -122,6 +128,7 @@ pub struct TrackCacheStorageForOrigin {
     pub origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TrackCacheStorageForOriginReturnObject {}
 impl super::Command for TrackCacheStorageForOrigin {
     const NAME: &'static str = "Storage.trackCacheStorageForOrigin";
@@ -135,6 +142,7 @@ pub struct TrackIndexedDBForOrigin {
     pub origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TrackIndexedDBForOriginReturnObject {}
 impl super::Command for TrackIndexedDBForOrigin {
     const NAME: &'static str = "Storage.trackIndexedDBForOrigin";
@@ -148,6 +156,7 @@ pub struct UntrackCacheStorageForOrigin {
     pub origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UntrackCacheStorageForOriginReturnObject {}
 impl super::Command for UntrackCacheStorageForOrigin {
     const NAME: &'static str = "Storage.untrackCacheStorageForOrigin";
@@ -161,6 +170,7 @@ pub struct UntrackIndexedDBForOrigin {
     pub origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UntrackIndexedDBForOriginReturnObject {}
 impl super::Command for UntrackIndexedDBForOrigin {
     const NAME: &'static str = "Storage.untrackIndexedDBForOrigin";

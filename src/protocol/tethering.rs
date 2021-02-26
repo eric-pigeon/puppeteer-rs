@@ -8,6 +8,7 @@ pub struct Bind {
     pub port: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct BindReturnObject {}
 impl super::Command for Bind {
     const NAME: &'static str = "Tethering.bind";
@@ -21,6 +22,7 @@ pub struct Unbind {
     pub port: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UnbindReturnObject {}
 impl super::Command for Unbind {
     const NAME: &'static str = "Tethering.unbind";

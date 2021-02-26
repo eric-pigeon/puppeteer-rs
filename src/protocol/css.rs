@@ -343,6 +343,7 @@ pub struct AddRule {
     pub location: SourceRange,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddRuleReturnObject {
     // The newly created rule.
     pub rule: CSSRule,
@@ -358,6 +359,7 @@ pub struct CollectClassNames {
     pub style_sheet_id: StyleSheetId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CollectClassNamesReturnObject {
     // Class name list.
     pub class_names: Vec<String>,
@@ -374,6 +376,7 @@ pub struct CreateStyleSheet {
     pub frame_id: super::page::FrameId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateStyleSheetReturnObject {
     // Identifier of the created "via-inspector" stylesheet.
     pub style_sheet_id: StyleSheetId,
@@ -387,6 +390,7 @@ impl super::Command for CreateStyleSheet {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "CSS.disable";
@@ -398,6 +402,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "CSS.enable";
@@ -414,6 +419,7 @@ pub struct ForcePseudoState {
     pub forced_pseudo_classes: Vec<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ForcePseudoStateReturnObject {}
 impl super::Command for ForcePseudoState {
     const NAME: &'static str = "CSS.forcePseudoState";
@@ -426,6 +432,7 @@ pub struct GetBackgroundColors {
     pub node_id: super::dom::NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetBackgroundColorsReturnObject {
     // The range of background colors behind this element, if it contains any visible text. If no
     // visible text is present, this will be undefined. In the case of a flat background color,
@@ -450,6 +457,7 @@ pub struct GetComputedStyleForNode {
     pub node_id: super::dom::NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetComputedStyleForNodeReturnObject {
     // Computed style for the specified DOM node.
     pub computed_style: Vec<CSSComputedStyleProperty>,
@@ -466,6 +474,7 @@ pub struct GetInlineStylesForNode {
     pub node_id: super::dom::NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetInlineStylesForNodeReturnObject {
     // Inline style for the specified DOM node.
     pub inline_style: Option<CSSStyle>,
@@ -483,6 +492,7 @@ pub struct GetMatchedStylesForNode {
     pub node_id: super::dom::NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetMatchedStylesForNodeReturnObject {
     // Inline style for the specified DOM node.
     pub inline_style: Option<CSSStyle>,
@@ -506,6 +516,7 @@ impl super::Command for GetMatchedStylesForNode {
 #[derive(Serialize, Debug)]
 pub struct GetMediaQueries {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetMediaQueriesReturnObject {
     pub medias: Vec<CSSMedia>,
 }
@@ -521,6 +532,7 @@ pub struct GetPlatformFontsForNode {
     pub node_id: super::dom::NodeId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetPlatformFontsForNodeReturnObject {
     // Usage statistics for every employed platform font.
     pub fonts: Vec<PlatformFontUsage>,
@@ -536,6 +548,7 @@ pub struct GetStyleSheetText {
     pub style_sheet_id: StyleSheetId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetStyleSheetTextReturnObject {
     // The stylesheet text.
     pub text: String,
@@ -556,6 +569,7 @@ pub struct TrackComputedStyleUpdates {
     pub properties_to_track: Vec<CSSComputedStyleProperty>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TrackComputedStyleUpdatesReturnObject {}
 impl super::Command for TrackComputedStyleUpdates {
     const NAME: &'static str = "CSS.trackComputedStyleUpdates";
@@ -566,6 +580,7 @@ impl super::Command for TrackComputedStyleUpdates {
 #[derive(Serialize, Debug)]
 pub struct TakeComputedStyleUpdates {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakeComputedStyleUpdatesReturnObject {
     // The list of node Ids that have their tracked computed styles updated
     pub node_ids: Vec<super::dom::NodeId>,
@@ -585,6 +600,7 @@ pub struct SetEffectivePropertyValueForNode {
     pub value: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetEffectivePropertyValueForNodeReturnObject {}
 impl super::Command for SetEffectivePropertyValueForNode {
     const NAME: &'static str = "CSS.setEffectivePropertyValueForNode";
@@ -599,6 +615,7 @@ pub struct SetKeyframeKey {
     pub key_text: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetKeyframeKeyReturnObject {
     // The resulting key text after modification.
     pub key_text: Value,
@@ -616,6 +633,7 @@ pub struct SetMediaText {
     pub text: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetMediaTextReturnObject {
     // The resulting CSS media rule after modification.
     pub media: CSSMedia,
@@ -633,6 +651,7 @@ pub struct SetRuleSelector {
     pub selector: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetRuleSelectorReturnObject {
     // The resulting selector list after modification.
     pub selector_list: SelectorList,
@@ -649,6 +668,7 @@ pub struct SetStyleSheetText {
     pub text: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetStyleSheetTextReturnObject {
     // URL of source map associated with script (if any).
     pub source_map_url: Option<String>,
@@ -664,6 +684,7 @@ pub struct SetStyleTexts {
     pub edits: Vec<StyleDeclarationEdit>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetStyleTextsReturnObject {
     // The resulting styles after modification.
     pub styles: Vec<CSSStyle>,
@@ -677,6 +698,7 @@ impl super::Command for SetStyleTexts {
 #[derive(Serialize, Debug)]
 pub struct StartRuleUsageTracking {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartRuleUsageTrackingReturnObject {}
 impl super::Command for StartRuleUsageTracking {
     const NAME: &'static str = "CSS.startRuleUsageTracking";
@@ -688,6 +710,7 @@ impl super::Command for StartRuleUsageTracking {
 #[derive(Serialize, Debug)]
 pub struct StopRuleUsageTracking {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopRuleUsageTrackingReturnObject {
     pub rule_usage: Vec<RuleUsage>,
 }
@@ -701,6 +724,7 @@ impl super::Command for StopRuleUsageTracking {
 #[derive(Serialize, Debug)]
 pub struct TakeCoverageDelta {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakeCoverageDeltaReturnObject {
     pub coverage: Vec<RuleUsage>,
     // Monotonically increasing time, in seconds.
@@ -718,6 +742,7 @@ pub struct SetLocalFontsEnabled {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetLocalFontsEnabledReturnObject {}
 impl super::Command for SetLocalFontsEnabled {
     const NAME: &'static str = "CSS.setLocalFontsEnabled";

@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Debug)]
 pub struct ClearDeviceOrientationOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearDeviceOrientationOverrideReturnObject {}
 impl super::Command for ClearDeviceOrientationOverride {
     const NAME: &'static str = "DeviceOrientation.clearDeviceOrientationOverride";
@@ -22,6 +23,7 @@ pub struct SetDeviceOrientationOverride {
     pub gamma: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDeviceOrientationOverrideReturnObject {}
 impl super::Command for SetDeviceOrientationOverride {
     const NAME: &'static str = "DeviceOrientation.setDeviceOrientationOverride";

@@ -72,6 +72,7 @@ pub struct UserAgentMetadata {
 #[derive(Serialize, Debug)]
 pub struct CanEmulate {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CanEmulateReturnObject {
     // True if emulation is supported.
     pub result: bool,
@@ -85,6 +86,7 @@ impl super::Command for CanEmulate {
 #[derive(Serialize, Debug)]
 pub struct ClearDeviceMetricsOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearDeviceMetricsOverrideReturnObject {}
 impl super::Command for ClearDeviceMetricsOverride {
     const NAME: &'static str = "Emulation.clearDeviceMetricsOverride";
@@ -95,6 +97,7 @@ impl super::Command for ClearDeviceMetricsOverride {
 #[derive(Serialize, Debug)]
 pub struct ClearGeolocationOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearGeolocationOverrideReturnObject {}
 impl super::Command for ClearGeolocationOverride {
     const NAME: &'static str = "Emulation.clearGeolocationOverride";
@@ -105,6 +108,7 @@ impl super::Command for ClearGeolocationOverride {
 #[derive(Serialize, Debug)]
 pub struct ResetPageScaleFactor {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResetPageScaleFactorReturnObject {}
 impl super::Command for ResetPageScaleFactor {
     const NAME: &'static str = "Emulation.resetPageScaleFactor";
@@ -118,6 +122,7 @@ pub struct SetFocusEmulationEnabled {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetFocusEmulationEnabledReturnObject {}
 impl super::Command for SetFocusEmulationEnabled {
     const NAME: &'static str = "Emulation.setFocusEmulationEnabled";
@@ -131,6 +136,7 @@ pub struct SetCPUThrottlingRate {
     pub rate: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetCPUThrottlingRateReturnObject {}
 impl super::Command for SetCPUThrottlingRate {
     const NAME: &'static str = "Emulation.setCPUThrottlingRate";
@@ -146,6 +152,7 @@ pub struct SetDefaultBackgroundColorOverride {
     pub color: Option<super::dom::RGBA>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDefaultBackgroundColorOverrideReturnObject {}
 impl super::Command for SetDefaultBackgroundColorOverride {
     const NAME: &'static str = "Emulation.setDefaultBackgroundColorOverride";
@@ -188,6 +195,7 @@ pub struct SetDeviceMetricsOverride {
     pub display_feature: Option<DisplayFeature>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDeviceMetricsOverrideReturnObject {}
 impl super::Command for SetDeviceMetricsOverride {
     const NAME: &'static str = "Emulation.setDeviceMetricsOverride";
@@ -200,6 +208,7 @@ pub struct SetScrollbarsHidden {
     pub hidden: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetScrollbarsHiddenReturnObject {}
 impl super::Command for SetScrollbarsHidden {
     const NAME: &'static str = "Emulation.setScrollbarsHidden";
@@ -212,6 +221,7 @@ pub struct SetDocumentCookieDisabled {
     pub disabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDocumentCookieDisabledReturnObject {}
 impl super::Command for SetDocumentCookieDisabled {
     const NAME: &'static str = "Emulation.setDocumentCookieDisabled";
@@ -232,6 +242,7 @@ pub struct SetEmitTouchEventsForMouse {
     pub configuration: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetEmitTouchEventsForMouseReturnObject {}
 impl super::Command for SetEmitTouchEventsForMouse {
     const NAME: &'static str = "Emulation.setEmitTouchEventsForMouse";
@@ -247,6 +258,7 @@ pub struct SetEmulatedMedia {
     pub features: Option<Vec<MediaFeature>>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetEmulatedMediaReturnObject {}
 impl super::Command for SetEmulatedMedia {
     const NAME: &'static str = "Emulation.setEmulatedMedia";
@@ -270,6 +282,7 @@ pub struct SetEmulatedVisionDeficiency {
     pub r#type: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetEmulatedVisionDeficiencyReturnObject {}
 impl super::Command for SetEmulatedVisionDeficiency {
     const NAME: &'static str = "Emulation.setEmulatedVisionDeficiency";
@@ -288,6 +301,7 @@ pub struct SetGeolocationOverride {
     pub accuracy: Option<f64>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetGeolocationOverrideReturnObject {}
 impl super::Command for SetGeolocationOverride {
     const NAME: &'static str = "Emulation.setGeolocationOverride";
@@ -303,6 +317,7 @@ pub struct SetIdleOverride {
     pub is_screen_unlocked: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetIdleOverrideReturnObject {}
 impl super::Command for SetIdleOverride {
     const NAME: &'static str = "Emulation.setIdleOverride";
@@ -313,6 +328,7 @@ impl super::Command for SetIdleOverride {
 #[derive(Serialize, Debug)]
 pub struct ClearIdleOverride {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearIdleOverrideReturnObject {}
 impl super::Command for ClearIdleOverride {
     const NAME: &'static str = "Emulation.clearIdleOverride";
@@ -326,6 +342,7 @@ pub struct SetNavigatorOverrides {
     pub platform: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetNavigatorOverridesReturnObject {}
 impl super::Command for SetNavigatorOverrides {
     const NAME: &'static str = "Emulation.setNavigatorOverrides";
@@ -339,6 +356,7 @@ pub struct SetPageScaleFactor {
     pub page_scale_factor: f64,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPageScaleFactorReturnObject {}
 impl super::Command for SetPageScaleFactor {
     const NAME: &'static str = "Emulation.setPageScaleFactor";
@@ -352,6 +370,7 @@ pub struct SetScriptExecutionDisabled {
     pub value: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetScriptExecutionDisabledReturnObject {}
 impl super::Command for SetScriptExecutionDisabled {
     const NAME: &'static str = "Emulation.setScriptExecutionDisabled";
@@ -367,6 +386,7 @@ pub struct SetTouchEmulationEnabled {
     pub max_touch_points: Option<i32>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetTouchEmulationEnabledReturnObject {}
 impl super::Command for SetTouchEmulationEnabled {
     const NAME: &'static str = "Emulation.setTouchEmulationEnabled";
@@ -391,6 +411,7 @@ pub struct SetVirtualTimePolicy {
     pub initial_virtual_time: Option<super::network::TimeSinceEpoch>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetVirtualTimePolicyReturnObject {
     // Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
     pub virtual_time_ticks_base: f64,
@@ -408,6 +429,7 @@ pub struct SetLocaleOverride {
     pub locale: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetLocaleOverrideReturnObject {}
 impl super::Command for SetLocaleOverride {
     const NAME: &'static str = "Emulation.setLocaleOverride";
@@ -422,6 +444,7 @@ pub struct SetTimezoneOverride {
     pub timezone_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetTimezoneOverrideReturnObject {}
 impl super::Command for SetTimezoneOverride {
     const NAME: &'static str = "Emulation.setTimezoneOverride";
@@ -439,6 +462,7 @@ pub struct SetVisibleSize {
     pub height: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetVisibleSizeReturnObject {}
 impl super::Command for SetVisibleSize {
     const NAME: &'static str = "Emulation.setVisibleSize";
@@ -458,6 +482,7 @@ pub struct SetUserAgentOverride {
     pub user_agent_metadata: Option<UserAgentMetadata>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetUserAgentOverrideReturnObject {}
 impl super::Command for SetUserAgentOverride {
     const NAME: &'static str = "Emulation.setUserAgentOverride";

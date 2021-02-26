@@ -128,6 +128,7 @@ pub struct RuntimeCallCounterInfo {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Profiler.disable";
@@ -137,6 +138,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Profiler.enable";
@@ -148,6 +150,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct GetBestEffortCoverage {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetBestEffortCoverageReturnObject {
     // Coverage data for the current isolate.
     pub result: Vec<ScriptCoverage>,
@@ -164,6 +167,7 @@ pub struct SetSamplingInterval {
     pub interval: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetSamplingIntervalReturnObject {}
 impl super::Command for SetSamplingInterval {
     const NAME: &'static str = "Profiler.setSamplingInterval";
@@ -173,6 +177,7 @@ impl super::Command for SetSamplingInterval {
 #[derive(Serialize, Debug)]
 pub struct Start {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartReturnObject {}
 impl super::Command for Start {
     const NAME: &'static str = "Profiler.start";
@@ -192,6 +197,7 @@ pub struct StartPreciseCoverage {
     pub allow_triggered_updates: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartPreciseCoverageReturnObject {
     // Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
     pub timestamp: f64,
@@ -205,6 +211,7 @@ impl super::Command for StartPreciseCoverage {
 #[derive(Serialize, Debug)]
 pub struct StartTypeProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartTypeProfileReturnObject {}
 impl super::Command for StartTypeProfile {
     const NAME: &'static str = "Profiler.startTypeProfile";
@@ -214,6 +221,7 @@ impl super::Command for StartTypeProfile {
 #[derive(Serialize, Debug)]
 pub struct Stop {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopReturnObject {
     // Recorded profile.
     pub profile: Profile,
@@ -228,6 +236,7 @@ impl super::Command for Stop {
 #[derive(Serialize, Debug)]
 pub struct StopPreciseCoverage {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopPreciseCoverageReturnObject {}
 impl super::Command for StopPreciseCoverage {
     const NAME: &'static str = "Profiler.stopPreciseCoverage";
@@ -238,6 +247,7 @@ impl super::Command for StopPreciseCoverage {
 #[derive(Serialize, Debug)]
 pub struct StopTypeProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopTypeProfileReturnObject {}
 impl super::Command for StopTypeProfile {
     const NAME: &'static str = "Profiler.stopTypeProfile";
@@ -249,6 +259,7 @@ impl super::Command for StopTypeProfile {
 #[derive(Serialize, Debug)]
 pub struct TakePreciseCoverage {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakePreciseCoverageReturnObject {
     // Coverage data for the current isolate.
     pub result: Vec<ScriptCoverage>,
@@ -264,6 +275,7 @@ impl super::Command for TakePreciseCoverage {
 #[derive(Serialize, Debug)]
 pub struct TakeTypeProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakeTypeProfileReturnObject {
     // Type profile for all scripts since startTypeProfile() was turned on.
     pub result: Vec<ScriptTypeProfile>,
@@ -277,6 +289,7 @@ impl super::Command for TakeTypeProfile {
 #[derive(Serialize, Debug)]
 pub struct EnableCounters {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableCountersReturnObject {}
 impl super::Command for EnableCounters {
     const NAME: &'static str = "Profiler.enableCounters";
@@ -287,6 +300,7 @@ impl super::Command for EnableCounters {
 #[derive(Serialize, Debug)]
 pub struct DisableCounters {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableCountersReturnObject {}
 impl super::Command for DisableCounters {
     const NAME: &'static str = "Profiler.disableCounters";
@@ -297,6 +311,7 @@ impl super::Command for DisableCounters {
 #[derive(Serialize, Debug)]
 pub struct GetCounters {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCountersReturnObject {
     // Collected counters information.
     pub result: Vec<CounterInfo>,
@@ -310,6 +325,7 @@ impl super::Command for GetCounters {
 #[derive(Serialize, Debug)]
 pub struct EnableRuntimeCallStats {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableRuntimeCallStatsReturnObject {}
 impl super::Command for EnableRuntimeCallStats {
     const NAME: &'static str = "Profiler.enableRuntimeCallStats";
@@ -320,6 +336,7 @@ impl super::Command for EnableRuntimeCallStats {
 #[derive(Serialize, Debug)]
 pub struct DisableRuntimeCallStats {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableRuntimeCallStatsReturnObject {}
 impl super::Command for DisableRuntimeCallStats {
     const NAME: &'static str = "Profiler.disableRuntimeCallStats";
@@ -330,6 +347,7 @@ impl super::Command for DisableRuntimeCallStats {
 #[derive(Serialize, Debug)]
 pub struct GetRuntimeCallStats {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetRuntimeCallStatsReturnObject {
     // Collected runtime call counter information.
     pub result: Vec<RuntimeCallCounterInfo>,

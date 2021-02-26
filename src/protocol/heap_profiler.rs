@@ -44,6 +44,7 @@ pub struct AddInspectedHeapObject {
     pub heap_object_id: HeapSnapshotObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AddInspectedHeapObjectReturnObject {}
 impl super::Command for AddInspectedHeapObject {
     const NAME: &'static str = "HeapProfiler.addInspectedHeapObject";
@@ -53,6 +54,7 @@ impl super::Command for AddInspectedHeapObject {
 #[derive(Serialize, Debug)]
 pub struct CollectGarbage {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CollectGarbageReturnObject {}
 impl super::Command for CollectGarbage {
     const NAME: &'static str = "HeapProfiler.collectGarbage";
@@ -62,6 +64,7 @@ impl super::Command for CollectGarbage {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "HeapProfiler.disable";
@@ -71,6 +74,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "HeapProfiler.enable";
@@ -83,6 +87,7 @@ pub struct GetHeapObjectId {
     pub object_id: super::runtime::RemoteObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetHeapObjectIdReturnObject {
     // Id of the heap snapshot object corresponding to the passed remote object id.
     pub heap_snapshot_object_id: HeapSnapshotObjectId,
@@ -99,6 +104,7 @@ pub struct GetObjectByHeapObjectId {
     pub object_group: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetObjectByHeapObjectIdReturnObject {
     // Evaluation result.
     pub result: super::runtime::RemoteObject,
@@ -111,6 +117,7 @@ impl super::Command for GetObjectByHeapObjectId {
 #[derive(Serialize, Debug)]
 pub struct GetSamplingProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetSamplingProfileReturnObject {
     // Return the sampling profile being collected.
     pub profile: SamplingHeapProfile,
@@ -127,6 +134,7 @@ pub struct StartSampling {
     pub sampling_interval: Option<f64>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartSamplingReturnObject {}
 impl super::Command for StartSampling {
     const NAME: &'static str = "HeapProfiler.startSampling";
@@ -138,6 +146,7 @@ pub struct StartTrackingHeapObjects {
     pub track_allocations: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartTrackingHeapObjectsReturnObject {}
 impl super::Command for StartTrackingHeapObjects {
     const NAME: &'static str = "HeapProfiler.startTrackingHeapObjects";
@@ -147,6 +156,7 @@ impl super::Command for StartTrackingHeapObjects {
 #[derive(Serialize, Debug)]
 pub struct StopSampling {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopSamplingReturnObject {
     // Recorded sampling heap profile.
     pub profile: SamplingHeapProfile,
@@ -164,6 +174,7 @@ pub struct StopTrackingHeapObjects {
     pub treat_global_objects_as_roots: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopTrackingHeapObjectsReturnObject {}
 impl super::Command for StopTrackingHeapObjects {
     const NAME: &'static str = "HeapProfiler.stopTrackingHeapObjects";
@@ -178,6 +189,7 @@ pub struct TakeHeapSnapshot {
     pub treat_global_objects_as_roots: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakeHeapSnapshotReturnObject {}
 impl super::Command for TakeHeapSnapshot {
     const NAME: &'static str = "HeapProfiler.takeHeapSnapshot";

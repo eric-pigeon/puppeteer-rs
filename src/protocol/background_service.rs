@@ -37,6 +37,7 @@ pub struct StartObserving {
     pub service: ServiceName,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartObservingReturnObject {}
 impl super::Command for StartObserving {
     const NAME: &'static str = "BackgroundService.startObserving";
@@ -49,6 +50,7 @@ pub struct StopObserving {
     pub service: ServiceName,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopObservingReturnObject {}
 impl super::Command for StopObserving {
     const NAME: &'static str = "BackgroundService.stopObserving";
@@ -62,6 +64,7 @@ pub struct SetRecording {
     pub service: ServiceName,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetRecordingReturnObject {}
 impl super::Command for SetRecording {
     const NAME: &'static str = "BackgroundService.setRecording";
@@ -74,6 +77,7 @@ pub struct ClearEvents {
     pub service: ServiceName,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearEventsReturnObject {}
 impl super::Command for ClearEvents {
     const NAME: &'static str = "BackgroundService.clearEvents";

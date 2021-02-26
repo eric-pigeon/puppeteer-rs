@@ -21,6 +21,7 @@ pub struct Enable {
     pub presentation_url: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Cast.enable";
@@ -31,6 +32,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Cast.disable";
@@ -44,6 +46,7 @@ pub struct SetSinkToUse {
     pub sink_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetSinkToUseReturnObject {}
 impl super::Command for SetSinkToUse {
     const NAME: &'static str = "Cast.setSinkToUse";
@@ -56,6 +59,7 @@ pub struct StartTabMirroring {
     pub sink_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartTabMirroringReturnObject {}
 impl super::Command for StartTabMirroring {
     const NAME: &'static str = "Cast.startTabMirroring";
@@ -68,6 +72,7 @@ pub struct StopCasting {
     pub sink_name: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopCastingReturnObject {}
 impl super::Command for StopCasting {
     const NAME: &'static str = "Cast.stopCasting";

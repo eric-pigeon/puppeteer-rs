@@ -48,6 +48,7 @@ pub struct DeliverPushMessage {
     pub data: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeliverPushMessageReturnObject {}
 impl super::Command for DeliverPushMessage {
     const NAME: &'static str = "ServiceWorker.deliverPushMessage";
@@ -57,6 +58,7 @@ impl super::Command for DeliverPushMessage {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "ServiceWorker.disable";
@@ -71,6 +73,7 @@ pub struct DispatchSyncEvent {
     pub last_chance: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DispatchSyncEventReturnObject {}
 impl super::Command for DispatchSyncEvent {
     const NAME: &'static str = "ServiceWorker.dispatchSyncEvent";
@@ -84,6 +87,7 @@ pub struct DispatchPeriodicSyncEvent {
     pub tag: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DispatchPeriodicSyncEventReturnObject {}
 impl super::Command for DispatchPeriodicSyncEvent {
     const NAME: &'static str = "ServiceWorker.dispatchPeriodicSyncEvent";
@@ -93,6 +97,7 @@ impl super::Command for DispatchPeriodicSyncEvent {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "ServiceWorker.enable";
@@ -104,6 +109,7 @@ pub struct InspectWorker {
     pub version_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct InspectWorkerReturnObject {}
 impl super::Command for InspectWorker {
     const NAME: &'static str = "ServiceWorker.inspectWorker";
@@ -115,6 +121,7 @@ pub struct SetForceUpdateOnPageLoad {
     pub force_update_on_page_load: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetForceUpdateOnPageLoadReturnObject {}
 impl super::Command for SetForceUpdateOnPageLoad {
     const NAME: &'static str = "ServiceWorker.setForceUpdateOnPageLoad";
@@ -126,6 +133,7 @@ pub struct SkipWaiting {
     pub scope_url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SkipWaitingReturnObject {}
 impl super::Command for SkipWaiting {
     const NAME: &'static str = "ServiceWorker.skipWaiting";
@@ -137,6 +145,7 @@ pub struct StartWorker {
     pub scope_url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartWorkerReturnObject {}
 impl super::Command for StartWorker {
     const NAME: &'static str = "ServiceWorker.startWorker";
@@ -146,6 +155,7 @@ impl super::Command for StartWorker {
 #[derive(Serialize, Debug)]
 pub struct StopAllWorkers {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopAllWorkersReturnObject {}
 impl super::Command for StopAllWorkers {
     const NAME: &'static str = "ServiceWorker.stopAllWorkers";
@@ -157,6 +167,7 @@ pub struct StopWorker {
     pub version_id: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopWorkerReturnObject {}
 impl super::Command for StopWorker {
     const NAME: &'static str = "ServiceWorker.stopWorker";
@@ -168,6 +179,7 @@ pub struct Unregister {
     pub scope_url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UnregisterReturnObject {}
 impl super::Command for Unregister {
     const NAME: &'static str = "ServiceWorker.unregister";
@@ -179,6 +191,7 @@ pub struct UpdateRegistration {
     pub scope_url: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct UpdateRegistrationReturnObject {}
 impl super::Command for UpdateRegistration {
     const NAME: &'static str = "ServiceWorker.updateRegistration";

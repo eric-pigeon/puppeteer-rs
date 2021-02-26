@@ -78,6 +78,7 @@ pub struct SetPermission {
     pub browser_context_id: Option<BrowserContextID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPermissionReturnObject {}
 impl super::Command for SetPermission {
     const NAME: &'static str = "Browser.setPermission";
@@ -94,6 +95,7 @@ pub struct GrantPermissions {
     pub browser_context_id: Option<BrowserContextID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GrantPermissionsReturnObject {}
 impl super::Command for GrantPermissions {
     const NAME: &'static str = "Browser.grantPermissions";
@@ -107,6 +109,7 @@ pub struct ResetPermissions {
     pub browser_context_id: Option<BrowserContextID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ResetPermissionsReturnObject {}
 impl super::Command for ResetPermissions {
     const NAME: &'static str = "Browser.resetPermissions";
@@ -135,6 +138,7 @@ pub struct SetDownloadBehavior {
     pub download_path: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDownloadBehaviorReturnObject {}
 impl super::Command for SetDownloadBehavior {
     const NAME: &'static str = "Browser.setDownloadBehavior";
@@ -145,6 +149,7 @@ impl super::Command for SetDownloadBehavior {
 #[derive(Serialize, Debug)]
 pub struct Close {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CloseReturnObject {}
 impl super::Command for Close {
     const NAME: &'static str = "Browser.close";
@@ -155,6 +160,7 @@ impl super::Command for Close {
 #[derive(Serialize, Debug)]
 pub struct Crash {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CrashReturnObject {}
 impl super::Command for Crash {
     const NAME: &'static str = "Browser.crash";
@@ -165,6 +171,7 @@ impl super::Command for Crash {
 #[derive(Serialize, Debug)]
 pub struct CrashGpuProcess {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CrashGpuProcessReturnObject {}
 impl super::Command for CrashGpuProcess {
     const NAME: &'static str = "Browser.crashGpuProcess";
@@ -175,6 +182,7 @@ impl super::Command for CrashGpuProcess {
 #[derive(Serialize, Debug)]
 pub struct GetVersion {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetVersionReturnObject {
     // Protocol version.
     pub protocol_version: String,
@@ -197,6 +205,7 @@ impl super::Command for GetVersion {
 #[derive(Serialize, Debug)]
 pub struct GetBrowserCommandLine {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetBrowserCommandLineReturnObject {
     // Commandline parameters
     pub arguments: Vec<String>,
@@ -217,6 +226,7 @@ pub struct GetHistograms {
     pub delta: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetHistogramsReturnObject {
     // Histograms.
     pub histograms: Vec<Histogram>,
@@ -235,6 +245,7 @@ pub struct GetHistogram {
     pub delta: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetHistogramReturnObject {
     // Histogram.
     pub histogram: Histogram,
@@ -251,6 +262,7 @@ pub struct GetWindowBounds {
     pub window_id: WindowID,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetWindowBoundsReturnObject {
     // Bounds information of the window. When window state is 'minimized', the restored window
     // position and size are returned.
@@ -268,6 +280,7 @@ pub struct GetWindowForTarget {
     pub target_id: Option<super::target::TargetID>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetWindowForTargetReturnObject {
     // Browser window id.
     pub window_id: WindowID,
@@ -290,6 +303,7 @@ pub struct SetWindowBounds {
     pub bounds: Bounds,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetWindowBoundsReturnObject {}
 impl super::Command for SetWindowBounds {
     const NAME: &'static str = "Browser.setWindowBounds";
@@ -304,6 +318,7 @@ pub struct SetDockTile {
     pub image: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDockTileReturnObject {}
 impl super::Command for SetDockTile {
     const NAME: &'static str = "Browser.setDockTile";

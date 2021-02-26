@@ -575,6 +575,7 @@ pub struct LoadNetworkResourceOptions {
 #[derive(Serialize, Debug)]
 pub struct CanClearBrowserCache {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CanClearBrowserCacheReturnObject {
     // True if browser cache can be cleared.
     pub result: bool,
@@ -588,6 +589,7 @@ impl super::Command for CanClearBrowserCache {
 #[derive(Serialize, Debug)]
 pub struct CanClearBrowserCookies {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CanClearBrowserCookiesReturnObject {
     // True if browser cookies can be cleared.
     pub result: bool,
@@ -601,6 +603,7 @@ impl super::Command for CanClearBrowserCookies {
 #[derive(Serialize, Debug)]
 pub struct CanEmulateNetworkConditions {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CanEmulateNetworkConditionsReturnObject {
     // True if emulation of network conditions is supported.
     pub result: bool,
@@ -614,6 +617,7 @@ impl super::Command for CanEmulateNetworkConditions {
 #[derive(Serialize, Debug)]
 pub struct ClearBrowserCache {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearBrowserCacheReturnObject {}
 impl super::Command for ClearBrowserCache {
     const NAME: &'static str = "Network.clearBrowserCache";
@@ -624,6 +628,7 @@ impl super::Command for ClearBrowserCache {
 #[derive(Serialize, Debug)]
 pub struct ClearBrowserCookies {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ClearBrowserCookiesReturnObject {}
 impl super::Command for ClearBrowserCookies {
     const NAME: &'static str = "Network.clearBrowserCookies";
@@ -660,6 +665,7 @@ pub struct ContinueInterceptedRequest {
     pub auth_challenge_response: Option<AuthChallengeResponse>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ContinueInterceptedRequestReturnObject {}
 impl super::Command for ContinueInterceptedRequest {
     const NAME: &'static str = "Network.continueInterceptedRequest";
@@ -680,6 +686,7 @@ pub struct DeleteCookies {
     pub path: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DeleteCookiesReturnObject {}
 impl super::Command for DeleteCookies {
     const NAME: &'static str = "Network.deleteCookies";
@@ -690,6 +697,7 @@ impl super::Command for DeleteCookies {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Network.disable";
@@ -711,6 +719,7 @@ pub struct EmulateNetworkConditions {
     pub connection_type: Option<ConnectionType>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EmulateNetworkConditionsReturnObject {}
 impl super::Command for EmulateNetworkConditions {
     const NAME: &'static str = "Network.emulateNetworkConditions";
@@ -728,6 +737,7 @@ pub struct Enable {
     pub max_post_data_size: Option<i32>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Network.enable";
@@ -739,6 +749,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct GetAllCookies {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetAllCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<Cookie>,
@@ -755,6 +766,7 @@ pub struct GetCertificate {
     pub origin: String,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCertificateReturnObject {
     pub table_names: Vec<String>,
 }
@@ -773,6 +785,7 @@ pub struct GetCookies {
     pub urls: Option<Vec<String>>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetCookiesReturnObject {
     // Array of cookie objects.
     pub cookies: Vec<Cookie>,
@@ -789,6 +802,7 @@ pub struct GetResponseBody {
     pub request_id: RequestId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetResponseBodyReturnObject {
     // Response body.
     pub body: String,
@@ -807,6 +821,7 @@ pub struct GetRequestPostData {
     pub request_id: RequestId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetRequestPostDataReturnObject {
     // Request body string, omitting files from multipart requests
     pub post_data: String,
@@ -823,6 +838,7 @@ pub struct GetResponseBodyForInterception {
     pub interception_id: InterceptionId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetResponseBodyForInterceptionReturnObject {
     // Response body.
     pub body: String,
@@ -843,6 +859,7 @@ pub struct TakeResponseBodyForInterceptionAsStream {
     pub interception_id: InterceptionId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TakeResponseBodyForInterceptionAsStreamReturnObject {
     pub stream: super::io::StreamHandle,
 }
@@ -860,6 +877,7 @@ pub struct ReplayXHR {
     pub request_id: RequestId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ReplayXHRReturnObject {}
 impl super::Command for ReplayXHR {
     const NAME: &'static str = "Network.replayXHR";
@@ -879,6 +897,7 @@ pub struct SearchInResponseBody {
     pub is_regex: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchInResponseBodyReturnObject {
     // List of search matches.
     pub result: Vec<super::debugger::SearchMatch>,
@@ -895,6 +914,7 @@ pub struct SetBlockedURLs {
     pub urls: Vec<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBlockedURLsReturnObject {}
 impl super::Command for SetBlockedURLs {
     const NAME: &'static str = "Network.setBlockedURLs";
@@ -908,6 +928,7 @@ pub struct SetBypassServiceWorker {
     pub bypass: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetBypassServiceWorkerReturnObject {}
 impl super::Command for SetBypassServiceWorker {
     const NAME: &'static str = "Network.setBypassServiceWorker";
@@ -921,6 +942,7 @@ pub struct SetCacheDisabled {
     pub cache_disabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetCacheDisabledReturnObject {}
 impl super::Command for SetCacheDisabled {
     const NAME: &'static str = "Network.setCacheDisabled";
@@ -953,6 +975,7 @@ pub struct SetCookie {
     pub priority: Option<CookiePriority>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetCookieReturnObject {
     // Always set to true. If an error occurs, the response indicates protocol error.
     pub success: bool,
@@ -969,6 +992,7 @@ pub struct SetCookies {
     pub cookies: Vec<CookieParam>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetCookiesReturnObject {}
 impl super::Command for SetCookies {
     const NAME: &'static str = "Network.setCookies";
@@ -984,6 +1008,7 @@ pub struct SetDataSizeLimitsForTest {
     pub max_resource_size: i32,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetDataSizeLimitsForTestReturnObject {}
 impl super::Command for SetDataSizeLimitsForTest {
     const NAME: &'static str = "Network.setDataSizeLimitsForTest";
@@ -997,6 +1022,7 @@ pub struct SetExtraHTTPHeaders {
     pub headers: Headers,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetExtraHTTPHeadersReturnObject {}
 impl super::Command for SetExtraHTTPHeaders {
     const NAME: &'static str = "Network.setExtraHTTPHeaders";
@@ -1010,6 +1036,7 @@ pub struct SetAttachDebugHeader {
     pub enabled: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetAttachDebugHeaderReturnObject {}
 impl super::Command for SetAttachDebugHeader {
     const NAME: &'static str = "Network.setAttachDebugHeader";
@@ -1025,6 +1052,7 @@ pub struct SetRequestInterception {
     pub patterns: Vec<RequestPattern>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetRequestInterceptionReturnObject {}
 impl super::Command for SetRequestInterception {
     const NAME: &'static str = "Network.setRequestInterception";
@@ -1044,6 +1072,7 @@ pub struct SetUserAgentOverride {
     pub user_agent_metadata: Option<super::emulation::UserAgentMetadata>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetUserAgentOverrideReturnObject {}
 impl super::Command for SetUserAgentOverride {
     const NAME: &'static str = "Network.setUserAgentOverride";
@@ -1057,6 +1086,7 @@ pub struct GetSecurityIsolationStatus {
     pub frame_id: Option<super::page::FrameId>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetSecurityIsolationStatusReturnObject {
     pub status: SecurityIsolationStatus,
 }
@@ -1076,6 +1106,7 @@ pub struct LoadNetworkResource {
     pub options: LoadNetworkResourceOptions,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct LoadNetworkResourceReturnObject {
     pub resource: LoadNetworkResourcePageResult,
 }

@@ -85,6 +85,7 @@ pub struct AudioParam {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "WebAudio.enable";
@@ -95,6 +96,7 @@ impl super::Command for Enable {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "WebAudio.disable";
@@ -107,6 +109,7 @@ pub struct GetRealtimeData {
     pub context_id: GraphObjectId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetRealtimeDataReturnObject {
     pub realtime_data: ContextRealtimeData,
 }

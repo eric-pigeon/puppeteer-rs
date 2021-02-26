@@ -100,6 +100,7 @@ pub struct AXNode {
 #[derive(Serialize, Debug)]
 pub struct Disable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DisableReturnObject {}
 impl super::Command for Disable {
     const NAME: &'static str = "Accessibility.disable";
@@ -111,6 +112,7 @@ impl super::Command for Disable {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "Accessibility.enable";
@@ -130,6 +132,7 @@ pub struct GetPartialAXTree {
     pub fetch_relatives: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetPartialAXTreeReturnObject {
     // The `Accessibility.AXNode` for this DOM node, if it exists, plus its ancestors, siblings and
     // children, if requested.
@@ -144,6 +147,7 @@ impl super::Command for GetPartialAXTree {
 #[derive(Serialize, Debug)]
 pub struct GetFullAXTree {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFullAXTreeReturnObject {
     pub nodes: Vec<AXNode>,
 }
@@ -171,6 +175,7 @@ pub struct QueryAXTree {
     pub role: Option<String>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct QueryAXTreeReturnObject {
     // A list of `Accessibility.AXNode` matching the specified attributes,
     // including nodes that are ignored for accessibility.

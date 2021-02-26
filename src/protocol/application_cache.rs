@@ -43,6 +43,7 @@ pub struct FrameWithManifest {
 #[derive(Serialize, Debug)]
 pub struct Enable {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct EnableReturnObject {}
 impl super::Command for Enable {
     const NAME: &'static str = "ApplicationCache.enable";
@@ -56,6 +57,7 @@ pub struct GetApplicationCacheForFrame {
     pub frame_id: super::page::FrameId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetApplicationCacheForFrameReturnObject {
     // Relevant application cache data for the document in given frame.
     pub application_cache: ApplicationCache,
@@ -70,6 +72,7 @@ impl super::Command for GetApplicationCacheForFrame {
 #[derive(Serialize, Debug)]
 pub struct GetFramesWithManifests {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFramesWithManifestsReturnObject {
     // Array of frame identifiers with manifest urls for each frame containing a document
     // associated with some application cache.
@@ -87,6 +90,7 @@ pub struct GetManifestForFrame {
     pub frame_id: super::page::FrameId,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetManifestForFrameReturnObject {
     // Manifest URL for document in the given frame.
     pub manifest_url: String,

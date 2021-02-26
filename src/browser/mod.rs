@@ -1,13 +1,13 @@
+use futures::future::Future;
 use process::{Child, Command};
 use std::path::PathBuf;
 use tempfile::tempdir;
 
 use browser_fetcher::BrowserFetcher;
 use connection::{Connection, ConnectionOptions};
-pub use context::BrowserContext;
 pub use launch_options::{BrowserOptions, ChromeArgOptions, LaunchOptions};
 
-use crate::protocol::target;
+use crate::protocol::{browser, target};
 
 mod browser_fetcher;
 mod connection;
@@ -39,8 +39,6 @@ const DEFAULT_ARGS: &'static [&'static str] = &[
     "--enable-automation",
     "--password-store=basic",
     "--use-mock-keychain",
-    // TODO(sadym): remove "--enable-blink-features=IdleDetection"
-    // once IdleDetection is turned on by default.
     "--enable-blink-features=IdleDetection",
 ];
 
@@ -72,11 +70,6 @@ impl Browser {
             Ok(path) => path,
             Err(err) => panic!(err),
         };
-        // TODO cleanup
-        // println!(
-        //     "executable_path {}",
-        //     executable_path.to_str().expect("path")
-        // );
 
         let mut child = Command::new(executable_path, tmp_dir).args(args).spawn()?;
         let connection = child
@@ -87,9 +80,12 @@ impl Browser {
             })
             .await;
 
+        // let default_context =
+        //     BrowserContext::default_context(Arc::downgrade(&Arc::new(connection)));
         let browser = Browser {
             _child: child,
             connection: connection,
+            // default_context: default_context,
         };
 
         browser
@@ -100,13 +96,33 @@ impl Browser {
 
         Ok(browser)
     }
+
+    pub async fn version(&self) -> String {
+        let version = self
+            .get_version()
+            .await
+            .expect("failed to get browser version");
+        version.product
+    }
+
+    pub async fn user_agent(&self) -> String {
+        let version = self
+            .get_version()
+            .await
+            .expect("failed to get browser version");
+        version.user_agent
+    }
+
+    fn get_version(
+        &self,
+    ) -> impl Future<Output = Result<browser::GetVersionReturnObject, &'static str>> {
+        self.connection.send(browser::GetVersion {})
+    }
 }
 
 impl Drop for Browser {
     fn drop(&mut self) {
-        // println!("Dropping browser");
-        //     let _ = self.loop_shutdown_tx.send(());
-        //     self.transport.shutdown();
+        // TODO
     }
 }
 

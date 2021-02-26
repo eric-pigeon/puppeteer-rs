@@ -39,6 +39,7 @@ pub struct Module {
 #[derive(Serialize, Debug)]
 pub struct GetDOMCounters {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetDOMCountersReturnObject {
     pub documents: i32,
     pub nodes: i32,
@@ -52,6 +53,7 @@ impl super::Command for GetDOMCounters {
 #[derive(Serialize, Debug)]
 pub struct PrepareForLeakDetection {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PrepareForLeakDetectionReturnObject {}
 impl super::Command for PrepareForLeakDetection {
     const NAME: &'static str = "Memory.prepareForLeakDetection";
@@ -62,6 +64,7 @@ impl super::Command for PrepareForLeakDetection {
 #[derive(Serialize, Debug)]
 pub struct ForciblyPurgeJavaScriptMemory {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ForciblyPurgeJavaScriptMemoryReturnObject {}
 impl super::Command for ForciblyPurgeJavaScriptMemory {
     const NAME: &'static str = "Memory.forciblyPurgeJavaScriptMemory";
@@ -75,6 +78,7 @@ pub struct SetPressureNotificationsSuppressed {
     pub suppressed: bool,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SetPressureNotificationsSuppressedReturnObject {}
 impl super::Command for SetPressureNotificationsSuppressed {
     const NAME: &'static str = "Memory.setPressureNotificationsSuppressed";
@@ -88,6 +92,7 @@ pub struct SimulatePressureNotification {
     pub level: PressureLevel,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SimulatePressureNotificationReturnObject {}
 impl super::Command for SimulatePressureNotification {
     const NAME: &'static str = "Memory.simulatePressureNotification";
@@ -103,6 +108,7 @@ pub struct StartSampling {
     pub suppress_randomness: Option<bool>,
 }
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StartSamplingReturnObject {}
 impl super::Command for StartSampling {
     const NAME: &'static str = "Memory.startSampling";
@@ -113,6 +119,7 @@ impl super::Command for StartSampling {
 #[derive(Serialize, Debug)]
 pub struct StopSampling {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StopSamplingReturnObject {}
 impl super::Command for StopSampling {
     const NAME: &'static str = "Memory.stopSampling";
@@ -124,6 +131,7 @@ impl super::Command for StopSampling {
 #[derive(Serialize, Debug)]
 pub struct GetAllTimeSamplingProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetAllTimeSamplingProfileReturnObject {
     pub profile: SamplingProfile,
 }
@@ -137,6 +145,7 @@ impl super::Command for GetAllTimeSamplingProfile {
 #[derive(Serialize, Debug)]
 pub struct GetBrowserSamplingProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetBrowserSamplingProfileReturnObject {
     pub profile: SamplingProfile,
 }
@@ -150,6 +159,7 @@ impl super::Command for GetBrowserSamplingProfile {
 #[derive(Serialize, Debug)]
 pub struct GetSamplingProfile {}
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct GetSamplingProfileReturnObject {
     pub profile: SamplingProfile,
 }
